@@ -4,7 +4,7 @@
 [ext_resource path="res://troll.png" type="Texture" id=2]
 
 [sub_resource type="CircleShape2D" id=1]
-radius = 16.0
+radius = 1.0
 
 [node name="Troll" type="KinematicBody2D" groups=[
 "player",
