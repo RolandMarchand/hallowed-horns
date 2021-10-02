@@ -4,7 +4,7 @@ var loaded_rooms: Array = []
 
 # {level : room}
 var global_world := {
-	0: ["res://room0.tscn","res://room1.tscn"]
+	0: ["res://rooms/room0.tscn","res://rooms/room1.tscn"]
 }
 
 func _ready():

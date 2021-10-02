@@ -8,16 +8,6 @@
 
 config_version=4
 
-_global_script_classes=[ {
-"base": "",
-"class": "GitAPI",
-"language": "NativeScript",
-"path": "res://addons/godot-git-plugin/git_api.gdns"
-} ]
-_global_script_class_icons={
-"GitAPI": ""
-}
-
 [application]
 
 config/name="Isometric Game"
@@ -30,9 +20,9 @@ config/icon="res://icon.png"
 
 [autoload]
 
-GlobalWorld="*res://world.gd"
-ItemDict="*res://item_dictionary.gd"
-PlayerStats="*res://player_stats.gd"
+GlobalWorld="*res://scripts/world.gd"
+ItemDict="*res://scripts/item_dictionary.gd"
+PlayerStats="*res://scripts/player_stats.gd"
 
 [display]
 
@@ -42,7 +32,7 @@ window/stretch/aspect="keep"
 
 [gdnative]
 
-singletons=[ "res://addons/godot-git-plugin/git_api.gdnlib" ]
+singletons=[  ]
 
 [global]
 
