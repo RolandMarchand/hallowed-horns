@@ -1,58 +1,18 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://rooms/room_template.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scripts/room0.gd" type="Script" id=2]
-[ext_resource path="res://entities/door.tscn" type="PackedScene" id=3]
-[ext_resource path="res://troll.png" type="Texture" id=4]
-[ext_resource path="res://entities/key.tscn" type="PackedScene" id=5]
-[ext_resource path="res://scripts/enemy.gd" type="Script" id=6]
-
-[sub_resource type="Curve2D" id=1]
-_data = {
-"points": PoolVector2Array(  )
-}
-
-[sub_resource type="CircleShape2D" id=2]
-radius = 16.0
 
 [node name="Room0" groups=[
 "spawn",
 ] instance=ExtResource( 1 )]
 script = ExtResource( 2 )
 
-[node name="Floor" parent="." index="0"]
-tile_data = PoolIntArray( -65532, 1, 0, -65531, 1, 0, -65530, 1, 0, -65529, 1, 0, -65528, 1, 0, -65527, 1, 0, -65526, 1, 0, -65525, 1, 0, -65524, 1, 0, -65523, 1, 0, 4, 1, 0, 5, 1, 0, 6, 1, 0, 7, 1, 0, 8, 1, 0, 9, 1, 0, 10, 1, 0, 11, 1, 0, 12, 1, 0, 13, 1, 0, 65540, 1, 0, 65541, 1, 0, 65542, 1, 0, 65543, 1, 0, 65544, 1, 0, 65545, 1, 0, 65546, 1, 0, 65547, 1, 0, 65548, 1, 0, 65549, 1, 0, 131076, 1, 0, 131077, 1, 0, 131078, 1, 0, 131079, 1, 0, 131080, 1, 0, 131081, 1, 0, 131082, 1, 0, 131083, 1, 0, 131084, 1, 0, 131085, 1, 0, 196612, 1, 0, 196613, 1, 0, 196614, 1, 0, 196615, 1, 0, 196616, 1, 0, 196617, 1, 0, 196618, 1, 0, 196619, 1, 0, 196620, 1, 0, 196621, 1, 0, 196622, 1, 0, 196623, 1, 0, 196624, 1, 0, 262148, 1, 0, 262149, 1, 0, 262150, 1, 0, 262151, 1, 0, 262152, 1, 0, 262153, 1, 0, 262154, 1, 0, 262155, 1, 0, 262156, 1, 0, 262157, 1, 0, 262158, 1, 0, 262159, 1, 0, 262160, 1, 0, 262161, 1, 0, 262162, 1, 0, 327684, 1, 0, 327685, 1, 0, 327686, 1, 0, 327687, 1, 0, 327688, 1, 0, 327689, 1, 0, 327690, 1, 0, 327691, 1, 0, 327692, 1, 0, 327693, 1, 0, 327694, 1, 0, 327695, 1, 0, 327696, 1, 0, 327697, 1, 0, 327698, 1, 0, 393220, 1, 0, 393221, 1, 0, 393222, 1, 0, 393223, 1, 0, 393224, 1, 0, 393225, 1, 0, 393226, 1, 0, 393227, 1, 0, 393228, 1, 0, 393229, 1, 0, 393230, 1, 0, 393231, 1, 0, 393232, 1, 0, 393233, 1, 0, 393234, 1, 0, 458756, 1, 0, 458757, 1, 0, 458758, 1, 0, 458759, 1, 0, 458760, 1, 0, 458761, 1, 0, 458762, 1, 0, 458763, 1, 0, 458764, 1, 0, 458765, 1, 0, 458766, 1, 0, 458767, 1, 0, 458768, 1, 0, 458769, 1, 0, 458770, 1, 0 )
+[node name="Floor" parent="YSort" index="0"]
+tile_data = PoolIntArray( -327671, 0, 0, -262136, 0, 0, -262135, 0, 0, -262134, 0, 0, -262133, 0, 0, -196601, 0, 0, -196600, 0, 0, -196599, 0, 0, -196598, 0, 0, -196597, 0, 0, -131065, 0, 0, -131064, 0, 0, -131063, 0, 0, -131062, 0, 0, -131061, 0, 0, -65529, 0, 0, -65528, 0, 0, -65527, 0, 0, -65526, 0, 0, -65525, 0, 0, 7, 0, 0, 8, 0, 0, 9, 0, 0, 10, 0, 0 )
 
-[node name="Walls" parent="." index="1"]
-tile_data = PoolIntArray( -65532, 2, 0, -65531, 2, 0, -65530, 2, 0, -65529, 2, 0, -65528, 2, 0, -65527, 2, 0, -65526, 2, 0, -65524, 2, 0, -65523, 2, 0, 4, 2, 0, 13, 2, 0, 65540, 2, 0, 65549, 2, 0, 131076, 2, 0, 131078, 3, 0, 131085, 2, 0, 196612, 2, 0, 196621, 2, 0, 196622, 2, 0, 196623, 2, 0, 196624, 2, 0, 262148, 2, 0, 262153, 3, 0, 262160, 2, 0, 262161, 2, 0, 262162, 2, 0, 327684, 2, 0, 327698, 2, 0, 393220, 2, 0, 393234, 2, 0, 458756, 2, 0, 458757, 2, 0, 458758, 2, 0, 458759, 2, 0, 458760, 2, 0, 458761, 2, 0, 458762, 2, 0, 458763, 2, 0, 458764, 2, 0, 458765, 2, 0, 458766, 2, 0, 458767, 2, 0, 458768, 2, 0, 458769, 2, 0, 458770, 2, 0 )
+[node name="Walls" parent="YSort" index="1"]
+tile_data = PoolIntArray( -393210, 0, 2, -393209, 0, 2, -393206, 0, 2, -393205, 0, 2, -327674, 0, 2, -327673, 0, 2, -327672, 0, 1, -327670, 0, 1, -327669, 0, 2, -327668, 0, 2, -262138, 0, 2, -262137, 0, 2, -262136, 0, 3, -262133, 0, 65536, -262132, 0, 2, -262131, 0, 2, -196602, 0, 2, -196601, 0, 3, -196596, 0, 65536, -196595, 0, 2, -131066, 0, 1, -131062, 0, 1, -131059, 0, 2, -65530, 0, 1, -65523, 0, 2, 6, 0, 2, 7, 0, 65537, 12, 0, 65538, 13, 0, 2, 65543, 0, 2, 65544, 0, 65537, 65547, 0, 65538, 65548, 0, 2, 65549, 0, 2, 131080, 0, 2, 131081, 0, 2, 131082, 0, 2, 131083, 0, 2, 131084, 0, 2, 131085, 0, 2 )
 
-[node name="Key" parent="Walls" index="0" instance=ExtResource( 5 )]
-position = Vector2( 512, 448 )
-
-[node name="Troll" parent="Walls" index="1"]
-position = Vector2( 640, 384 )
-
-[node name="Door" parent="Walls" index="2" instance=ExtResource( 3 )]
-position = Vector2( 768, 352 )
-scale = Vector2( -1, 1 )
-is_locked = true
-
-[node name="Enemy" type="Path2D" parent="Walls" index="3"]
-curve = SubResource( 1 )
-script = ExtResource( 6 )
-
-[node name="PathFollow2D" type="PathFollow2D" parent="Walls/Enemy" index="0"]
-
-[node name="KinematicBody2D" type="KinematicBody2D" parent="Walls/Enemy/PathFollow2D" index="0"]
-
-[node name="Sprite" type="Sprite" parent="Walls/Enemy/PathFollow2D/KinematicBody2D" index="0"]
-modulate = Color( 1, 0, 0, 1 )
-position = Vector2( -4, -28 )
-texture = ExtResource( 4 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Enemy/PathFollow2D/KinematicBody2D" index="1"]
-shape = SubResource( 2 )
-
-[node name="Timer" type="Timer" parent="Walls/Enemy/PathFollow2D/KinematicBody2D" index="2"]
-
-[node name="Tween" type="Tween" parent="Walls/Enemy/PathFollow2D" index="1"]
+[node name="Troll" parent="YSort" index="2"]
+position = Vector2( 344, 96 )

@@ -1,8 +1,11 @@
-extends CanvasLayer
+extends Node
 
 var current_room: int
-
+onready var lmao = 3
+func lmao():
+	print(lmao)
 func _ready():
+	lmao()
 	for room in GlobalWorld.global_world[0]:
 		$Rooms.add_child(load(room).instance())
 	

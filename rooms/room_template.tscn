@@ -1,6 +1,5 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://tileset.tres" type="TileSet" id=1]
 [ext_resource path="res://entities/troll.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scripts/room.gd" type="Script" id=3]
 [ext_resource path="res://newtile.tres" type="TileSet" id=4]
@@ -12,8 +11,8 @@ script = ExtResource( 3 )
 
 [node name="Floor" type="TileMap" parent="."]
 mode = 1
-tile_set = ExtResource( 1 )
-cell_size = Vector2( 128, 64 )
+tile_set = ExtResource( 4 )
+cell_size = Vector2( 64, 32 )
 cell_tile_origin = 1
 centered_textures = true
 format = 1
@@ -22,10 +21,9 @@ format = 1
 mode = 1
 tile_set = ExtResource( 4 )
 cell_size = Vector2( 64, 32 )
-cell_quadrant_size = 32
 cell_tile_origin = 1
+cell_y_sort = true
+centered_textures = true
 format = 1
-tile_data = PoolIntArray( -131070, 0, 65536, -131069, 0, 65536, -131068, 0, 65536, -131067, 0, 65536, -131066, 0, 65536, -131065, 0, 65536, -131064, 0, 65536, -131063, 0, 65536, -65534, 0, 65536, -65533, 0, 4, -65532, 0, 2, -65531, 0, 2, -65530, 0, 2, -65529, 0, 2, -65528, 0, 2, -65527, 0, 65536, 2, 0, 65536, 3, 0, 3, 4, 0, 0, 5, 0, 0, 6, 0, 131072, 7, 0, 0, 8, 0, 0, 9, 0, 65536, 65539, 0, 65540, 65540, 0, 0, 65541, 0, 0, 65542, 0, 0, 65543, 0, 0, 65544, 0, 0, 65545, 0, 65536, 131076, 0, 65540, 131077, 0, 0, 131078, 0, 0, 131079, 0, 0, 131080, 0, 0, 131081, 0, 65536, 196613, 0, 65536, 196614, 0, 65536, 196615, 0, 65536, 196616, 0, 65536, 196617, 0, 65536 )
 
-[node name="Troll" parent="Walls" instance=ExtResource( 2 )]
-position = Vector2( 124.732, 89.1829 )
+[node name="Troll" parent="." instance=ExtResource( 2 )]

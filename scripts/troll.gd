@@ -1,8 +1,14 @@
 extends KinematicBody2D
 
-const MOTION_SPEED = 160 # Pixels/second.
+const MOTION_SPEED = 120 # Pixels/second.
 
-func _physics_process(_delta):
+export var zoom: Vector2
+
+func _ready() -> void:
+	if zoom:
+		$Camera2D.zoom = zoom
+
+func _physics_process(_delta) -> void:
 	var motion = Vector2()
 	motion.x = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
 	motion.y = Input.get_action_strength("move_down") - Input.get_action_strength("move_up")
