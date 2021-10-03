@@ -4,29 +4,33 @@
 [ext_resource path="res://scripts/door.gd" type="Script" id=2]
 
 [sub_resource type="SegmentShape2D" id=1]
-a = Vector2( 0, 12 )
-b = Vector2( -32, -4 )
+a = Vector2( -16, 4 )
+b = Vector2( 16, 20 )
 
 [node name="Door" type="Area2D"]
 collision_layer = 6
 collision_mask = 6
 script = ExtResource( 2 )
+__meta__ = {
+"_edit_group_": true
+}
 
 [node name="Sprite" type="Sprite" parent="."]
-position = Vector2( 0, -20 )
+position = Vector2( 0, -4 )
 texture = ExtResource( 1 )
 hframes = 4
 vframes = 2
 frame = 7
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-position = Vector2( 0, -24 )
+position = Vector2( 0, -8 )
 polygon = PoolVector2Array( -24, 16, 8, 32, 24, 24, -8, 8 )
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
+[node name="StaticBody2D" type="StaticBody2D" parent="." groups=[
+"collisions",
+]]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2( 16, -8 )
 shape = SubResource( 1 )
 
 [connection signal="body_entered" from="." to="." method="_on_Door_body_entered"]

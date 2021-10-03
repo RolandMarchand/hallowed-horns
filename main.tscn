@@ -3,7 +3,8 @@
 [ext_resource path="res://border2.png" type="Texture" id=1]
 [ext_resource path="res://scripts/main.gd" type="Script" id=2]
 
-[node name="Main" type="Node"]
+[node name="Main" type="CanvasLayer"]
+follow_viewport_enable = true
 script = ExtResource( 2 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]

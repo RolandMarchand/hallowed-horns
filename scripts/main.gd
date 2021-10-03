@@ -1,11 +1,8 @@
-extends Node
+extends CanvasLayer
 
 var current_room: int
-onready var lmao = 3
-func lmao():
-	print(lmao)
+
 func _ready():
-	lmao()
 	for room in GlobalWorld.global_world[0]:
 		$Rooms.add_child(load(room).instance())
 	
@@ -25,12 +22,14 @@ func change_room(room: int, _node: Node = null):
 	enable_room(room_node)
 	current_room = room_node.id
 
-func disable_room(room: Node):
+func disable_room(room: Node2D):
 	room.hide()
+	room.disable_collisions()
 	set_scene_process(room, false)
 
-func enable_room(room: Node):
+func enable_room(room: Node2D):
 	room.show()
+	room.enable_collisions()
 	set_scene_process(room, true)
 
 # Pauses a scene and all of its children

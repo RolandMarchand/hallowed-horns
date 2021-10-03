@@ -1,6 +1,6 @@
 extends KinematicBody2D
 
-const MOTION_SPEED = 120 # Pixels/second.
+const MOTION_SPEED = 60 # Pixels/second.
 
 export var zoom: Vector2
 
