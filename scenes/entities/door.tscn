@@ -7,7 +7,9 @@
 a = Vector2( -16, 4 )
 b = Vector2( 16, 20 )
 
-[node name="Door" type="Area2D"]
+[node name="Door" type="Area2D" groups=[
+"dont_disable_collisions",
+]]
 collision_layer = 6
 collision_mask = 6
 script = ExtResource( 2 )
@@ -16,19 +18,18 @@ __meta__ = {
 }
 
 [node name="Sprite" type="Sprite" parent="."]
-position = Vector2( 0, -4 )
+position = Vector2( 0, -16 )
 texture = ExtResource( 1 )
 hframes = 4
 vframes = 2
 frame = 7
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-position = Vector2( 0, -8 )
+position = Vector2( 0, -20 )
 polygon = PoolVector2Array( -24, 16, 8, 32, 24, 24, -8, 8 )
 
-[node name="StaticBody2D" type="StaticBody2D" parent="." groups=[
-"collisions",
-]]
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2( 0, -12 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
 shape = SubResource( 1 )

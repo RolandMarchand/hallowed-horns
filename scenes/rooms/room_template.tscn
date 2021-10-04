@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://entities/troll.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/entities/troll.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scripts/room.gd" type="Script" id=3]
 [ext_resource path="res://scenes/newtile.tres" type="TileSet" id=4]
 

@@ -1,0 +1,80 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://assets/fonts/Bitmgothic/Bitmgothic/Bitmgothic.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://assets/border.png" type="Texture" id=2]
+[ext_resource path="res://AnimatedText.tscn" type="PackedScene" id=3]
+
+[sub_resource type="DynamicFont" id=1]
+font_data = ExtResource( 1 )
+
+[sub_resource type="Theme" id=2]
+default_font = SubResource( 1 )
+
+[node name="GUI" type="CanvasLayer"]
+layer = 2
+
+[node name="TextureRect" type="TextureRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BorderMargin" type="MarginContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = SubResource( 2 )
+custom_constants/margin_right = 32
+custom_constants/margin_top = 16
+custom_constants/margin_left = 32
+custom_constants/margin_bottom = 48
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="BorderMargin"]
+visible = false
+margin_left = 32.0
+margin_top = 16.0
+margin_right = 288.0
+margin_bottom = 144.0
+color = Color( 0, 0, 0, 1 )
+
+[node name="TextMargin" type="MarginContainer" parent="BorderMargin"]
+margin_left = 32.0
+margin_top = 16.0
+margin_right = 288.0
+margin_bottom = 144.0
+custom_constants/margin_right = 10
+custom_constants/margin_top = 10
+custom_constants/margin_left = 10
+custom_constants/margin_bottom = 10
+
+[node name="AnimatedText" parent="BorderMargin/TextMargin" instance=ExtResource( 3 )]
+visible = false
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 246.0
+margin_bottom = 118.0
+bbcode_text = "1
+2
+3
+4
+5
+6
+7
+8
+9
+10"
+text = "1
+2
+3
+4
+5
+6
+7
+8
+9
+10"
+scroll_active = false

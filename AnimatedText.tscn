@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://AnimatedText.gd" type="Script" id=1]
+
+[node name="AnimatedText" type="RichTextLabel"]
+margin_right = 119.0
+margin_bottom = 77.0
+text = "This is an example. 
+I wanted to test out this cool new mechanic!"
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.075
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
