@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/border.png-a4a7a5340f73f9267d6dc48e4760554a.stex"
+path="res://.import/troll.png-9acc1766882ca3ed61e09510178cd9e3.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://border.png"
-dest_files=[ "res://.import/border.png-a4a7a5340f73f9267d6dc48e4760554a.stex" ]
+source_file="res://assets/troll.png"
+dest_files=[ "res://.import/troll.png-9acc1766882ca3ed61e09510178cd9e3.stex" ]
 
 [params]
 
@@ -20,7 +20,7 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=false
+flags/filter=true
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2
