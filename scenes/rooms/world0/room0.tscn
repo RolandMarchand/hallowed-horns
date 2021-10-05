@@ -1,9 +1,14 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://scenes/rooms/room_template.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scripts/room0.gd" type="Script" id=2]
 [ext_resource path="res://scenes/entities/key.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/entities/door.tscn" type="PackedScene" id=4]
+
+[sub_resource type="NavigationPolygon" id=1]
+vertices = PoolVector2Array( -80, -44, -8, -80, -8, -72, -56, -48, 8, -64, 8, -72, 88, -72, 40, -48, -24, 44, -80, 16, 0, -20, 88, 44, 152, 12, 40, -40, 152, -40 )
+polygons = [ PoolIntArray( 0, 1, 2, 3 ), PoolIntArray( 4, 5, 6, 7 ), PoolIntArray( 8, 9, 0, 3, 10, 11 ), PoolIntArray( 12, 11, 10, 13, 14 ), PoolIntArray( 6, 14, 13, 7 ) ]
+outlines = [ PoolVector2Array( -80, -44, -80, 16, -24, 44, 88, 44, 152, 12, 152, -40, 88, -72, 8, -72, 8, -64, 40, -48, 40, -40, 0, -20, -56, -48, -8, -72, -8, -80 ) ]
 
 [node name="Room0" groups=[
 "spawn",
@@ -14,14 +19,18 @@ script = ExtResource( 2 )
 tile_data = PoolIntArray( -262145, 0, 0, -196610, 0, 0, -196609, 0, 0, -262144, 0, 0, -262143, 0, 0, -131075, 0, 0, -131074, 0, 0, -131073, 0, 0, -196608, 0, 0, -196607, 0, 0, -65539, 0, 0, -65538, 0, 0, -65537, 0, 0, -131072, 0, 0, -131071, 0, 0, -3, 0, 0, -2, 0, 0, -1, 0, 0, -65536, 0, 0, -65535, 0, 0, 65533, 0, 0, 65534, 0, 0, 65535, 0, 0, 0, 0, 0 )
 
 [node name="Walls" parent="." index="1"]
+show_collision = true
 tile_data = PoolIntArray( -262148, 0, 2, -262147, 0, 2, -262146, 0, 2, -327680, 0, 1, -327679, 0, 2, -196612, 0, 2, -196611, 0, 2, -196610, 0, 3, -262143, 0, 65536, -262142, 0, 2, -131076, 0, 2, -131075, 0, 3, -196606, 0, 65536, -196605, 0, 2, -65540, 0, 1, -65538, 0, 1, -131069, 0, 2, -4, 0, 1, -65533, 0, 2, 65532, 0, 2, 65533, 0, 65537, 2, 0, 65538, 3, 0, 2, 131069, 0, 2, 131070, 0, 65537, 65537, 0, 65538, 65538, 0, 2, 65539, 0, 2, 196606, 0, 2, 196607, 0, 2, 131072, 0, 2, 131073, 0, 2, 131074, 0, 2, 131075, 0, 2 )
 
-[node name="Troll" parent="Walls" index="0"]
-position = Vector2( 38, -17 )
-
-[node name="Door" parent="Walls" index="1" instance=ExtResource( 4 )]
+[node name="Door" parent="Walls" index="0" instance=ExtResource( 4 )]
 position = Vector2( 128, -80 )
 is_locked = true
 
-[node name="Key" parent="Walls" index="2" instance=ExtResource( 3 )]
-position = Vector2( -25.6, -24 )
+[node name="Key" parent="Walls" index="1" instance=ExtResource( 3 )]
+position = Vector2( 96, -56 )
+
+[node name="Player" parent="Walls" index="2"]
+position = Vector2( 72, -32 )
+
+[node name="NavigationPolygonInstance" parent="Walls/Navigation2D" index="0"]
+navpoly = SubResource( 1 )

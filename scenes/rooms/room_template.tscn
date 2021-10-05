@@ -26,7 +26,7 @@ cell_y_sort = true
 centered_textures = true
 format = 1
 
-[node name="Troll" parent="Walls" instance=ExtResource( 2 )]
+[node name="Player" parent="Walls" instance=ExtResource( 2 )]
 
 [node name="Navigation2D" type="Navigation2D" parent="Walls"]
 

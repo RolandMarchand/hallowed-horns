@@ -26,6 +26,7 @@ curve = SubResource( 1 )
 rotate = false
 
 [node name="Body" type="KinematicBody2D" parent="Path2D/PathFollow2D"]
+collision_layer = 0
 __meta__ = {
 "_edit_group_": true
 }
@@ -43,6 +44,12 @@ polygon = PoolVector2Array( 0, -8, -16, 0, 0, 8, 16, 0 )
 enabled = true
 collision_mask = 3
 
-[node name="Tween" type="Tween" parent="Path2D/PathFollow2D"]
+[node name="Timer" type="Timer" parent="Path2D/PathFollow2D/Body"]
+wait_time = 0.1
+autostart = true
+
+[node name="PathTween" type="Tween" parent="Path2D/PathFollow2D"]
 repeat = true
 playback/repeat = true
+
+[node name="NavTween" type="Tween" parent="Path2D/PathFollow2D"]
