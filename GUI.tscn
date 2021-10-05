@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://assets/fonts/Bitmgothic/Bitmgothic/Bitmgothic.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://assets/border.png" type="Texture" id=2]
 [ext_resource path="res://AnimatedText.tscn" type="PackedScene" id=3]
+[ext_resource path="res://GUI.gd" type="Script" id=4]
 
 [sub_resource type="DynamicFont" id=1]
 font_data = ExtResource( 1 )
@@ -12,6 +13,7 @@ default_font = SubResource( 1 )
 
 [node name="GUI" type="CanvasLayer"]
 layer = 2
+script = ExtResource( 4 )
 
 [node name="TextureRect" type="TextureRect" parent="."]
 anchor_right = 1.0
@@ -34,7 +36,6 @@ __meta__ = {
 }
 
 [node name="ColorRect" type="ColorRect" parent="BorderMargin"]
-visible = false
 margin_left = 32.0
 margin_top = 16.0
 margin_right = 288.0
@@ -52,29 +53,11 @@ custom_constants/margin_left = 10
 custom_constants/margin_bottom = 10
 
 [node name="AnimatedText" parent="BorderMargin/TextMargin" instance=ExtResource( 3 )]
-visible = false
 margin_left = 10.0
 margin_top = 10.0
 margin_right = 246.0
 margin_bottom = 118.0
-bbcode_text = "1
-2
-3
-4
-5
-6
-7
-8
-9
-10"
-text = "1
-2
-3
-4
-5
-6
-7
-8
-9
-10"
+bbcode_enabled = true
+bbcode_text = "[center]Lorem ipsum dolor sit amet, dico ferri at duo, te usu hinc nemore voluptatum. Sit et doming admodum adipiscing, usu primis adipisci ne. Et qualisque repudiandae quo, ex eos diam.[/center]"
+text = "Lorem ipsum dolor sit amet, dico ferri at duo, te usu hinc nemore voluptatum. Sit et doming admodum adipiscing, usu primis adipisci ne. Et qualisque repudiandae quo, ex eos diam."
 scroll_active = false

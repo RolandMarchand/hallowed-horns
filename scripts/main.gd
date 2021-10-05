@@ -3,6 +3,7 @@ extends CanvasLayer
 var current_room: int
 
 func _ready() -> void:
+	
 	for room in GlobalWorld.global_world[0]:
 		$Rooms.add_child(load(room).instance())
 	
@@ -10,11 +11,12 @@ func _ready() -> void:
 	# Sets current_room to the spawning room ID
 	for room in $Rooms.get_children():
 		disable_room(room)
-		
 		if room.is_in_group("spawn"):
 			current_room = room.id
-	
 	enable_room(find_room_id(current_room))
+	
+	for enemy in get_tree().get_nodes_in_group("enemies"):
+		enemy.connect("send_target_info", self, "enemy_target_request")
 
 func change_room(room: int, _node: Node = null) -> void:
 	var room_node: Node = find_room_id(room)
@@ -53,3 +55,8 @@ func door_locked() -> void:
 func door_unlocked(to: int) -> void:
 	print("The door is unlocked")
 	change_room(to)
+
+func enemy_target_request(_sender: Node2D) -> void:
+	for _player in get_tree().get_nodes_in_group("player"):
+		if find_room_id(current_room).is_a_parent_of(_player):
+			_sender.set_player(_player)

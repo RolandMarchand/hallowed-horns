@@ -1,0 +1,48 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://scripts/enemy.gd" type="Script" id=1]
+[ext_resource path="res://assets/troll.png" type="Texture" id=2]
+
+[sub_resource type="Curve2D" id=1]
+_data = {
+"points": PoolVector2Array(  )
+}
+
+[node name="Enemy" type="Node2D" groups=[
+"enemies",
+]]
+script = ExtResource( 1 )
+
+[node name="PathPoints" type="Node2D" parent="."]
+
+[node name="Position2D" type="Position2D" parent="PathPoints"]
+
+[node name="Position2D2" type="Position2D" parent="PathPoints"]
+
+[node name="Path2D" type="Path2D" parent="."]
+curve = SubResource( 1 )
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
+rotate = false
+
+[node name="Body" type="KinematicBody2D" parent="Path2D/PathFollow2D"]
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" type="Sprite" parent="Path2D/PathFollow2D/Body"]
+modulate = Color( 1, 0, 0, 1 )
+position = Vector2( -2.772, -13.171 )
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 2 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Path2D/PathFollow2D/Body"]
+polygon = PoolVector2Array( 0, -8, -16, 0, 0, 8, 16, 0 )
+
+[node name="VisionRay" type="RayCast2D" parent="Path2D/PathFollow2D/Body"]
+enabled = true
+collision_mask = 3
+
+[node name="Tween" type="Tween" parent="Path2D/PathFollow2D"]
+repeat = true
+playback/repeat = true
