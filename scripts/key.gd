@@ -1,14 +1,14 @@
-extends Area2D
+extends "res://scripts/item.gd"
 
-signal picked_up
+export(ItemDict.keys) var _key_type: int = ItemDict.keys.BRONZE_KEY
 
-export(ItemDict.keys) var key_type = ItemDict.keys.BRONZE_KEY
-
-func _ready():
+func _ready() -> void:
 # warning-ignore:return_value_discarded
-	connect("picked_up", PlayerStats, "add_key")
+	connect("body_entered", self, "_on_body_entered")
 
+func _on_body_entered(_body: Node) -> void:
+	match _when_interact:
+		action.PICKED_UP:
+			emit_signal("picked_up", ItemDict.types.KEYS, _key_type)
+			call_deferred("queue_free")
 
-func _on_Key_body_entered(_body):
-	emit_signal("picked_up", key_type)
-	call_deferred("free")

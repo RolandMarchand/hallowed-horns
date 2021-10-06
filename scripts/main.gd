@@ -2,8 +2,9 @@ extends CanvasLayer
 
 var current_room: int
 
+onready var gui = get_node("GUI")
+
 func _ready() -> void:
-	
 	for room in GlobalWorld.global_world[0]:
 		$Rooms.add_child(load(room).instance())
 	
@@ -14,6 +15,14 @@ func _ready() -> void:
 		if room.is_in_group("spawn"):
 			current_room = room.id
 	enable_room(find_room_id(current_room))
+	
+	for item in get_tree().get_nodes_in_group("items"):
+		item.connect("picked_up", self, "_item_picked_up", [item])
+	
+	for enemy in get_tree().get_nodes_in_group("enemies"):
+		enemy.body.connect("body_entered", self, "enemy_touched_player", [enemy])
+	
+	VisualServer.set_default_clear_color(Color("#ff5555"))
 
 func change_room(room: int, _node: Node = null) -> void:
 	var room_node: Node = find_room_id(room)
@@ -22,12 +31,12 @@ func change_room(room: int, _node: Node = null) -> void:
 	current_room = room_node.id
 
 func disable_room(room: Node2D) -> void:
-	room.hide()
+	#room.hide()
 	room.disable_collisions()
 	set_scene_process(room, false)
 
 func enable_room(room: Node2D) -> void:
-	room.show()
+	#room.show()
 	room.enable_collisions()
 	set_scene_process(room, true)
 
@@ -52,3 +61,13 @@ func door_locked() -> void:
 func door_unlocked(to: int) -> void:
 	print("The door is unlocked")
 	change_room(to)
+
+func _item_picked_up(_type, _value, _item: Node) -> void:
+	match _type:
+		ItemDict.types.KEYS:
+			PlayerStats.add_key(_value)
+
+func enemy_touched_player(_player: Node, _enemy: Node):
+	_enemy.queue_free()
+	PlayerStats.health -= 1
+	gui.damaged()
