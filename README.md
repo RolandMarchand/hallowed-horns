@@ -1,26 +1,16 @@
-# Isometric Game
+# Hallowed Horns
 
-This demo shows a traditional isometric view with depth sorting.
+[TODO] Game description
 
-A character can move around the level and will also slide around objects,
-as well as be occluded when standing in front or behind them.
+Made with Godot Engine v3.3.4.stable.flathub [faf3f883d]
+## Team
+* Lead Developer - Moowool
+* Lead Artist - DanDude
+## License
+Hallowed Horns Copyright (C) 2021 moowool195@gmail.com
+This program is free software, covered by the GNU General Public License.
 
-Language: GDScript
-
-Renderer: GLES 2
-
-Check out this demo on the asset library: https://godotengine.org/asset-library/asset/112
-
-## How does it work?
-
-The level uses a [`TileMap`](https://docs.godotengine.org/en/latest/classes/class_tilemap.html#class-tilemap)
-in which the tiles have different vertical offsets.
-The walls, doors, and pillars each have
-[`StaticBody2D`](https://docs.godotengine.org/en/latest/classes/class_staticbody2d.html)
-and [`CollisionPolygon2D`](https://docs.godotengine.org/en/latest/classes/class_collisionpolygon2d.html)
-at their base. The player also has a collider at its base,
-which makes the player collide with the level.
-
-## Screenshots
-
-![Screenshot](screenshots/isometric.png)
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License included in COPYING for more details.
