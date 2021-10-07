@@ -1,17 +1,14 @@
 extends Node2D
 
-onready var _navigation: Navigation2D = get_node("Walls/Navigation2D")
 onready var _player: KinematicBody2D = get_node("Walls/Player")
 
 var _saved_layers: Dictionary
 var _saved_masks: Dictionary
 
 func _ready() -> void:
-	get_tree().call_group("enemies", "set_player", _player)
-	get_tree().call_group("enemies", "set_navigation", _navigation)
-
-func _enemy_navigation_request(_sender: Node) -> void:
-	_sender.set_navigation = _navigation
+	for enemy in get_tree().get_nodes_in_group("enemy_transforms"):
+		if self.is_a_parent_of(enemy):
+			enemy.set_references(_player)
 
 func enable_collisions() -> void:
 	_ec(self)

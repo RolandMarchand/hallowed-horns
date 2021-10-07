@@ -2,7 +2,7 @@
 
 [ext_resource path="res://scenes/entities/player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scripts/room.gd" type="Script" id=3]
-[ext_resource path="res://scenes/newtile.tres" type="TileSet" id=4]
+[ext_resource path="res://assets/newtile.tres" type="TileSet" id=4]
 
 [node name="RoomTemplate" type="Node2D" groups=[
 "rooms",
@@ -27,8 +27,3 @@ centered_textures = true
 format = 1
 
 [node name="Player" parent="Walls" instance=ExtResource( 2 )]
-
-[node name="Navigation2D" type="Navigation2D" parent="Walls"]
-
-[node name="NavigationPolygonInstance" type="NavigationPolygonInstance" parent="Walls/Navigation2D"]
-visible = false

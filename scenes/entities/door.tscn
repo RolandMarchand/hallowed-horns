@@ -4,7 +4,7 @@
 [ext_resource path="res://scripts/door.gd" type="Script" id=2]
 
 [node name="Door" type="Area2D" groups=[
-"dont_disable_wall_collisions",
+"doors",
 ]]
 collision_layer = 8
 collision_mask = 8
