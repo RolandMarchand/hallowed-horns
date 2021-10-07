@@ -17,7 +17,9 @@ extends RichTextLabel
 var _text_display_speed: int = 12 # Characers per second
 
 func _ready() -> void:
-	new_text()
+	$Tween.interpolate_property(self, "percent_visible", 0, 1,
+			_tween_time(_text_display_speed, self.text.length()))
+	$Tween.start()
 
 func new_text() -> void:
 	$Timer.start()
@@ -40,13 +42,6 @@ func _unhandled_input(_event) -> void:
 		else:
 			$Timer.wait_time = 15 # Lets some time to read the quickly printer screen
 			$Tween.playback_speed = 5
-#	if Input.is_action_pressed("ui_accept"):
-#		$Tween.playback_speed = 5
-#	else:
-#		$Tween.playback_speed = 1
-
-func _physics_process(_delta):
-	pass
 
 func _tween_time(speed, words) -> float:
 	return pow(speed, -1) * words
