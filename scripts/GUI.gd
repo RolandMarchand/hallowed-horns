@@ -15,12 +15,26 @@
 extends CanvasLayer
 
 
-onready var label_node: RichTextLabel = get_node("BorderMargin/TextMargin/AnimatedText")
+onready var _animated_text: RichTextLabel = get_node("BorderMargin/TextMargin/AnimatedText")
 
+func display_message(message: String) -> void:
+	get_tree().paused = true
+	$BorderMargin.show()
+	$ColorRect.color = Color("#ff000000")
+	
+	_animated_text.new_text(message)
+	
+	yield(_animated_text, "text_displayed")
+	$ColorRect.color = Color("#00000000")
+	$BorderMargin.hide()
+	get_tree().paused = false
+
+# Placeholder, please changex
 func damaged() -> void:
 	get_node("BorderMargin/TextMargin/HBoxContainer/Label2").text = str(PlayerStats.health)
-	get_node("BorderMargin/ColorRect").color = Color("#ff5555")
-	get_node("BorderMargin/ColorRect").show()
-	get_node("BorderMargin/Tween").interpolate_property(get_node("BorderMargin/ColorRect"),
-	"color", Color("#ffff5555"), Color("#00ff5555"), 1, Tween.TRANS_CUBIC, Tween.EASE_OUT)
+	get_node("ColorRect").color = Color("#ff5555")
+	get_node("ColorRect").show()
+	get_node("BorderMargin/Tween").interpolate_property(get_node("ColorRect"),
+	"color", Color("#ffff5555"), Color("#00ff5555"), 2, Tween.TRANS_CUBIC, Tween.EASE_OUT)
 	get_node("BorderMargin/Tween").start()
+	yield(get_node("BorderMargin/Tween"), "tween_all_completed")

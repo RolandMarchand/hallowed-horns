@@ -23,6 +23,8 @@ func _ready() -> void:
 func _on_body_entered(_body: Node) -> void:
 	match _when_interact:
 		action.PICKED_UP:
+			# Redirect the signal to main so that it can manage the singleton
+			# and the GUI message
 			emit_signal("picked_up", ItemDict.types.KEYS, _key_type)
 			call_deferred("queue_free")
 

@@ -87,10 +87,10 @@ func find_room_id(id: int) -> Object:
 	return null
 
 func door_locked() -> void:
-	print("The door is locked")
+	gui.display_message("The door is locked.")
 
 func door_unlocked() -> void:
-	print("The door is unlocked")
+	gui.display_message("The door is locked.\nBut you have the key.")
 
 func _item_picked_up(_type, _value, _item: Node) -> void:
 	match _type:

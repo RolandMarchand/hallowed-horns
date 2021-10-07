@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://assets/fonts/Bitmgothic/Bitmgothic/Bitmgothic.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://assets/fonts/Bitmgothic/Bitmgothic/Bitmgothic.otf" type="DynamicFontData" id=1]
 [ext_resource path="res://assets/border.png" type="Texture" id=2]
 [ext_resource path="res://scripts/AnimatedText.gd" type="Script" id=3]
 [ext_resource path="res://scripts/GUI.gd" type="Script" id=4]
@@ -12,6 +12,7 @@ font_data = ExtResource( 1 )
 default_font = SubResource( 1 )
 
 [node name="GUI" type="CanvasLayer"]
+pause_mode = 2
 layer = 2
 script = ExtResource( 4 )
 
@@ -23,13 +24,20 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="ColorRect" type="ColorRect" parent="."]
+margin_left = 32.0
+margin_top = 16.0
+margin_right = 288.0
+margin_bottom = 144.0
+color = Color( 0, 0, 0, 0 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="BorderMargin" type="MarginContainer" parent="."]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 0.33371
-margin_top = -0.33371
-margin_right = 0.33371
-margin_bottom = -0.33371
 theme = SubResource( 2 )
 custom_constants/margin_right = 32
 custom_constants/margin_top = 16
@@ -40,14 +48,6 @@ __meta__ = {
 }
 
 [node name="Tween" type="Tween" parent="BorderMargin"]
-
-[node name="ColorRect" type="ColorRect" parent="BorderMargin"]
-visible = false
-margin_left = 32.0
-margin_top = 16.0
-margin_right = 288.0
-margin_bottom = 144.0
-color = Color( 0, 0, 0, 1 )
 
 [node name="TextMargin" type="MarginContainer" parent="BorderMargin"]
 margin_left = 32.0
@@ -100,5 +100,3 @@ __meta__ = {
 [node name="Timer" type="Timer" parent="BorderMargin/TextMargin/AnimatedText"]
 wait_time = 3.0
 one_shot = true
-
-[connection signal="tween_all_completed" from="BorderMargin/TextMargin/AnimatedText/Tween" to="BorderMargin/TextMargin/AnimatedText" method="new_text"]
