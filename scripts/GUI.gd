@@ -14,8 +14,9 @@
 # along with Hallowed Horns.  If not, see <https://www.gnu.org/licenses/>.
 extends CanvasLayer
 
-
 onready var _animated_text: RichTextLabel = get_node("BorderMargin/TextMargin/AnimatedText")
+
+# The entire GUI should be overalled, maybe aside from the scrolling text
 
 func display_message(message: String) -> void:
 	get_tree().paused = true
@@ -29,9 +30,9 @@ func display_message(message: String) -> void:
 	$BorderMargin.hide()
 	get_tree().paused = false
 
-# Placeholder, please changex
+# Placeholder, please change
 func damaged() -> void:
-	get_node("BorderMargin/TextMargin/HBoxContainer/Label2").text = str(PlayerStats.health)
+	get_node("TextureRect/Label").text = str(PlayerStats.health)
 	get_node("ColorRect").color = Color("#ff5555")
 	get_node("ColorRect").show()
 	get_node("BorderMargin/Tween").interpolate_property(get_node("ColorRect"),

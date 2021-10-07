@@ -14,7 +14,7 @@
 # along with Hallowed Horns.  If not, see <https://www.gnu.org/licenses/>.
 extends "res://scripts/item.gd"
 
-export(ItemDict.keys) var _key_type: int = ItemDict.keys.BRONZE_KEY
+export(ItemDict.KEY) var _key_type: int = ItemDict.KEY.BRONZE
 
 func _ready() -> void:
 # warning-ignore:return_value_discarded
@@ -25,6 +25,6 @@ func _on_body_entered(_body: Node) -> void:
 		action.PICKED_UP:
 			# Redirect the signal to main so that it can manage the singleton
 			# and the GUI message
-			emit_signal("picked_up", ItemDict.types.KEYS, _key_type)
+			emit_signal("picked_up", ItemDict.TYPE.KEY, _key_type)
 			call_deferred("queue_free")
 

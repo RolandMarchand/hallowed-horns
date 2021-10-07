@@ -20,7 +20,7 @@ signal change_room
 
 export var leads_to := 1
 export var is_locked: bool = false
-export(ItemDict.keys) var key_required = ItemDict.keys.BRONZE_KEY
+export(ItemDict.KEY) var key_required = ItemDict.KEY.BRONZE
 export(int, FLAGS, "Walls", "Player", "Entities", "Doors") var _protected_layers = 0 setget ,get_protected_layers
 export(int, FLAGS, "Walls", "Player", "Entities", "Doors") var _protected_masks = 0 setget ,get_protected_masks
 

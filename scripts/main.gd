@@ -30,6 +30,10 @@ func _ready() -> void:
 	
 	VisualServer.set_default_clear_color(Color("#ff5555"))
 
+func unload_current_world():
+	for node in $Rooms.get_children():
+		get_tree().queue_delete(node)
+
 func load_world(world: int) -> void:
 	for room in GlobalWorld.global_world[world]:
 		$Rooms.add_child(load(room).instance())
@@ -92,12 +96,22 @@ func door_locked() -> void:
 func door_unlocked() -> void:
 	gui.display_message("The door is locked.\nBut you have the key.")
 
-func _item_picked_up(_type, _value, _item: Node) -> void:
-	match _type:
-		ItemDict.types.KEYS:
-			PlayerStats.add_key(_value)
+func _item_picked_up(type, value, _item: Node) -> void:
+	match type:
+		ItemDict.TYPE.KEY:
+			PlayerStats.add_key(value)
+			
+			gui.display_message("You picked up the {key} key.".format({"key": ItemDict.key_string_dict[value]}))
 
 func enemy_touched_player(_player: Node, _enemy: Node):
 	_enemy.queue_free()
 	PlayerStats.health -= 1
-	gui.damaged()
+	if PlayerStats.health < 1:
+		_death()
+	else:
+		gui.damaged()
+
+func _death():
+	gui.display_message("You have died...\nThe level will restart.")
+#	yield(gui._animated_text, "text_displayed")
+#	get_tree().reload_current_scene()

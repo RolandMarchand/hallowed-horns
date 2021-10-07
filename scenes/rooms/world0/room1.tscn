@@ -1,59 +1,26 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://scenes/rooms/room_template.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scripts/room1.gd" type="Script" id=2]
-[ext_resource path="res://scenes/entities/enemy_ai.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/entities/enemy.tscn" type="PackedScene" id=4]
-[ext_resource path="res://scenes/entities/door.tscn" type="PackedScene" id=5]
-[ext_resource path="res://scenes/rooms/world0/path_room1.tres" type="NavigationPolygon" id=6]
 
 [node name="Room1" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
 
 [node name="Floor" parent="." index="0"]
-tile_data = PoolIntArray( -131077, 0, 0, -131076, 0, 0, -131075, 0, 0, -131074, 0, 0, -65541, 0, 0, -65540, 0, 0, -65539, 0, 0, -65538, 0, 0, -3, 0, 0, -2, 0, 0, 65533, 0, 0, 65534, 0, 0, 131069, 0, 0, 131070, 0, 0, 131071, 0, 0, 65536, 0, 0, 65537, 0, 0, 196605, 0, 0, 196606, 0, 0, 196607, 0, 0, 131072, 0, 0, 131073, 0, 0, 131074, 0, 0 )
+tile_data = PoolIntArray( -262144, 0, 1, -262143, 0, 1, -262142, 0, 1, -131073, 0, 1, -196605, 0, 1, -196604, 0, 1, -65538, 0, 1, -131067, 0, 1, -3, 0, 1, -2, 0, 1, -65531, 0, 1, 65534, 0, 1, 3, 0, 65539, 6, 0, 1, 131070, 0, 1, 65543, 0, 1, 196606, 0, 1, 131079, 0, 1, 262142, 0, 1, 196615, 0, 1, 327678, 0, 1, 327679, 0, 1, 262151, 0, 1, 393215, 0, 1, 327687, 0, 1, 393216, 0, 1, 393222, 0, 1, 458753, 0, 1, 458757, 0, 1, 524290, 0, 1, 524291, 0, 1, 524292, 0, 1, 524293, 0, 1 )
 
 [node name="Walls" parent="." index="1"]
 show_collision = true
-tile_data = PoolIntArray( -196614, 0, 1, -196613, 0, 1, -196612, 0, 1, -196611, 0, 1, -196610, 0, 1, -196609, 0, 2, -131078, 0, 1, -131073, 0, 2, -65542, 0, 1, -65537, 0, 2, -6, 0, 2, -5, 0, 2, -4, 0, 1, -1, 0, 2, 65532, 0, 1, 65535, 0, 1, 0, 0, 1, 1, 0, 1, 2, 0, 2, 131068, 0, 1, 65538, 0, 2, 196604, 0, 1, 262140, 0, 2, 262141, 0, 2, 262142, 0, 2, 262143, 0, 2, 196608, 0, 2, 196609, 0, 2, 196610, 0, 2 )
 
-[node name="Door" parent="Walls" index="0" instance=ExtResource( 5 )]
-position = Vector2( 0, 80 )
-leads_to = 0
+[node name="Enemy" parent="Walls" index="0" instance=ExtResource( 4 )]
+position = Vector2( 32, 16 )
 
-[node name="Player" parent="Walls" index="1"]
+[node name="Enemy2" parent="Walls" index="1" instance=ExtResource( 4 )]
+position = Vector2( 56, 28 )
+
+[node name="Enemy3" parent="Walls" index="2" instance=ExtResource( 4 )]
+position = Vector2( 8, 4 )
+
+[node name="Player" parent="Walls" index="3"]
 position = Vector2( -32, 48 )
-
-[node name="Enemy" parent="Walls" index="2" instance=ExtResource( 4 )]
-position = Vector2( -80, -88 )
-
-[node name="EnemyAI" parent="Walls" index="3" instance=ExtResource( 3 )]
-_current_state = 1
-_vision_length = 0.0
-
-[node name="NavigationPolygonInstance" parent="Walls/EnemyAI" index="0"]
-navpoly = ExtResource( 6 )
-
-[node name="RemoteEnemy" parent="Walls/EnemyAI/Path2D/PathFollow2D" index="0"]
-position = Vector2( -80, -88 )
-remote_path = NodePath("../../../../Enemy")
-
-[node name="RayCast2D" parent="Walls/EnemyAI/Path2D/PathFollow2D/RemoteEnemy" index="0"]
-enabled = true
-
-[node name="Position2D" parent="Walls/EnemyAI/PathPoints" index="0"]
-position = Vector2( -86, -102 )
-
-[node name="Position2D2" parent="Walls/EnemyAI/PathPoints" index="1"]
-position = Vector2( -30, -78 )
-
-[node name="Position2D3" type="Position2D" parent="Walls/EnemyAI/PathPoints" index="2"]
-position = Vector2( -30, -38 )
-
-[node name="Position2D4" type="Position2D" parent="Walls/EnemyAI/PathPoints" index="3"]
-position = Vector2( -70, -14 )
-
-[node name="Position2D5" type="Position2D" parent="Walls/EnemyAI/PathPoints" index="4"]
-position = Vector2( -46, 10 )
-
-[editable path="Walls/EnemyAI"]

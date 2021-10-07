@@ -16,38 +16,71 @@ extends RichTextLabel
 
 signal text_displayed
 
+const FAST = 5
+const SLOW = 1
+
 var _text_display_speed: int = 12 # Characers per second
 
-# Stupid mess I got myself in half asleep at 3AM
-# Just arrange the animated text so that the first time the player presses space
-# the text scroll faster, the second time it sends the signal text_displayed.
-# Keep the timer as it is
+# Huge mess, this whole UI, I screwed up, fix it
+
+## The text scrolls slowly, and wait for 3 seconds, and ends
+## If player interacts, text will scroll slowly and then wait a long time for
+## the reader to read all of the text
+## If the player interacts again, automatically ends
+## ADD A WAIT TIME FOR NEW SENTENCES.
 func new_text(message: String) -> void:
 	percent_visible = 0
-	message = message.insert(0, "[center]")
-	message = message.insert(message.length(), "[/center]")
+	#message = message.insert(0, "[center]")
+	#message = message.insert(message.length(), "[/center]")
 	bbcode_text = message
 	
 	
-	$Tween.playback_speed = 1
+	$Tween.playback_speed = SLOW
 	$Timer.wait_time = 3
 	
 	$Tween.interpolate_property(self, "percent_visible", 0, 1, _tween_time(_text_display_speed, self.text.length()))
 	$Tween.start()
-	yield($Tween, "tween_all_completed")
-	$Timer.start()
-	yield($Timer, "timeout")
-	emit_signal("text_displayed")
+
+#func _physics_process(delta):
+#	print($Timer.time_left)
 
 func _unhandled_input(_event) -> void:
 	# Quick printing
 	if Input.is_action_just_pressed("ui_accept"):
-		if not $Tween.is_active():
-			$Timer.stop()
-			$Timer.emit_signal("timeout")
+		if $Tween.is_active():
+			match $Tween.playback_speed:
+				SLOW:
+					print("Getting faster")
+					$Tween.playback_speed = FAST
+				FAST:
+					$Tween.stop_all()
+					$Timer.stop()
+					emit_signal("text_displayed")
 		else:
-			$Timer.wait_time = bbcode_text.length() / 10 # Lets some time to read the quickly printer screen
-			$Tween.playback_speed = 5
+			emit_signal("text_displayed")
+#		if not $Tween.is_active():
+#			print(1)
+#			$Timer.stop()
+#			$Timer.emit_signal("timeout")
+#		elif $Tween.is_active() and $Tween.playback_speed == FAST:
+#			print(2)
+#			$Tween.stop_all()
+#			$Timer.stop()
+#			emit_signal("text_displayed")
+#		else:
+#			print(3)
+#			$Timer.wait_time = bbcode_text.length() / 10.0 # Lets some time to read the quickly printer screen
+#			$Tween.playback_speed = FAST
 
 func _tween_time(speed, words) -> float:
 	return pow(speed, -1) * words
+
+
+func _on_Tween_tween_all_completed():
+	print("Tween")
+	$Timer.start()
+
+
+func _on_Timer_timeout():
+	print("Timer")
+	emit_signal("text_displayed")
