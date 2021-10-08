@@ -14,28 +14,76 @@
 # along with Hallowed Horns.  If not, see <https://www.gnu.org/licenses/>.
 extends CanvasLayer
 
-onready var _animated_text: RichTextLabel = get_node("BorderMargin/TextMargin/AnimatedText")
+signal text_displayed
 
-# The entire GUI should be overalled, maybe aside from the scrolling text
+const FAST = 5.0
+const SLOW = 1.0
+
+onready var _animated_text: RichTextLabel = get_node("BorderMargin/TextMargin/AnimatedText")
+onready var _health_label: Label = get_node("TextureRect/HealthLabel")
+onready var _pain_color_rect: ColorRect = get_node("BorderMargin/PainColorRect")
+onready var _black_color_rect: ColorRect = get_node("BorderMargin/BlackColorRect")
+onready var _color_rect_tween: Tween = get_node("BorderMargin/ColorRectTween")
+onready var _animation_player: AnimationPlayer = get_node("BorderMargin/TextMargin/AnimatedText/AnimationPlayer")
+
+var _text_display_speed: int = 12 # Characers per second
+var cga_palette: Dictionary = {
+		"green": Color("#55ff55"),
+		"red": Color("#ff5555"),
+		"yellow": Color("#ffff55")
+		}
 
 func display_message(message: String) -> void:
+	_open_message_screen()
+	print("hello")
+	_animated_text.text = message
+	_animated_text.visible_characters = 0
+	
+	
+	
+	emit_signal("text_displayed")
+	_close_message_screen()
+
+func _unhandled_input(_event):
+	if Input.is_action_just_pressed("ui_accept"):
+		pass
+
+func _open_message_screen() -> void:
 	get_tree().paused = true
-	$BorderMargin.show()
-	$ColorRect.color = Color("#ff000000")
-	
-	_animated_text.new_text(message)
-	
-	yield(_animated_text, "text_displayed")
-	$ColorRect.color = Color("#00000000")
-	$BorderMargin.hide()
+	_animated_text.show()
+	_black_color_rect.show()
+
+func _close_message_screen() -> void:
+	_black_color_rect.hide()
+	_animated_text.hide()
 	get_tree().paused = false
 
-# Placeholder, please change
 func damaged() -> void:
-	get_node("TextureRect/Label").text = str(PlayerStats.health)
-	get_node("ColorRect").color = Color("#ff5555")
-	get_node("ColorRect").show()
-	get_node("BorderMargin/Tween").interpolate_property(get_node("ColorRect"),
-	"color", Color("#ffff5555"), Color("#00ff5555"), 2, Tween.TRANS_CUBIC, Tween.EASE_OUT)
-	get_node("BorderMargin/Tween").start()
-	yield(get_node("BorderMargin/Tween"), "tween_all_completed")
+	_health_label.text = str(PlayerStats.health)
+	_flash(cga_palette["red"])
+
+func _flash(flash_color: Color) -> void:
+	var flash_color_alpha: Color = flash_color
+	flash_color_alpha.a = 0
+	
+	# warning-ignore:return_value_discarded
+	_color_rect_tween.interpolate_property(_pain_color_rect, "color",
+			flash_color, flash_color_alpha, 2,
+			Tween.TRANS_CUBIC, Tween.EASE_OUT)
+# warning-ignore:return_value_discarded
+	_color_rect_tween.start()
+
+func _tween_time(speed, words) -> float:
+	return pow(speed, -1) * words
+
+
+func _on_Tween_tween_all_completed():
+	print("done")
+
+
+func _on_LineTimer_timeout():
+	print("timer1")
+
+
+func _on_ScreenTimer_timeout():
+	print("timer2")

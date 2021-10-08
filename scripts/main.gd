@@ -12,7 +12,7 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Hallowed Horns.  If not, see <https://www.gnu.org/licenses/>.
-extends CanvasLayer
+extends Node
 
 var current_room: int
 var hide_rooms: bool = true
@@ -58,12 +58,6 @@ func load_world(world: int) -> void:
 		door.connect("locked", self, "door_locked")
 		door.connect("unlocked", self, "door_unlocked")
 
-func change_room(room: int, _node: Node = null) -> void:
-	var room_node: Node = find_room_id(room)
-	disable_room(find_room_id(current_room))
-	enable_room(room_node)
-	current_room = room_node.id
-
 func disable_room(room: Node2D) -> void:
 	if hide_rooms:
 		room.hide()
@@ -90,10 +84,17 @@ func find_room_id(id: int) -> Object:
 	push_error("find_room_id: No room found.")
 	return null
 
+func change_room(room: int, _node: Node = null) -> void:
+	var room_node: Node = find_room_id(room)
+	disable_room(find_room_id(current_room))
+	enable_room(room_node)
+	current_room = room_node.id
+
 func door_locked() -> void:
 	gui.display_message("The door is locked.")
 
-func door_unlocked() -> void:
+func door_unlocked(room: int) -> void:
+	change_room(room)
 	gui.display_message("The door is locked.\nBut you have the key.")
 
 func _item_picked_up(type, value, _item: Node) -> void:
@@ -112,6 +113,7 @@ func enemy_touched_player(_player: Node, _enemy: Node):
 		gui.damaged()
 
 func _death():
-	gui.display_message("You have died...\nThe level will restart.")
-#	yield(gui._animated_text, "text_displayed")
-#	get_tree().reload_current_scene()
+	gui.display_message("You have died.\nThe level will restart...")
+	yield(gui, "text_displayed")
+# warning-ignore:return_value_discarded
+	get_tree().reload_current_scene()

@@ -27,9 +27,8 @@ export(int, FLAGS, "Walls", "Player", "Entities", "Doors") var _protected_masks 
 func _on_Door_body_entered(_body):
 	if is_locked:
 		if PlayerStats.has_key(key_required):
-			emit_signal("unlocked")
+			emit_signal("unlocked", leads_to)
 			is_locked = false
-			emit_signal("change_room", leads_to)
 		else:
 			emit_signal("locked")
 	else:
