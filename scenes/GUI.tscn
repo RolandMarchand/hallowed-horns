@@ -85,3 +85,5 @@ custom_constants/margin_left = 10
 custom_constants/margin_bottom = 10
 
 [node name="AnimatedText" parent="BorderMargin/TextMargin" instance=ExtResource( 3 )]
+
+[connection signal="text_displayed" from="BorderMargin/TextMargin/AnimatedText" to="." method="_on_AnimatedText_text_displayed"]

@@ -19,7 +19,7 @@ signal text_displayed
 const FAST = 5.0
 const SLOW = 1.0
 
-onready var _animated_text_scene = preload("res://scenes/AnimatedText.tscn").new()
+onready var _animated_text_scene = preload("res://scenes/AnimatedText.tscn")
 onready var _animated_text: RichTextLabel = get_node("BorderMargin/TextMargin/AnimatedText")
 onready var _health_label: Label = get_node("TextureRect/HealthLabel")
 onready var _pain_color_rect: ColorRect = get_node("BorderMargin/PainColorRect")
@@ -39,11 +39,22 @@ func display_message(message: String) -> void:
 	
 func _on_AnimatedText_text_displayed():
 	emit_signal("text_displayed")
+	_reload_AnimatedText()
 	_close_message_screen()
 
-func _unhandled_input(_event):
-	if Input.is_action_just_pressed("ui_accept"):
-		pass
+func _reload_AnimatedText():
+	_animated_text = _reload_node(_animated_text, _animated_text_scene)
+	_animated_text.connect("text_displayed", self, "_on_AnimatedText_text_displayed")
+
+func _reload_node(node: Node, replacement: Resource) -> Node:
+	var parent: Node = node.get_node("../")
+	var new_node = replacement.instance()
+	
+	node.queue_free()
+	
+	#new_animated_text.connect("text_displayed", self, "_on_AnimatedText_text_displayed")
+	parent.add_child(new_node)
+	return new_node
 
 func _open_message_screen() -> void:
 	get_tree().paused = true
@@ -69,20 +80,4 @@ func _flash(flash_color: Color) -> void:
 			Tween.TRANS_CUBIC, Tween.EASE_OUT)
 # warning-ignore:return_value_discarded
 	_color_rect_tween.start()
-
-func _tween_time(speed, words) -> float:
-	return pow(speed, -1) * words
-
-
-func _on_Tween_tween_all_completed():
-	print("done")
-
-
-func _on_LineTimer_timeout():
-	print("timer1")
-
-
-func _on_ScreenTimer_timeout():
-	print("timer2")
-
 
