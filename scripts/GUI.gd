@@ -19,12 +19,12 @@ signal text_displayed
 const FAST = 5.0
 const SLOW = 1.0
 
+onready var _animated_text_scene = preload("res://scenes/AnimatedText.tscn").new()
 onready var _animated_text: RichTextLabel = get_node("BorderMargin/TextMargin/AnimatedText")
 onready var _health_label: Label = get_node("TextureRect/HealthLabel")
 onready var _pain_color_rect: ColorRect = get_node("BorderMargin/PainColorRect")
 onready var _black_color_rect: ColorRect = get_node("BorderMargin/BlackColorRect")
 onready var _color_rect_tween: Tween = get_node("BorderMargin/ColorRectTween")
-onready var _animation_player: AnimationPlayer = get_node("BorderMargin/TextMargin/AnimatedText/AnimationPlayer")
 
 var _text_display_speed: int = 12 # Characers per second
 var cga_palette: Dictionary = {
@@ -35,12 +35,9 @@ var cga_palette: Dictionary = {
 
 func display_message(message: String) -> void:
 	_open_message_screen()
-	print("hello")
-	_animated_text.text = message
-	_animated_text.visible_characters = 0
+	_animated_text.new_message(message)
 	
-	
-	
+func _on_AnimatedText_text_displayed():
 	emit_signal("text_displayed")
 	_close_message_screen()
 
@@ -87,3 +84,5 @@ func _on_LineTimer_timeout():
 
 func _on_ScreenTimer_timeout():
 	print("timer2")
+
+

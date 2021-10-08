@@ -107,10 +107,9 @@ func _item_picked_up(type, value, _item: Node) -> void:
 func enemy_touched_player(_player: Node, _enemy: Node):
 	_enemy.queue_free()
 	PlayerStats.health -= 1
+	gui.damaged()
 	if PlayerStats.health < 1:
 		_death()
-	else:
-		gui.damaged()
 
 func _death():
 	gui.display_message("You have died.\nThe level will restart...")
