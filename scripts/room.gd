@@ -14,8 +14,12 @@
 # along with Hallowed Horns.  If not, see <https://www.gnu.org/licenses/>.
 extends Node2D
 
+# TODO:
+# 1) Define multiple respawn points
+
 onready var _player: KinematicBody2D = get_node("Walls/Player")
 
+var pause: bool setget set_pause
 var _saved_layers: Dictionary
 var _saved_masks: Dictionary
 
@@ -66,3 +70,9 @@ func _sc(node: Node) -> void:
 			_saved_masks[child] = child.collision_mask
 		
 		_sc(child)
+
+# pause setter
+func set_pause (is_paused: bool) -> void:
+	for entity in $Walls.get_children():
+		if entity.has_method("set_pause"):
+			entity.set_pause(is_paused)

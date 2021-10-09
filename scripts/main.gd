@@ -22,11 +22,8 @@ onready var gui = get_node("GUI")
 func _ready() -> void:
 	load_world(0)
 	
-	# Debug
-	if get_tree().is_debugging_collisions_hint() or get_tree().is_debugging_navigation_hint():
-		hide_rooms = false
-		for room in $Rooms.get_children():
-			room.modulate = Color("#7fffffff")
+#	for room in $Rooms.get_children():
+#		room.modulate = Color("#7fffffff")
 	
 	VisualServer.set_default_clear_color(Color("#ff5555"))
 
@@ -59,15 +56,16 @@ func load_world(world: int) -> void:
 		door.connect("unlocked", self, "door_unlocked")
 
 func disable_room(room: Node2D) -> void:
-	if hide_rooms:
-		room.hide()
+	room.hide()
 	room.disable_collisions()
 	set_scene_process(room, false)
+	room.set_pause(true)
 
 func enable_room(room: Node2D) -> void:
 	room.show()
 	room.enable_collisions()
 	set_scene_process(room, true)
+	room.set_pause(false)
 
 # Pauses a scene and all of its children
 func set_scene_process(node: Node, paused: bool) -> void:

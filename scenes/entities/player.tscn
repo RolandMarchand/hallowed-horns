@@ -30,4 +30,4 @@ drag_margin_right = 0.3
 drag_margin_bottom = 0.1
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-polygon = PoolVector2Array( -16, 0, 0, -8, 16, 0, 0, 8 )
+polygon = PoolVector2Array( -15, 0, 0, -8, 15, 0, 0, 8 )

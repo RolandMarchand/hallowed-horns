@@ -15,3 +15,7 @@
 extends "res://scripts/room.gd"
 
 export var id: int = 1
+
+func _ready():
+	if -1:
+		print("lmao")

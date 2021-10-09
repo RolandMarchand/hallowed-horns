@@ -33,9 +33,11 @@ func new_message(message: String):
 	visible_characters = 0
 	
 	for line in message.split("\n"):
+# warning-ignore:return_value_discarded
 		_tween.interpolate_property(self, "visible_characters",
 				visible_characters, visible_characters + line.length(), 
 				_find_transition_time(text_speed, line.length()))
+# warning-ignore:return_value_discarded
 		_tween.start()
 		yield(_tween, "tween_all_completed")
 		
@@ -47,7 +49,7 @@ func new_message(message: String):
 	
 	emit_signal("text_displayed")
 
-func _unhandled_input(event):
+func _unhandled_input(_event):
 	if Input.is_action_just_pressed("ui_accept"):
 		match _tween.playback_speed:
 			SLOW:

@@ -14,11 +14,17 @@
 # along with Hallowed Horns.  If not, see <https://www.gnu.org/licenses/>.
 extends Navigation2D
 
+# TODO:
+# 1) Free the AI when the enemy dies
+# 2) Stop relying on _physic_process() for switching states, find a new model
+# 3) Find a way to export the navigation polygon and the remotetransform2d remote path
+
 enum STATE {IDLE, PATH, CHASE}
 
 export(STATE) var _current_state: int = STATE.IDLE setget set_current_state
 export var _vision_length: float = 50 # Pixels
 export var _speed: float = 32 # Pixels / second
+export(bool) var _looping_path: bool = false
 
 onready var _is_ready: bool = true
 onready var _path_points: Array = get_node("PathPoints").get_children()
@@ -30,21 +36,26 @@ onready var _path_tween: Tween = get_node("Path2D/PathFollow2D/PathTween")
 onready var _nav_tween: Tween = get_node("Path2D/PathFollow2D/NavTween")
 onready var _timer: Timer = get_node("Timer")
 
+var pause: bool setget set_pause
 var _references_set: bool = false
-var _navigation: Navigation2D = self
 var _navigation_path: PoolVector2Array = []
 var _path_curve: Curve2D = Curve2D.new()
 var _player: KinematicBody2D
 
 func _ready() -> void:
-	var _path_points_inverted: Array = _path_points.duplicate()
-	_path_points_inverted.invert()
-	
 	# Loops all the points from PathPoints
-	for _point in _path_points:
-		_path_curve.add_point(_point.global_position)
-	for _point in _path_points_inverted:
-		_path_curve.add_point(_point.global_position)
+	for point in _path_points:
+		_path_curve.add_point(point.global_position)
+	
+	if not _looping_path: # Follow back the path
+		var _path_points_inverted: Array = _path_points.duplicate()
+		_path_points_inverted.invert()
+		
+		for point in _path_points_inverted:
+			_path_curve.add_point(point.global_position)
+		
+	else: # Goes back to the first point
+		_path_curve.add_point(_path_points[0].global_position)
 	
 # warning-ignore:return_value_discarded
 	_timer.connect("timeout", self, "_update_navigation_path")
@@ -94,8 +105,8 @@ func _move_along_path() -> void:
 
 ## Gets called by _timer
 func _update_navigation_path() -> void:
-	if _player and _navigation:
-		_navigation_path = _navigation.get_simple_path(remote_enemy.global_position,
+	if _player:
+		_navigation_path = get_simple_path(remote_enemy.global_position,
 		_player.global_position)
 		_navigation_path.remove(0)
 
@@ -122,3 +133,12 @@ func _reset_state() -> void:
 		_path_tween.stop_all()
 	# warning-ignore:return_value_discarded
 		_nav_tween.stop_all()
+
+## pause setter
+func set_pause(is_paused: bool) -> void:
+	if is_paused:
+		_nav_tween.stop_all()
+		_path_tween.stop_all()
+	else:
+		_nav_tween.start()
+		_path_tween.start()

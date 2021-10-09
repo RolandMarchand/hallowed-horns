@@ -44,6 +44,7 @@ func _on_AnimatedText_text_displayed():
 
 func _reload_AnimatedText():
 	_animated_text = _reload_node(_animated_text, _animated_text_scene)
+# warning-ignore:return_value_discarded
 	_animated_text.connect("text_displayed", self, "_on_AnimatedText_text_displayed")
 
 func _reload_node(node: Node, replacement: Resource) -> Node:
