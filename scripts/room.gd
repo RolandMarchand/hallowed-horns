@@ -18,15 +18,11 @@ extends Node2D
 # 1) Define multiple respawn points
 
 onready var _player: KinematicBody2D = get_node("Walls/Player")
+onready var _enemy_ai_dict: Dictionary = {}
 
 var pause: bool setget set_pause
 var _saved_layers: Dictionary
 var _saved_masks: Dictionary
-
-func _ready() -> void:
-	for enemy in get_tree().get_nodes_in_group("enemy_transforms"):
-		if self.is_a_parent_of(enemy):
-			enemy.set_references(_player)
 
 func enable_collisions() -> void:
 	_ec(self)

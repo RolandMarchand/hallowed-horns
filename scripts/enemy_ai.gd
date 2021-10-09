@@ -18,6 +18,7 @@ extends Navigation2D
 # 1) Free the AI when the enemy dies
 # 2) Stop relying on _physic_process() for switching states, find a new model
 # 3) Find a way to export the navigation polygon and the remotetransform2d remote path
+# 4) connect AI to body
 
 enum STATE {IDLE, PATH, CHASE}
 
@@ -116,6 +117,10 @@ func _find_transition_time(speed: float, distance: float) -> float:
 func _player_detected() -> void:
 # warning-ignore:return_value_discarded
 	set_current_state(STATE.CHASE)
+
+func _on_enemy_body_entered(player: Node, body: Node):
+	body.call_deferred("queue_free")
+	self.call_deferred("queue_free")
 
 func set_references(new_player: KinematicBody2D) -> void:
 	_player = new_player

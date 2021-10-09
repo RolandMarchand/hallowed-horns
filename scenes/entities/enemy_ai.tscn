@@ -8,7 +8,7 @@ _data = {
 }
 
 [node name="EnemyAI" type="Navigation2D" groups=[
-"enemy_transforms",
+"enemy_ais",
 ]]
 script = ExtResource( 1 )
 _vision_length = 40.0

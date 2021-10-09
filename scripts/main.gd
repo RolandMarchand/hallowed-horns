@@ -102,8 +102,7 @@ func _item_picked_up(type, value, _item: Node) -> void:
 			
 			gui.display_message("You picked up the {key} key.".format({"key": ItemDict.key_string_dict[value]}))
 
-func enemy_touched_player(_player: Node, _enemy: Node):
-	_enemy.queue_free()
+func enemy_touched_player(_player: Node, enemy: Node):
 	PlayerStats.health -= 1
 	gui.damaged()
 	if PlayerStats.health < 1:

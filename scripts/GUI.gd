@@ -19,7 +19,7 @@ signal text_displayed
 const FAST = 5.0
 const SLOW = 1.0
 
-onready var _animated_text_scene = preload("res://scenes/AnimatedText.tscn")
+onready var _animated_text_scene = preload("res://scenes/GUI/AnimatedText.tscn")
 onready var _animated_text: RichTextLabel = get_node("BorderMargin/TextMargin/AnimatedText")
 onready var _health_label: Label = get_node("TextureRect/HealthLabel")
 onready var _pain_color_rect: ColorRect = get_node("BorderMargin/PainColorRect")
