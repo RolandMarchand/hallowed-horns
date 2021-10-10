@@ -24,8 +24,7 @@ enum {IDLE, PATH, CHASE}
 
 onready var _timer: Timer = get_node("Timer")
 onready var _navigation = self
-
-var player: KinematicBody2D
+onready var player: KinematicBody2D = _get_player()
 var _movement_preload: Resource = preload("res://scenes/entities/enemy/enemy_movement.tscn")
 var path_of: Dictionary = {}
 var enemy_array: Array = []
@@ -36,7 +35,6 @@ func _ready() -> void:
 	_record_path_curves()
 	_timer.connect("timeout", self, "_update_navigation_path")
 	
-	yield(get_parent(), "ready")
 	_record_enemies()
 	for enemy in enemy_array:
 		change_state(enemy)
@@ -125,34 +123,45 @@ func _chase(enemy: Node) -> void:
 ## Gets called by _timer
 func _update_navigation_path() -> void:
 	for enemy in enemy_array:
-		var navigation_path := PoolVector2Array(get_simple_path(enemy.global_position,
-				player.global_position))
+		var navigation_path = get_simple_path(enemy.global_position,
+				player.global_position)
 		navigation_path.remove(0)
 			
 		enemy.navigation_path = navigation_path
 
-
+# THERE ARE NO CURVES
 func _move_along_path(enemy: Node) -> void:
 	var path = path_of[enemy]
+	var curve = path.curve
+	print(curve.get_baked_points())
 	#enemy.global_position = global_position
 	
 # warning-ignore:return_value_discarded
-	path.tween.interpolate_property(path.follow, "unit_offset", 0, 1,
-	_find_transition_time(enemy.speed, path.get_baked_length()))
-	
-# warning-ignore:return_value_discarded
-	path.tween.start()
-	yield(path.tween, "tween_all_completed")
-	
-	change_state(enemy)
+	path.follow.unit_offset = 0.5
+#	path.tween.interpolate_property(path.follow, "unit_offset", 0, 1,
+#	_find_transition_time(enemy.speed, path.curve.get_baked_length()))
+#
+## warning-ignore:return_value_discarded
+#	path.tween.start()
+#	yield(path.tween, "tween_all_completed")
+#
+#	change_state(enemy)
 
 
 func _find_transition_time(speed: float, distance: float) -> float:
 	return pow(speed, -1) * distance
 
-func _enemy_spotted_player(enemy: Node, player: Node) -> void:
+func _enemy_spotted_player(enemy: Node, current_player: Node) -> void:
 # warning-ignore:return_value_discarded
-	pass#set_current_state(STATE.CHASE)
+	enemy.state = CHASE
+	change_state(enemy)
+
+func _get_player() -> Node:
+	for current_player in get_tree().get_nodes_in_group("player"):
+		if get_parent().is_a_parent_of(current_player):
+			return current_player
+	
+	return null
 
 #func _on_enemy_body_entered(player: Node, body: Node):
 #	body.call_deferred("queue_free")
