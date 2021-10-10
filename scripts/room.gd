@@ -24,6 +24,11 @@ var pause: bool setget set_pause
 var _saved_layers: Dictionary
 var _saved_masks: Dictionary
 
+func _ready() -> void:
+	for ai in get_tree().get_nodes_in_group("enemy_ais"):
+		if self.is_a_parent_of(ai):
+			ai.player = _player
+
 func enable_collisions() -> void:
 	_ec(self)
 func _ec(node) -> void:

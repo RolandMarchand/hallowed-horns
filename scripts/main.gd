@@ -47,9 +47,6 @@ func load_world(world: int) -> void:
 	for item in get_tree().get_nodes_in_group("items"):
 		item.connect("picked_up", self, "_item_picked_up", [item])
 	
-	for enemy in get_tree().get_nodes_in_group("enemies"):
-		enemy.connect("body_entered", self, "enemy_touched_player", [enemy])
-	
 	for door in get_tree().get_nodes_in_group("doors"):
 		door.connect("change_room", self, "change_room")
 		door.connect("locked", self, "door_locked")

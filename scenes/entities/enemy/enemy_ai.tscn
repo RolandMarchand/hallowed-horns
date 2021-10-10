@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://scripts/enemy_ai.gd" type="Script" id=1]
+
+[node name="EnemyAI" type="Navigation2D" groups=[
+"enemy_ais",
+]]
+script = ExtResource( 1 )
+
+[node name="NavigationPolygonInstance" type="NavigationPolygonInstance" parent="."]
+visible = false
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.1
+autostart = true

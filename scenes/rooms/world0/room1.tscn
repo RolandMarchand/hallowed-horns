@@ -1,12 +1,11 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://scenes/rooms/room_template.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scripts/room1.gd" type="Script" id=2]
 [ext_resource path="res://scenes/entities/door.tscn" type="PackedScene" id=3]
-[ext_resource path="res://scenes/entities/enemy_body.tscn" type="PackedScene" id=4]
+[ext_resource path="res://scenes/entities/enemy/enemy_body.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scenes/entities/key.tscn" type="PackedScene" id=5]
-[ext_resource path="res://scenes/entities/enemy_ai.tscn" type="PackedScene" id=6]
-[ext_resource path="res://scenes/rooms/world0/room1_path.tres" type="NavigationPolygon" id=7]
+[ext_resource path="res://scenes/entities/enemy/enemy_ai.tscn" type="PackedScene" id=6]
 
 [node name="Room1" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
@@ -27,60 +26,13 @@ position = Vector2( 64, -112 )
 leads_to = 0
 is_locked = true
 
-[node name="Key" parent="Walls" index="2" instance=ExtResource( 5 )]
+[node name="EnemyBody" parent="Walls" index="2" instance=ExtResource( 4 )]
+
+[node name="EnemyAI" parent="Walls" index="3" instance=ExtResource( 6 )]
+
+[node name="Key" parent="Walls" index="4" instance=ExtResource( 5 )]
 position = Vector2( -328, -136 )
 scale = Vector2( 0.249991, 0.249991 )
 
-[node name="Player" parent="Walls" index="3"]
+[node name="Player" parent="Walls" index="5"]
 position = Vector2( -24, 60 )
-
-[node name="Enemy" parent="Walls" index="4" instance=ExtResource( 4 )]
-position = Vector2( -56, -56 )
-
-[node name="EnemyAI" parent="Walls" index="5" instance=ExtResource( 6 )]
-_current_state = 1
-_speed = 32.0
-_looping_path = true
-
-[node name="NavigationPolygonInstance" parent="Walls/EnemyAI" index="0"]
-navpoly = ExtResource( 7 )
-
-[node name="RemoteEnemy" parent="Walls/EnemyAI/Path2D/PathFollow2D" index="0"]
-position = Vector2( -56, -56 )
-remote_path = NodePath("../../../../Enemy")
-
-[node name="Position2D" parent="Walls/EnemyAI/PathPoints" index="0"]
-position = Vector2( 122, -78 )
-
-[node name="Position2D2" parent="Walls/EnemyAI/PathPoints" index="1"]
-position = Vector2( -142, 54 )
-
-[node name="Enemy2" parent="Walls" index="6" instance=ExtResource( 4 )]
-position = Vector2( -56, -60 )
-
-[node name="EnemyAI2" parent="Walls" index="7" instance=ExtResource( 6 )]
-_current_state = 1
-_speed = 32.0
-_looping_path = true
-
-[node name="NavigationPolygonInstance" parent="Walls/EnemyAI2" index="0"]
-navpoly = ExtResource( 7 )
-
-[node name="RemoteEnemy" parent="Walls/EnemyAI2/Path2D/PathFollow2D" index="0"]
-position = Vector2( -56, -60 )
-remote_path = NodePath("../../../../Enemy2")
-
-[node name="Position2D" parent="Walls/EnemyAI2/PathPoints" index="0"]
-position = Vector2( -278, -126 )
-
-[node name="Position2D2" parent="Walls/EnemyAI2/PathPoints" index="1"]
-position = Vector2( -278, -30 )
-
-[node name="Position2D3" type="Position2D" parent="Walls/EnemyAI2/PathPoints" index="2"]
-position = Vector2( -166, -30 )
-
-[node name="Position2D4" type="Position2D" parent="Walls/EnemyAI2/PathPoints" index="3"]
-position = Vector2( -166, -126 )
-
-[editable path="Walls/EnemyAI"]
-[editable path="Walls/EnemyAI2"]
