@@ -35,7 +35,7 @@ state = 1
 position = Vector2( -38, -14 )
 
 [node name="Position2D2" parent="Walls/EnemyBody/Points" index="1"]
-position = Vector2( 2, 18 )
+position = Vector2( -134, 34 )
 
 [node name="EnemyAI" parent="Walls" index="3" instance=ExtResource( 6 )]
 

@@ -51,6 +51,9 @@ func load_world(world: int) -> void:
 		door.connect("change_room", self, "change_room")
 		door.connect("locked", self, "door_locked")
 		door.connect("unlocked", self, "door_unlocked")
+	
+	for enemy in get_tree().get_nodes_in_group("enemy_ais"):
+		enemy.connect("enemy_touched_player", self, "enemy_touched_player")
 
 func disable_room(room: Node2D) -> void:
 	room.hide()
@@ -99,7 +102,7 @@ func _item_picked_up(type, value, _item: Node) -> void:
 			
 			gui.display_message("You picked up the {key} key.".format({"key": ItemDict.key_string_dict[value]}))
 
-func enemy_touched_player(_player: Node, enemy: Node):
+func enemy_touched_player():
 	PlayerStats.health -= 1
 	gui.damaged()
 	if PlayerStats.health < 1:

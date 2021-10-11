@@ -14,6 +14,8 @@
 # along with Hallowed Horns.  If not, see <https://www.gnu.org/licenses/>.
 extends Navigation2D
 
+signal enemy_touched_player
+
 # TODO:
 # 1) Free the AI when the enemy dies
 # 2) Stop relying on _physic_process() for switching states, find a new model
@@ -31,11 +33,11 @@ var enemy_array: Array = []
 var navigation: Navigation2D = self
 
 func _ready() -> void:
-	_update_navigation_path()
-	_record_path_curves()
 	_timer.connect("timeout", self, "_update_navigation_path")
 	
 	_record_enemies()
+	_update_navigation_path()
+	_record_path_curves()
 	for enemy in enemy_array:
 		change_state(enemy)
 
@@ -50,46 +52,29 @@ func _record_enemies() -> void:
 			path_of[enemy] = movement
 			
 			enemy.connect("player_detected", self, "_enemy_spotted_player")
+			enemy.connect("body_entered", self, "_enemy_touched_player", [enemy])
+			
+			movement.remote_enemy.remote_path = enemy.get_path()
+			
+			enemy.player = player
 
-#
-#
-#export(STATE) var _current_state: int = STATE.IDLE setget set_current_state
-#export var _vision_length: float = 50 # Pixels
-#export var _speed: float = 32 # Pixels / second
-#export(bool) var _looping_path: bool = false
-#
-#onready var _is_ready: bool = true
-#onready var _path_points: Array = get_node("PathPoints").get_children()
-#onready var _vision_ray: RayCast2D = get_node("Path2D/PathFollow2D/RemoteEnemy/RayCast2D")
-#onready var remote_enemy: RemoteTransform2D = get_node("Path2D/PathFollow2D/RemoteEnemy")
-#onready var _path: Path2D = get_node("Path2D")
-#onready var _path_follow: PathFollow2D = get_node("Path2D/PathFollow2D")
-#onready var _path_tween: Tween = get_node("Path2D/PathFollow2D/PathTween")
-#onready var _nav_tween: Tween = get_node("Path2D/PathFollow2D/NavTween")
-#onready var _timer: Timer = get_node("Timer")
-#
-#var pause: bool setget set_pause
-#var _references_set: bool = false
-#var _navigation_path: PoolVector2Array = []
-#var _path_curve: Curve2D = Curve2D.new()
-#
 func _record_path_curves() -> void:
 	for enemy in enemy_array:
 		var path_points = enemy.get_points()
 		var path: Curve2D = Curve2D.new()
 		
 		for point in path_points:
-			path.path_curve.add_point(point.global_position)
+			path.add_point(point.global_position)
 		
 		if enemy.loop_path: # Goes back to the first point
-			path.path_curve.add_point(path_points[0].global_position)
+			path.add_point(path_points[0].global_position)
 			
 		else: # Follows back the path
-			var path_points_inverted: Array = path.path_curve.duplicate()
+			var path_points_inverted: PoolVector2Array = path.get_baked_points()
 			path_points_inverted.invert()
 			
 			for point in path_points_inverted:
-				path.path_curve.add_point(point.global_position)
+				path.add_point(point)#.global_position)
 		
 		path_of[enemy].curve = path
 
@@ -129,24 +114,17 @@ func _update_navigation_path() -> void:
 			
 		enemy.navigation_path = navigation_path
 
-# THERE ARE NO CURVES
 func _move_along_path(enemy: Node) -> void:
 	var path = path_of[enemy]
-	var curve = path.curve
-	print(curve.get_baked_points())
-	#enemy.global_position = global_position
+	
+	path.tween.interpolate_property(path.follow, "unit_offset", 0, 1,
+	_find_transition_time(enemy.speed, path.curve.get_baked_length()))
 	
 # warning-ignore:return_value_discarded
-	path.follow.unit_offset = 0.5
-#	path.tween.interpolate_property(path.follow, "unit_offset", 0, 1,
-#	_find_transition_time(enemy.speed, path.curve.get_baked_length()))
-#
-## warning-ignore:return_value_discarded
-#	path.tween.start()
-#	yield(path.tween, "tween_all_completed")
-#
-#	change_state(enemy)
-
+	path.tween.start()
+	yield(path.tween, "tween_all_completed")
+	
+	change_state(enemy)
 
 func _find_transition_time(speed: float, distance: float) -> float:
 	return pow(speed, -1) * distance
@@ -154,7 +132,15 @@ func _find_transition_time(speed: float, distance: float) -> float:
 func _enemy_spotted_player(enemy: Node, current_player: Node) -> void:
 # warning-ignore:return_value_discarded
 	enemy.state = CHASE
+	path_of[enemy].tween.stop_all()
 	change_state(enemy)
+
+func _enemy_touched_player(_player: Node, enemy: Node) -> void:
+	enemy_array.erase(enemy)
+	enemy.call_deferred("queue_free")
+	path_of[enemy].call_deferred("queue_free")
+	
+	emit_signal("enemy_touched_player")
 
 func _get_player() -> Node:
 	for current_player in get_tree().get_nodes_in_group("player"):
@@ -163,27 +149,6 @@ func _get_player() -> Node:
 	
 	return null
 
-#func _on_enemy_body_entered(player: Node, body: Node):
-#	body.call_deferred("queue_free")
-#	self.call_deferred("queue_free")
-#
-#func set_references(new_player: KinematicBody2D) -> void:
-#	_player = new_player
-#	_references_set = true
-#
-### _current_state setter
-#func set_current_state(new_state: int) -> void:
-#	_reset_state()
-#	_current_state = new_state
-#
-#func _reset_state() -> void:
-#	if _references_set:
-#		_navigation_path = []
-#	# warning-ignore:return_value_discarded
-#		_path_tween.stop_all()
-#	# warning-ignore:return_value_discarded
-#		_nav_tween.stop_all()
-#
 ### pause setter
 #func set_pause(is_paused: bool) -> void:
 #	if is_paused:
@@ -192,6 +157,3 @@ func _get_player() -> Node:
 #	else:
 #		_nav_tween.start()
 #		_path_tween.start()
-#
-#func get_enemy_body_node() -> Node:
-#	return get_node(remote_enemy.remote_path)
