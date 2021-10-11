@@ -8,3 +8,4 @@
 script = ExtResource( 1 )
 
 [node name="NavigationPolygonInstance" type="NavigationPolygonInstance" parent="."]
+visible = false

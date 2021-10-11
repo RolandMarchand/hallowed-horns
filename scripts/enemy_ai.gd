@@ -50,6 +50,7 @@ func _record_enemies() -> void:
 	for enemy in get_tree().get_nodes_in_group("enemies"):
 		if get_parent().is_a_parent_of(enemy):
 			var movement = _movement_preload.instance()
+			var enemy_global_pos = enemy.global_position
 			add_child(movement)
 			
 			enemy_array.append(enemy)
@@ -59,9 +60,16 @@ func _record_enemies() -> void:
 			enemy.connect("player_detected", self, "_enemy_spotted_player")
 			enemy.connect("body_entered", self, "_enemy_touched_player", [enemy])
 			
+			# BIG BUG, This line sets enemy.global_position and
+			# movement.remote_enemy.global_position to (0,0)
 			movement.remote_enemy.remote_path = enemy.get_path()
 			
+			# Little hack for the bug, but does not display the path correctly
+			movement.remote_enemy.global_position = enemy_global_pos
+			print(movement.remote_enemy.global_position)
+			
 			enemy.player = player
+
 
 func _record_path_curves() -> void:
 	for enemy in enemy_array:
@@ -70,7 +78,6 @@ func _record_path_curves() -> void:
 		
 		for point in path_points:
 			path.add_point(point.global_position)
-			print(point.global_position)
 		
 		if enemy.loop_path: # Goes back to the first point
 			path.add_point(path_points[0].global_position)
