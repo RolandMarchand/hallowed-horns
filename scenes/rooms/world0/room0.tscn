@@ -21,8 +21,16 @@ tile_data = PoolIntArray( -65539, 0, 1, -65538, 0, 1, -65537, 0, 1, -131072, 0, 
 position = Vector2( -32, 7.99999 )
 
 [node name="Key" parent="Walls" index="1" instance=ExtResource( 3 )]
+collision_layer = 1
+collision_mask = 1
 
 [node name="Door" parent="Walls" index="2" instance=ExtResource( 4 )]
 position = Vector2( -64, -48 )
 scale = Vector2( -1, 1 )
+leads_to_room = 1
 is_locked = true
+
+[node name="Respawn" parent="Walls/Door" index="3"]
+position = Vector2( -32, 16 )
+
+[editable path="Walls/Door"]

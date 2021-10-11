@@ -17,7 +17,7 @@ extends KinematicBody2D
 export(int, FLAGS, "Walls", "Player", "Entities", "Doors") var _protected_layers = 0 setget ,get_protected_layers
 export(int, FLAGS, "Walls", "Player", "Entities", "Doors") var _protected_masks = 0 setget ,get_protected_masks
 
-export var _speed = 32 # Pixels/second.
+export var _speed = 64 # Pixels/second.
 
 func _physics_process(_delta: float) -> void:
 	var _motion = Vector2()

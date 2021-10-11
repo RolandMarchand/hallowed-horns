@@ -18,7 +18,9 @@ var loaded_rooms: Array = []
 
 # {level : room}
 var global_world := {
-	0: ["res://scenes/rooms/world0/room0.tscn", "res://scenes/rooms/world0/room1.tscn"]
+	0: ["res://scenes/rooms/world0/room0.tscn",
+			"res://scenes/rooms/world0/room1.tscn",
+			"res://scenes/rooms/world0/room2.tscn",]
 }
 
 func _ready() -> void:

@@ -15,6 +15,8 @@ script = ExtResource( 1 )
 rotate = false
 
 [node name="RemoteEnemy" type="RemoteTransform2D" parent="PathFollow2D"]
+update_rotation = false
+update_scale = false
 __meta__ = {
 "_edit_group_": true
 }

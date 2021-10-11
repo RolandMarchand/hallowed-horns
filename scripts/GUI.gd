@@ -33,11 +33,28 @@ var cga_palette: Dictionary = {
 		"yellow": Color("#ffff55")
 		}
 
+# Huge mess about fading in and out
+
 func display_message(message: String) -> void:
 	_open_message_screen()
 	_animated_text.new_message(message)
+
+func fades_in() -> void:
+	get_tree().paused = true
+	_color_rect_tween.interpolate_property(_black_color_rect, "color",
+			Color("#00000000"), Color("#000000"), 0.5, Tween.TRANS_QUINT, Tween.EASE_IN)
+	_color_rect_tween.start()
+	yield(_color_rect_tween, "tween_all_completed")
+	emit_signal("text_displayed")
+
+func fades_out() -> void:
+	_color_rect_tween.interpolate_property(_black_color_rect, "color",
+			Color("#000000"), Color("#00000000"), 0.5, Tween.TRANS_QUINT, Tween.EASE_OUT)
+	_color_rect_tween.start()
 	
-func _on_AnimatedText_text_displayed():
+	get_tree().paused = false
+
+func _on_AnimatedText_text_displayed() -> void:
 	emit_signal("text_displayed")
 	_reload_AnimatedText()
 	_close_message_screen()
@@ -58,26 +75,30 @@ func _reload_node(node: Node, replacement: Resource) -> Node:
 	return new_node
 
 func _open_message_screen() -> void:
-	get_tree().paused = true
+	_color_rect_tween.interpolate_property(_black_color_rect, "color",
+			Color("#00000000"), Color("#000000"), 0.5, Tween.TRANS_QUINT, Tween.EASE_IN)
+	_color_rect_tween.start()
 	_animated_text.show()
-	_black_color_rect.show()
+	get_tree().paused = true
 
 func _close_message_screen() -> void:
-	_black_color_rect.hide()
+	_color_rect_tween.interpolate_property(_black_color_rect, "color",
+			Color("#000000"), Color("#00000000"), 0.5, Tween.TRANS_QUINT, Tween.EASE_OUT)
+	_color_rect_tween.start()
 	_animated_text.hide()
 	get_tree().paused = false
 
 func damaged() -> void:
 	_health_label.text = str(PlayerStats.health)
-	_flash(cga_palette["red"])
+	_flash(cga_palette["red"], 2)
 
-func _flash(flash_color: Color) -> void:
+func _flash(flash_color: Color, time: float) -> void:
 	var flash_color_alpha: Color = flash_color
 	flash_color_alpha.a = 0
 	
 	# warning-ignore:return_value_discarded
 	_color_rect_tween.interpolate_property(_pain_color_rect, "color",
-			flash_color, flash_color_alpha, 2,
+			flash_color, flash_color_alpha, time,
 			Tween.TRANS_CUBIC, Tween.EASE_OUT)
 # warning-ignore:return_value_discarded
 	_color_rect_tween.start()

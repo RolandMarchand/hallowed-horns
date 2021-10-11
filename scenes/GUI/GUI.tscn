@@ -62,12 +62,11 @@ __meta__ = {
 }
 
 [node name="BlackColorRect" type="ColorRect" parent="BorderMargin"]
-visible = false
 margin_left = 32.0
 margin_top = 16.0
 margin_right = 288.0
 margin_bottom = 144.0
-color = Color( 0, 0, 0, 1 )
+color = Color( 0, 0, 0, 0 )
 __meta__ = {
 "_edit_use_anchors_": false
 }

@@ -17,6 +17,7 @@ extends Node2D
 # TODO:
 # 1) Define multiple respawn points
 
+export(int) var id: int
 onready var _player: KinematicBody2D = get_node("Walls/Player")
 onready var _enemy_ai_dict: Dictionary = {}
 
@@ -28,6 +29,9 @@ func _ready() -> void:
 	for ai in get_tree().get_nodes_in_group("enemy_ai"):
 		if self.is_a_parent_of(ai):
 			ai.player = _player
+
+func spawn(door: Area2D):
+	_player.global_position = door.spawn_point
 
 func enable_collisions() -> void:
 	_ec(self)

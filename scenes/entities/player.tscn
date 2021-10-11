@@ -13,8 +13,6 @@ script = ExtResource( 1 )
 __meta__ = {
 "_edit_group_": true
 }
-_protected_masks = 8
-_speed = 64
 
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( 1.35525e-20, -12.0004 )

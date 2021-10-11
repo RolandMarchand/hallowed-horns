@@ -70,7 +70,6 @@ func _record_enemies() -> void:
 			
 			enemy.player = player
 
-
 func _record_path_curves() -> void:
 	for enemy in enemy_array:
 		var path_points = enemy.get_points()

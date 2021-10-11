@@ -13,5 +13,3 @@
 # You should have received a copy of the GNU General Public License
 # along with Hallowed Horns.  If not, see <https://www.gnu.org/licenses/>.
 extends "res://scripts/room.gd"
-
-export var id: int = 0
