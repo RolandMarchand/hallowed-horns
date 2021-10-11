@@ -52,7 +52,7 @@ func load_world(world: int) -> void:
 		door.connect("locked", self, "door_locked")
 		door.connect("unlocked", self, "door_unlocked")
 	
-	for enemy in get_tree().get_nodes_in_group("enemy_ais"):
+	for enemy in get_tree().get_nodes_in_group("enemy_ai"):
 		enemy.connect("enemy_touched_player", self, "enemy_touched_player")
 
 func disable_room(room: Node2D) -> void:

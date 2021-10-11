@@ -25,7 +25,7 @@ var _saved_layers: Dictionary
 var _saved_masks: Dictionary
 
 func _ready() -> void:
-	for ai in get_tree().get_nodes_in_group("enemy_ais"):
+	for ai in get_tree().get_nodes_in_group("enemy_ai"):
 		if self.is_a_parent_of(ai):
 			ai.player = _player
 

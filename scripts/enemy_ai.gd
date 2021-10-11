@@ -16,33 +16,38 @@ extends Navigation2D
 
 signal enemy_touched_player
 
-# TODO:
-# 1) Free the AI when the enemy dies
-# 2) Stop relying on _physic_process() for switching states, find a new model
-# 3) Find a way to export the navigation polygon and the remotetransform2d remote path
-# 4) connect AI to body
-# 5) Make so we only need 1 AI to control all the enemies
 enum {IDLE, PATH, CHASE}
 
-onready var _timer: Timer = get_node("Timer")
+export(float) var _nav_poly_update_time: float = 0.1
+
 onready var _navigation = self
 onready var player: KinematicBody2D = _get_player()
+
+var _timer: Timer = Timer.new()
 var _movement_preload: Resource = preload("res://scenes/entities/enemy/enemy_movement.tscn")
+
 var path_of: Dictionary = {}
 var enemy_array: Array = []
 var navigation: Navigation2D = self
 
 func _ready() -> void:
-	_timer.connect("timeout", self, "_update_navigation_path")
-	
+	_setup_timer()
 	_record_enemies()
 	_update_navigation_path()
 	_record_path_curves()
 	for enemy in enemy_array:
 		change_state(enemy)
 
+func _setup_timer() -> void:
+	_timer.autostart = true
+	_timer.wait_time = _nav_poly_update_time
+	_timer.one_shot = false
+# warning-ignore:return_value_discarded
+	_timer.connect("timeout", self, "_update_navigation_path")
+	add_child(_timer)
+
 func _record_enemies() -> void:
-	for enemy in get_tree().get_nodes_in_group("enemy_bodies"):
+	for enemy in get_tree().get_nodes_in_group("enemies"):
 		if get_parent().is_a_parent_of(enemy):
 			var movement = _movement_preload.instance()
 			add_child(movement)
@@ -65,6 +70,7 @@ func _record_path_curves() -> void:
 		
 		for point in path_points:
 			path.add_point(point.global_position)
+			print(point.global_position)
 		
 		if enemy.loop_path: # Goes back to the first point
 			path.add_point(path_points[0].global_position)
@@ -116,6 +122,7 @@ func _update_navigation_path() -> void:
 
 func _move_along_path(enemy: Node) -> void:
 	var path = path_of[enemy]
+	print(path.global_position, enemy.global_position)
 	
 	path.tween.interpolate_property(path.follow, "unit_offset", 0, 1,
 	_find_transition_time(enemy.speed, path.curve.get_baked_length()))
@@ -129,7 +136,7 @@ func _move_along_path(enemy: Node) -> void:
 func _find_transition_time(speed: float, distance: float) -> float:
 	return pow(speed, -1) * distance
 
-func _enemy_spotted_player(enemy: Node, current_player: Node) -> void:
+func _enemy_spotted_player(enemy: Node, _current_player: Node) -> void:
 # warning-ignore:return_value_discarded
 	enemy.state = CHASE
 	path_of[enemy].tween.stop_all()
@@ -149,11 +156,13 @@ func _get_player() -> Node:
 	
 	return null
 
-### pause setter
-#func set_pause(is_paused: bool) -> void:
-#	if is_paused:
-#		_nav_tween.stop_all()
-#		_path_tween.stop_all()
-#	else:
-#		_nav_tween.start()
-#		_path_tween.start()
+## pause setter
+func set_pause(is_paused: bool) -> void:
+	if is_paused:
+		for enemy in enemy_array:
+			path_of[enemy].tween.stop_all()
+			enemy.tween.stop_all()
+	else:
+		for enemy in enemy_array:
+			path_of[enemy].tween.resume_all()
+			enemy.tween.resume_all()
