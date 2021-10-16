@@ -15,7 +15,6 @@
 extends Node
 
 enum TYPE {KEY}
-
 enum KEY {BRONZE = 1, SILVER = 2, GOLDEN = 4}
 
 var key_string_dict: Dictionary = {1: "bronze", 2: "silver", 4: "golden"}

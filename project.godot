@@ -8,6 +8,16 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "Reference",
+"class": "Attack",
+"language": "GDScript",
+"path": "res://Attack.gd"
+} ]
+_global_script_class_icons={
+"Attack": ""
+}
+
 [application]
 
 config/name="Hallowed Horns"
