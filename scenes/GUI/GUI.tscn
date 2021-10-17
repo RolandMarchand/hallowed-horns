@@ -85,4 +85,14 @@ custom_constants/margin_bottom = 10
 
 [node name="AnimatedText" parent="BorderMargin/TextMargin" instance=ExtResource( 3 )]
 
+[node name="TextEdit" type="TextEdit" parent="BorderMargin/TextMargin"]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 246.0
+margin_bottom = 118.0
+custom_constants/completion_lines = 10
+custom_constants/completion_max_width = 10
+custom_constants/completion_scroll_width = 10
+text = "This is a test"
+
 [connection signal="text_displayed" from="BorderMargin/TextMargin/AnimatedText" to="." method="_on_AnimatedText_text_displayed"]

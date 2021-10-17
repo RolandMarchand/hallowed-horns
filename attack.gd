@@ -12,27 +12,17 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Hallowed Horns.  If not, see <https://www.gnu.org/licenses/>.
-class_name Attack
+class_name Attack#, "res://assets/attack_class_icon.svg"
 
 var enabled: bool = false
 var required_items: PoolIntArray
 var key_combination: PoolIntArray
 var damage: int
+var attack_name: String
 
-# warning-ignore:shadowed_variable
-# warning-ignore:shadowed_variable
-# warning-ignore:shadowed_variable
-# warning-ignore:shadowed_variable
-func _init(enabled: bool, required_items: PoolIntArray, key_combination: PoolIntArray, damage: int):
-	self.enabled = enabled
-	self.required_items = required_items
-	self.key_combination = key_combination
-	self.damage = damage
-
-## Returns false if item_list doesn't have all the values of required_items
+## Returns false if item_list doesn't have all the values in required_items
 func has_required_items(item_list: Array) -> bool:
 	for required in required_items:
 		if not item_list.has(required):
 			return false
-	
 	return true

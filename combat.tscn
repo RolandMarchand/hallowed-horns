@@ -1,9 +1,35 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://combat.gd" type="Script" id=1]
+[ext_resource path="res://assets/troll.png" type="Texture" id=2]
+[ext_resource path="res://enemy_hurt.tres" type="Animation" id=3]
+[ext_resource path="res://player_hurt.tres" type="Animation" id=4]
 
 [node name="CanvasLayer" type="CanvasLayer"]
 script = ExtResource( 1 )
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.701961, 0.0862745, 0.0862745, 0 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -30.5
+margin_top = -66.998
+margin_right = 30.5
+margin_bottom = 4.00195
+texture = ExtResource( 2 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 anchor_right = 1.0
@@ -185,3 +211,58 @@ align = 1
 [node name="AttackTimer" type="Timer" parent="."]
 wait_time = 3.0
 autostart = true
+__meta__ = {
+"_editor_description_": ""
+}
+
+[node name="StunnedTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+__meta__ = {
+"_editor_description_": ""
+}
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/enemy_hurt = ExtResource( 3 )
+anims/player_hurt = ExtResource( 4 )
+
+[node name="GameOver" type="MarginContainer" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/margin_right = 10
+custom_constants/margin_top = 10
+custom_constants/margin_left = 10
+custom_constants/margin_bottom = 10
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CenterContainer" type="CenterContainer" parent="GameOver"]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 310.0
+margin_bottom = 182.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GameOver/CenterContainer"]
+margin_left = 123.0
+margin_top = 67.0
+margin_right = 176.0
+margin_bottom = 105.0
+
+[node name="Label" type="Label" parent="GameOver/CenterContainer/VBoxContainer"]
+margin_right = 53.0
+margin_bottom = 14.0
+text = "You win!"
+
+[node name="Button" type="Button" parent="GameOver/CenterContainer/VBoxContainer"]
+margin_top = 18.0
+margin_right = 53.0
+margin_bottom = 38.0
+text = "quit"
+
+[connection signal="timeout" from="AttackTimer" to="." method="_on_AttackTimer_timeout"]
+[connection signal="timeout" from="StunnedTimer" to="." method="_on_StunnedTimer_timeout"]
+[connection signal="pressed" from="GameOver/CenterContainer/VBoxContainer/Button" to="." method="_on_Button_pressed"]

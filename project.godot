@@ -12,7 +12,7 @@ _global_script_classes=[ {
 "base": "Reference",
 "class": "Attack",
 "language": "GDScript",
-"path": "res://Attack.gd"
+"path": "res://attack.gd"
 } ]
 _global_script_class_icons={
 "Attack": ""
@@ -33,6 +33,7 @@ config/icon="res://assets/icon.png"
 GlobalWorld="*res://scripts/world.gd"
 ItemDict="*res://scripts/item_dictionary.gd"
 PlayerStats="*res://scripts/player_stats.gd"
+Moves="*res://moves.gd"
 
 [display]
 

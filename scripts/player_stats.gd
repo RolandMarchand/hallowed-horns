@@ -14,7 +14,7 @@
 # along with Hallowed Horns.  If not, see <https://www.gnu.org/licenses/>.
 extends Node
 
-var health: int = 3
+var health: int = 18
 var _keyring: int = 0
 
 ## Works on a 1, 2, 4 system like Unix permissions
