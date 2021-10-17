@@ -19,5 +19,7 @@ class Goblin extends Enemy:
 		attack_speed = 1
 		damage = 1
 		health = 18
+		
+		texture = "res://assets/troll.png"
 		vision_length = 50 # Overriden by the enemy's local vision length
 		walk_speed = 32 # Overriden by the enemy's local speed

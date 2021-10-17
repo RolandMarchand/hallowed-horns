@@ -24,6 +24,7 @@ const ENEMY_MAX_HEALTH := 18
 
 onready var time_bar: ProgressBar = $MarginContainer/VBoxContainer/HBoxContainer3/ProgressBar
 onready var attack_timer: Timer = $AttackTimer
+onready var texture_rect: TextureRect = $TextureRect
 onready var stunned_timer: Timer = $StunnedTimer
 onready var buffer_label: Label = $MarginContainer/VBoxContainer/HBoxContainer4/VBoxContainer/Label2
 onready var next_attack_label: Label = $MarginContainer/VBoxContainer/HBoxContainer4/VBoxContainer2/Label2
@@ -41,6 +42,8 @@ enum {PLAYER, ENEMY}
 var punch: Object = MoveLexicon.Punch.new()
 var kick: Object = MoveLexicon.Kick.new()
 
+var enemy: Object
+
 var attack_array: Array = [punch, kick]
 var next_attack: int
 
@@ -49,12 +52,11 @@ var array_pos: int
 
 var stunned: bool # Does not record wrong key presses while stunned
 
-var enemy_health: int = ENEMY_MAX_HEALTH
-var enemy_damage: int = 1
-
 func _ready():
 	randomize()
 	_new_attack()
+	
+	#texture_rect.texture = 
 	
 	enemy_health_bar.max_value = enemy_health
 	enemy_health_bar.value = enemy_health_bar.max_value

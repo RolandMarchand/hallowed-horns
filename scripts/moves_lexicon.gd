@@ -20,7 +20,7 @@ class Punch extends Attack:
 		required_items = []
 		key_combination = [KEY_W, KEY_A, KEY_S, KEY_D]
 		damage = 1
-		attack_name = "Punch"
+		object_name = "Punch"
 
 class Kick extends Attack:
 	func _init():
@@ -28,4 +28,4 @@ class Kick extends Attack:
 		required_items = []
 		key_combination = [KEY_I, KEY_L, KEY_K, KEY_J]
 		damage = 1
-		attack_name = "Kick"
+		object_name = "Kick"

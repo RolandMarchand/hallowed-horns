@@ -17,5 +17,7 @@ class_name Enemy
 var attack_speed: float
 var damage: int
 var health: int
+var name: String
+var texture: NodePath
 var vision_length: int # Overriden by the enemy's local vision length
 var walk_speed: float # Overriden by the enemy's local speed
