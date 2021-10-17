@@ -19,13 +19,14 @@ signal player_detected
 onready var vision_ray = $RayCast2D
 onready var tween = $Tween
 
-export(int, "Idle", "Path", "Chase") var state = 0
-export(float) var vision_length = 50
-export(float) var speed: float = 32
-export(bool) var loop_path: bool = false
-
+var stats: Object = EnemyLexicon.Goblin.new()
 var player: KinematicBody2D
 var navigation_path: PoolVector2Array = []
+
+export(int, "Idle", "Path", "Chase") var state = 0
+export(int) var vision_length: int = stats.vision_length
+export(float) var speed: float = stats.walk_speed
+export(bool) var loop_path: bool = false
 
 func _physics_process(_delta: float) -> void:
 	if player:

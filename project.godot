@@ -12,10 +12,16 @@ _global_script_classes=[ {
 "base": "Reference",
 "class": "Attack",
 "language": "GDScript",
-"path": "res://attack.gd"
+"path": "res://scripts/attack_class.gd"
+}, {
+"base": "Reference",
+"class": "Enemy",
+"language": "GDScript",
+"path": "res://scripts/enemy_class.gd"
 } ]
 _global_script_class_icons={
-"Attack": ""
+"Attack": "",
+"Enemy": ""
 }
 
 [application]
@@ -25,15 +31,16 @@ config/description="This demo shows a traditional isometric view with depth sort
 
 A character can move around the level and will also slide around objects,
 as well as be occluded when standing in front or behind them."
-run/main_scene="res://combat.tscn"
+run/main_scene="res://scenes/combat.tscn"
 config/icon="res://assets/icon.png"
 
 [autoload]
 
 GlobalWorld="*res://scripts/world.gd"
-ItemDict="*res://scripts/item_dictionary.gd"
+ItemLexicon="*res://scripts/item_lexicon.gd"
 PlayerStats="*res://scripts/player_stats.gd"
-Moves="*res://moves.gd"
+MoveLexicon="*res://scripts/moves_lexicon.gd"
+EnemyLexicon="*res://enemy_lexicon.gd"
 
 [display]
 

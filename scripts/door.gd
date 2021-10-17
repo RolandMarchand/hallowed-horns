@@ -22,7 +22,7 @@ export var leads_to_room: int
 export var leads_to_door: int
 export var id: int
 export var is_locked: bool = false
-export(ItemDict.KEY) var key_required = ItemDict.KEY.BRONZE
+export(ItemLexicon.KEY) var key_required = ItemLexicon.KEY.BRONZE
 export(int, FLAGS, "Walls", "Player", "Entities", "Doors") var _protected_layers = 0 setget ,get_protected_layers
 export(int, FLAGS, "Walls", "Player", "Entities", "Doors") var _protected_masks = 0 setget ,get_protected_masks
 

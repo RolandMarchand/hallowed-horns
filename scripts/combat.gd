@@ -14,6 +14,12 @@
 # along with Hallowed Horns.  If not, see <https://www.gnu.org/licenses/>.
 extends CanvasLayer
 
+# TODO
+# 1) Add forced randomness.
+# Make sure there cannot be the same next move more than 4 times in a row
+# 2) Make the listing of moves dynamic
+# 3) Create a dynamic enemy system
+
 const ENEMY_MAX_HEALTH := 18
 
 onready var time_bar: ProgressBar = $MarginContainer/VBoxContainer/HBoxContainer3/ProgressBar
@@ -32,8 +38,8 @@ var punch2: AudioStreamOGGVorbis = preload("res://assets/sounds/impactPunch_heav
 
 enum {PLAYER, ENEMY}
 
-var punch: Object = Moves.Punch.new()
-var kick: Object = Moves.Kick.new()
+var punch: Object = MoveLexicon.Punch.new()
+var kick: Object = MoveLexicon.Kick.new()
 
 var attack_array: Array = [punch, kick]
 var next_attack: int

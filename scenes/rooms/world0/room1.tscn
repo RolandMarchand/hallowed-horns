@@ -38,7 +38,6 @@ position = Vector2( 32, 16 )
 [node name="Enemy" parent="Walls" index="2" instance=ExtResource( 4 )]
 position = Vector2( -128, 0 )
 state = 1
-speed = 100.0
 
 [node name="Position2D" parent="Walls/Enemy/Points" index="0"]
 position = Vector2( 240, -76 )
