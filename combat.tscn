@@ -256,7 +256,7 @@ align = 1
 margin_top = 18.0
 margin_right = 148.0
 margin_bottom = 32.0
-text = "I J K L"
+text = "I L K J"
 align = 1
 
 [node name="AttackTimer" type="Timer" parent="."]

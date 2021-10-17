@@ -86,7 +86,7 @@ func _damage(actor: int, damage):
 			stream.play()
 			
 			animation_player.call_deferred("stop", true)
-			animation_player.seek(0, true)
+			#animation_player.seek(0, true)
 			animation_player.call_deferred("play", "player_hurt")
 			
 			stunned_timer.start()
@@ -105,7 +105,7 @@ func _damage(actor: int, damage):
 			stream.play()
 			
 			animation_enemy.call_deferred("stop", true)
-			animation_enemy.seek(0, true)
+			#animation_enemy.seek(0, true)
 			animation_enemy.call_deferred("play", "enemy_hurt")
 			
 			_new_attack()
