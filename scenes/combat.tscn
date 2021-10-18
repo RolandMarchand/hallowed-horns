@@ -45,15 +45,21 @@ tracks/1/keys = {
 "values": [ Vector2( 129.5, 29.002 ), Vector2( 115.641, 29.002 ), Vector2( 129.5, 29.002 ), Vector2( 143.359, 29.002 ), Vector2( 129.5, 29.002 ) ]
 }
 
-[node name="CanvasLayer" type="CanvasLayer"]
+[node name="Combat" type="CanvasLayer"]
 script = ExtResource( 2 )
 
 [node name="Control" type="Control" parent="."]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="BGRect" type="ColorRect" parent="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 1 )
 
 [node name="ColorRect" type="ColorRect" parent="Control"]
 anchor_right = 1.0

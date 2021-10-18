@@ -31,22 +31,22 @@ var text_speed = 12 # Words per second
 func new_message(message: String):
 	text = message
 	visible_characters = 0
-	
+
 	for line in message.split("\n"):
 # warning-ignore:return_value_discarded
 		_tween.interpolate_property(self, "visible_characters",
-				visible_characters, visible_characters + line.length(), 
+				visible_characters, visible_characters + line.length(),
 				_find_transition_time(text_speed, line.length()))
 # warning-ignore:return_value_discarded
 		_tween.start()
 		yield(_tween, "tween_all_completed")
-		
+
 		_line_timer.start()
 		yield(_line_timer, "timeout")
-	
+
 	_screen_timer.start()
 	yield(_screen_timer, "timeout")
-	
+
 	emit_signal("text_displayed")
 
 func _unhandled_input(_event):

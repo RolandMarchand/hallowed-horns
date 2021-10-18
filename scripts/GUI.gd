@@ -44,17 +44,31 @@ func display_message(message: String) -> void:
 
 func fades_in() -> void:
 	get_tree().paused = true
-	_color_rect_tween.interpolate_property(_black_color_rect, "color",
-			Color("#00000000"), Color("#000000"), 0.5, Tween.TRANS_QUINT, Tween.EASE_IN)
+	_color_rect_tween.interpolate_property(
+			_black_color_rect,
+			"color",
+			Color("#00000000"),
+			Color("#000000"),
+			0.5,
+			Tween.TRANS_QUINT,
+			Tween.EASE_IN
+			)
 	_color_rect_tween.start()
 	yield(_color_rect_tween, "tween_all_completed")
 	emit_signal("text_displayed")
 
 func fades_out() -> void:
-	_color_rect_tween.interpolate_property(_black_color_rect, "color",
-			Color("#000000"), Color("#00000000"), 0.5, Tween.TRANS_QUINT, Tween.EASE_OUT)
+	_color_rect_tween.interpolate_property(
+			_black_color_rect,
+			"color",
+			Color("#000000"),
+			Color("#00000000"),
+			0.5,
+			Tween.TRANS_QUINT,
+			Tween.EASE_OUT
+			)
 	_color_rect_tween.start()
-	
+
 	get_tree().paused = false
 
 func _on_AnimatedText_text_displayed() -> void:
@@ -70,9 +84,9 @@ func _reload_AnimatedText():
 func _reload_node(node: Node, replacement: Resource) -> Node:
 	var parent: Node = node.get_node("../")
 	var new_node = replacement.instance()
-	
+
 	node.queue_free()
-	
+
 	#new_animated_text.connect("text_displayed", self, "_on_AnimatedText_text_displayed")
 	parent.add_child(new_node)
 	return new_node
@@ -98,7 +112,7 @@ func damaged() -> void:
 func _flash(flash_color: Color, time: float) -> void:
 	var flash_color_alpha: Color = flash_color
 	flash_color_alpha.a = 0
-	
+
 	# warning-ignore:return_value_discarded
 	_color_rect_tween.interpolate_property(_pain_color_rect, "color",
 			flash_color, flash_color_alpha, time,

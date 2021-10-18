@@ -25,9 +25,10 @@ position = Vector2( 0, -20 )
 polygon = PoolVector2Array( -32, 20, 0, 36, 32, 20, 0, 4 )
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
-position = Vector2( 0, -12 )
+position = Vector2( 416, -64 )
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+position = Vector2( -416, 52 )
 polygon = PoolVector2Array( 0, 0, -24, 12, 0, 24, 24, 12 )
 
 [node name="Respawn" type="Position2D" parent="."]

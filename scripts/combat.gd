@@ -18,7 +18,9 @@ extends CanvasLayer
 # 1) Add forced randomness.
 # Make sure there cannot be the same next move more than 4 times in a row
 # 2) Make the listing of moves dynamic
-# 3) Create a dynamic enemy system
+# 3) Rely on tweening the time bar instead of using _physics_process
+
+signal combat_over
 
 const ENEMY_MAX_HEALTH := 18
 
@@ -55,25 +57,24 @@ var stunned: bool # Does not record wrong key presses while stunned
 
 func _ready():
 	randomize()
-	new_combat(EnemyLexicon.Goblin.new())
 
 func new_combat(new_enemy: Object):
+	$Control.show()
+
 	_new_attack()
-	
+
 	enemy = new_enemy
-	
+
 	attack_timer.wait_time = enemy.attack_speed
 	attack_timer.start()
-	
+
 	texture_rect.texture = enemy.texture
-	
+
 	enemy_health_bar.max_value = enemy.health
 	enemy_health_bar.value = enemy_health_bar.max_value
-	
+
 	player_health_bar.max_value = PlayerStats.health
 	player_health_bar.value = player_health_bar.max_value
-	
-	VisualServer.set_default_clear_color(Color.black)
 
 func _physics_process(_delta):
 	time_bar.value = attack_timer.time_left / attack_timer.wait_time * 100
@@ -84,14 +85,14 @@ func _new_attack():
 
 func _update_attack_buffer(value: int):
 	_record_move(value)
-	
+
 	if stunned and not _is_move_valid():
 		_clear_attack_buffer()
-	
+
 	if not stunned and not _is_move_valid():
 		_damage(PLAYER, enemy.damage)
 		return
-	
+
 	if attack_buffer == Array(attack_array[next_attack].key_combination):
 		_damage(ENEMY, attack_array[next_attack].damage)
 
@@ -107,66 +108,66 @@ func _record_move(move: int):
 func _damage(actor: int, damage):
 	attack_timer.start()
 	_clear_attack_buffer()
-	
+
 	match actor:
 		PLAYER:
 			PlayerStats.health -= damage
 			player_health_bar.value = PlayerStats.health
-			
+
 			stream.stream = punch1
 			stream.play()
-			
+
 			animation_player.call_deferred("stop", true)
 			#animation_player.seek(0, true)
 			animation_player.call_deferred("play", "player_hurt")
-			
+
 			stunned_timer.start()
 			stunned = true
-			
+
 			attack_timer.stop()
-			
+
 			if PlayerStats.health < 1:
 				_game_over(false)
-			
+
 		ENEMY:
 			enemy.health -= damage
 			enemy_health_bar.value = enemy.health
-			
+
 			stream.stream = punch2
 			stream.play()
-			
+
 			animation_enemy.call_deferred("stop", true)
 			#animation_enemy.seek(0, true)
 			animation_enemy.call_deferred("play", "enemy_hurt")
-			
+
 			_new_attack()
-			
+
 			if enemy.health < 1:
 				_game_over(true)
-			
+
 			attack_timer.wait_time = max(float(enemy.health) / float(ENEMY_MAX_HEALTH) * 3, 1)
 
 func _game_over(win: bool):
-	$Control/MarginContainer.hide()
-	$Control/GameOver.show()
+	emit_signal("combat_over")
+	$Control.hide()
 	attack_timer.stop()
 	stunned_timer.stop()
 	set_process_unhandled_key_input(false)
-	
+
 	if win:
-		texture_rect.flip_v = true
+		#texture_rect.flip_v = true
 		$Control/GameOver/CenterContainer/VBoxContainer/Label.text = "You Win!"
 	else:
-		VisualServer.set_default_clear_color(Color("#a31818"))
+		#$Control/BGRect.color = Color("#a31818")
 		$Control/GameOver/CenterContainer/VBoxContainer/Label.text = "You Lose!"
 
 func _is_move_valid() -> bool:
 	var valid_attack = attack_array[next_attack]
-	
+
 	if attack_buffer.size() <= valid_attack.key_combination.size():
 		if attack_buffer[array_pos] == valid_attack.key_combination[array_pos]:
 			return true
-	
+
 	return false
 
 func _unhandled_key_input(event):
