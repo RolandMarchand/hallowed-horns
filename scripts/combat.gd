@@ -22,14 +22,14 @@ extends CanvasLayer
 
 const ENEMY_MAX_HEALTH := 18
 
-onready var time_bar: ProgressBar = $MarginContainer/VBoxContainer/HBoxContainer3/ProgressBar
+onready var time_bar: ProgressBar = $Control/MarginContainer/VBoxContainer/HBoxContainer3/ProgressBar
 onready var attack_timer: Timer = $AttackTimer
-onready var texture_rect: TextureRect = $TextureRect
+onready var texture_rect: TextureRect = $Control/TextureRect
 onready var stunned_timer: Timer = $StunnedTimer
-onready var buffer_label: Label = $MarginContainer/VBoxContainer/HBoxContainer4/VBoxContainer/Label2
-onready var next_attack_label: Label = $MarginContainer/VBoxContainer/HBoxContainer4/VBoxContainer2/Label2
-onready var player_health_bar: ProgressBar = $MarginContainer/VBoxContainer/HBoxContainer2/ProgressBar
-onready var enemy_health_bar: ProgressBar = $MarginContainer/VBoxContainer/HBoxContainer/ProgressBar
+onready var buffer_label: Label = $Control/MarginContainer/VBoxContainer/HBoxContainer4/VBoxContainer/Label2
+onready var next_attack_label: Label = $Control/MarginContainer/VBoxContainer/HBoxContainer4/VBoxContainer2/Label2
+onready var player_health_bar: ProgressBar = $Control/MarginContainer/VBoxContainer/HBoxContainer2/ProgressBar
+onready var enemy_health_bar: ProgressBar = $Control/MarginContainer/VBoxContainer/HBoxContainer/ProgressBar
 onready var stream: AudioStreamPlayer = $AudioStreamPlayer
 onready var animation_player: AnimationPlayer = $AnimationPlayer
 onready var animation_enemy: AnimationPlayer = $AnimationPlayer2
@@ -41,6 +41,7 @@ enum {PLAYER, ENEMY}
 
 var punch: Object = MoveLexicon.Punch.new()
 var kick: Object = MoveLexicon.Kick.new()
+
 
 var enemy: Object
 
@@ -54,11 +55,19 @@ var stunned: bool # Does not record wrong key presses while stunned
 
 func _ready():
 	randomize()
+	new_combat(EnemyLexicon.Goblin.new())
+
+func new_combat(new_enemy: Object):
 	_new_attack()
 	
-	#texture_rect.texture = 
+	enemy = new_enemy
 	
-	enemy_health_bar.max_value = enemy_health
+	attack_timer.wait_time = enemy.attack_speed
+	attack_timer.start()
+	
+	texture_rect.texture = enemy.texture
+	
+	enemy_health_bar.max_value = enemy.health
 	enemy_health_bar.value = enemy_health_bar.max_value
 	
 	player_health_bar.max_value = PlayerStats.health
@@ -71,7 +80,7 @@ func _physics_process(_delta):
 
 func _new_attack():
 	next_attack = randi() % attack_array.size()
-	next_attack_label.text = attack_array[next_attack].attack_name
+	next_attack_label.text = attack_array[next_attack].name
 
 func _update_attack_buffer(value: int):
 	_record_move(value)
@@ -80,7 +89,7 @@ func _update_attack_buffer(value: int):
 		_clear_attack_buffer()
 	
 	if not stunned and not _is_move_valid():
-		_damage(PLAYER, enemy_damage)
+		_damage(PLAYER, enemy.damage)
 		return
 	
 	if attack_buffer == Array(attack_array[next_attack].key_combination):
@@ -120,8 +129,8 @@ func _damage(actor: int, damage):
 				_game_over(false)
 			
 		ENEMY:
-			enemy_health -= damage
-			enemy_health_bar.value = enemy_health
+			enemy.health -= damage
+			enemy_health_bar.value = enemy.health
 			
 			stream.stream = punch2
 			stream.play()
@@ -132,24 +141,24 @@ func _damage(actor: int, damage):
 			
 			_new_attack()
 			
-			if enemy_health < 1:
+			if enemy.health < 1:
 				_game_over(true)
 			
-			attack_timer.wait_time = max(float(enemy_health) / float(ENEMY_MAX_HEALTH) * 3, 1)
+			attack_timer.wait_time = max(float(enemy.health) / float(ENEMY_MAX_HEALTH) * 3, 1)
 
 func _game_over(win: bool):
-	$MarginContainer.hide()
-	$GameOver.show()
+	$Control/MarginContainer.hide()
+	$Control/GameOver.show()
 	attack_timer.stop()
 	stunned_timer.stop()
 	set_process_unhandled_key_input(false)
 	
 	if win:
-		get_node("TextureRect").flip_v = true
-		$GameOver/CenterContainer/VBoxContainer/Label.text = "You Win!"
+		texture_rect.flip_v = true
+		$Control/GameOver/CenterContainer/VBoxContainer/Label.text = "You Win!"
 	else:
 		VisualServer.set_default_clear_color(Color("#a31818"))
-		$GameOver/CenterContainer/VBoxContainer/Label.text = "You Lose!"
+		$Control/GameOver/CenterContainer/VBoxContainer/Label.text = "You Lose!"
 
 func _is_move_valid() -> bool:
 	var valid_attack = attack_array[next_attack]
@@ -165,7 +174,7 @@ func _unhandled_key_input(event):
 		_update_attack_buffer(event.scancode)
 
 func _on_AttackTimer_timeout():
-	_damage(PLAYER, enemy_damage)
+	_damage(PLAYER, enemy.damage)
 
 func _on_StunnedTimer_timeout():
 	attack_timer.start()

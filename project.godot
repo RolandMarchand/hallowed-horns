@@ -39,8 +39,8 @@ config/icon="res://assets/icon.png"
 GlobalWorld="*res://scripts/world.gd"
 ItemLexicon="*res://scripts/item_lexicon.gd"
 PlayerStats="*res://scripts/player_stats.gd"
-MoveLexicon="*res://scripts/moves_lexicon.gd"
-EnemyLexicon="*res://enemy_lexicon.gd"
+MoveLexicon="*res://scripts/move_lexicon.gd"
+EnemyLexicon="*res://scripts/enemy_lexicon.gd"
 
 [display]
 

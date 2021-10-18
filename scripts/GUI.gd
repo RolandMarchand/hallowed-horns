@@ -14,6 +14,9 @@
 # along with Hallowed Horns.  If not, see <https://www.gnu.org/licenses/>.
 extends CanvasLayer
 
+# TODO:
+# Separate the dialogue system and the border
+
 signal text_displayed
 
 const FAST = 5.0

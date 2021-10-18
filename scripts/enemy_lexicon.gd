@@ -16,10 +16,22 @@ extends Node
 
 class Goblin extends Enemy:
 	func _init():
-		attack_speed = 1
+		attack_speed = 3 # Second per attack
 		damage = 1
+		entrance= "I'm just a little Goblin!"
 		health = 18
-		
-		texture = "res://assets/troll.png"
+		name = "Goblin"
+		texture = preload("res://assets/troll.png")
+		vision_length = 50 # Overriden by the enemy's local vision length
+		walk_speed = 32 # Overriden by the enemy's local speed
+
+class Mouse extends Enemy:
+	func _init():
+		attack_speed = 60 # Second per attack
+		damage = 1
+		entrance= "I'm just a little Goblin!"
+		health = 1
+		name = "Mouse"
+		texture = preload("res://assets/troll.png")
 		vision_length = 50 # Overriden by the enemy's local vision length
 		walk_speed = 32 # Overriden by the enemy's local speed

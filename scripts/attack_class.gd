@@ -18,7 +18,7 @@ var enabled: bool = false
 var required_items: PoolIntArray
 var key_combination: PoolIntArray
 var damage: int
-var attack_name: String
+var name: String
 
 ## Returns false if item_list doesn't have all the values in required_items
 func has_required_items(item_list: Array) -> bool:

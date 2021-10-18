@@ -14,10 +14,11 @@
 # along with Hallowed Horns.  If not, see <https://www.gnu.org/licenses/>.
 class_name Enemy
 
-var attack_speed: float
+var attack_speed: float # Second per attack
 var damage: int
+var entrance: String
 var health: int
 var name: String
-var texture: NodePath
+var texture: Texture
 var vision_length: int # Overriden by the enemy's local vision length
 var walk_speed: float # Overriden by the enemy's local speed
