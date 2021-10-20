@@ -60,6 +60,8 @@ func _ready():
 	set_process_unhandled_key_input(false)
 
 func new_combat(new_enemy: Object):
+	set_process_unhandled_key_input(true)
+
 	$Control.show()
 
 	_new_attack()

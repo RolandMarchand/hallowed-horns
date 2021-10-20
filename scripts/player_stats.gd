@@ -17,6 +17,8 @@ extends Node
 var health: int = 18
 var _keyring: int = 0
 var inventory: Array = []
+var global_position: Vector2
+var node: Object
 
 ## Works on a 1, 2, 4 system like Unix permissions
 func add_key(key) -> void:

@@ -14,16 +14,15 @@
 # along with Hallowed Horns.  If not, see <https://www.gnu.org/licenses/>.
 extends Node2D
 
+signal initialized
+
 export(int) var id: int
 
 func spawn_player(player: KinematicBody2D, spawn: Vector2) -> void:
 	$Walls.call_deferred("add_child", player)
-	player.call_deferred("set_global_position", spawn)
-	set_player(player)
 
-func set_player(player: KinematicBody2D) -> void:
-	for ai in get_tree().get_nodes_in_group("enemy_ai"):
-		ai.player = player
+	player.call_deferred("set_global_position", spawn)
+	emit_signal("initialized")
 
 # pause setter
 func set_pause (is_paused: bool) -> void:

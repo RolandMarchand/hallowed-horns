@@ -16,6 +16,9 @@ extends KinematicBody2D
 
 export var _speed = 64 # Pixels/second.
 
+func _ready() -> void:
+	PlayerStats.node = self
+
 func _physics_process(_delta: float) -> void:
 	var motion = Vector2()
 	motion.x = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
@@ -24,3 +27,5 @@ func _physics_process(_delta: float) -> void:
 	motion = motion.normalized() * _speed
 	#warning-ignore:return_value_discarded
 	move_and_slide(motion, Vector2(), false)
+
+	PlayerStats.global_position = global_position

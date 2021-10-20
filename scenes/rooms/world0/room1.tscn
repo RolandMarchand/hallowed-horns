@@ -5,7 +5,7 @@
 [ext_resource path="res://scenes/entities/door.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/entities/enemy/enemy.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scenes/entities/enemy/enemy_ai.tscn" type="PackedScene" id=5]
-[ext_resource path="res://scenes/entities/player.tscn" type="PackedScene" id=6]
+[ext_resource path="res://scenes/rooms/world0/room1_path.tres" type="NavigationPolygon" id=7]
 
 [node name="Room1" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
@@ -17,20 +17,29 @@ tile_data = PoolIntArray( -262146, 0, 0, -262145, 0, 0, -327680, 0, 0, -327679, 
 [node name="Walls" parent="." index="1"]
 tile_data = PoolIntArray( -327683, 0, 1, -327682, 0, 1, -327681, 0, 1, -393216, 0, 1, -393215, 0, 1, -393214, 0, 2, -327678, 0, 2, -196611, 0, 1, -262142, 0, 2, -131075, 0, 1, -196606, 0, 2, -65544, 0, 3, -65543, 0, 65536, -65539, 0, 1, -131070, 0, 2, -9, 0, 3, -6, 0, 65536, -3, 0, 1, -65534, 0, 2, 65526, 0, 3, 65531, 0, 65536, 65533, 0, 1, 2, 0, 2, 131061, 0, 3, 131066, 0, 1, 131068, 0, 65536, 131069, 0, 1, 65538, 0, 2, 196597, 0, 2, 196598, 0, 2, 196599, 0, 2, 196600, 0, 65537, 262137, 0, 65537, 196610, 0, 2, 327674, 0, 65537, 262146, 0, 2, 393211, 0, 65537, 393213, 0, 1, 327682, 0, 2, 458748, 0, 2, 458749, 0, 2, 458750, 0, 2, 458751, 0, 2, 393216, 0, 2, 393217, 0, 2, 393218, 0, 2 )
 
-[node name="Player" parent="Walls" index="0" instance=ExtResource( 6 )]
-position = Vector2( -232, -24 )
+[node name="EnemyAI" parent="Walls" index="0" instance=ExtResource( 5 )]
 
-[node name="EnemyAI" parent="Walls" index="1" instance=ExtResource( 5 )]
+[node name="NavigationPolygonInstance" parent="Walls/EnemyAI" index="0"]
+visible = true
+navpoly = ExtResource( 7 )
 
-[node name="Enemy" parent="Walls" index="2" instance=ExtResource( 4 )]
+[node name="Enemy" parent="Walls" index="1" instance=ExtResource( 4 )]
+position = Vector2( 104, -56 )
+state = 1
 
-[node name="Door" parent="Walls" index="3" instance=ExtResource( 3 )]
+[node name="Position2D" parent="Walls/Enemy/Points" index="0"]
+position = Vector2( -48, 0 )
+
+[node name="Position2D2" parent="Walls/Enemy/Points" index="1"]
+position = Vector2( -128, 52 )
+
+[node name="Door" parent="Walls" index="2" instance=ExtResource( 3 )]
 position = Vector2( 0, 80 )
 
 [node name="Position2D" parent="Walls/Door" index="3"]
 position = Vector2( -24, -24 )
 
-[node name="Door2" parent="Walls" index="4" instance=ExtResource( 3 )]
+[node name="Door2" parent="Walls" index="3" instance=ExtResource( 3 )]
 position = Vector2( 64, -112 )
 leads_to_room = 2
 id = 1
@@ -39,5 +48,7 @@ key_required = 2
 [node name="Position2D" parent="Walls/Door2" index="3"]
 position = Vector2( 32, 16 )
 
+[editable path="Walls/EnemyAI"]
+[editable path="Walls/Enemy"]
 [editable path="Walls/Door"]
 [editable path="Walls/Door2"]

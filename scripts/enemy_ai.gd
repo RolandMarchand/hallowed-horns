@@ -20,10 +20,9 @@ enum {IDLE, PATH, CHASE}
 
 export(float) var _nav_poly_update_time: float = 0.1
 
+onready var _timer: Timer = $Timer
 onready var _navigation = self
-onready var player: KinematicBody2D# = get_tree().get_nodes_in_group("player")[0]
 
-var _timer: Timer = Timer.new()
 var _movement_preload: Resource = preload("res://scenes/entities/enemy/enemy_movement.tscn")
 
 var path_of: Dictionary = {}
@@ -31,28 +30,24 @@ var enemy_array: Array = []
 var navigation: Navigation2D = self
 
 func _ready() -> void:
-	yield(get_tree().get_root(), "ready")
-	player = get_tree().get_nodes_in_group("player")[0]
-	_setup_timer()
+	yield(get_parent().get_parent(), "initialized")
+	_create_timer()
 	_record_enemies()
 	_update_navigation_path()
 	_record_path_curves()
 	for enemy in enemy_array:
 		change_state(enemy)
 
-func _setup_timer() -> void:
-	_timer.autostart = true
+func _create_timer() -> void:
 	_timer.wait_time = _nav_poly_update_time
-	_timer.one_shot = false
 # warning-ignore:return_value_discarded
 	_timer.connect("timeout", self, "_update_navigation_path")
-	add_child(_timer)
 
 func _record_enemies() -> void:
 	for enemy in get_tree().get_nodes_in_group("enemies"):
 		if get_parent().is_a_parent_of(enemy):
-			var movement = _movement_preload.instance()
-			var enemy_global_pos = enemy.global_position
+			var movement: Object = _movement_preload.instance()
+			var enemy_global_pos: Vector2 = enemy.global_position
 			add_child(movement)
 
 			enemy_array.append(enemy)
@@ -69,8 +64,6 @@ func _record_enemies() -> void:
 			# Little hack for the bug, but does not display the path correctly
 			movement.remote_enemy.global_position = enemy_global_pos
 			print(movement.remote_enemy.global_position)
-
-			enemy.player = player
 
 func _record_path_curves() -> void:
 	for enemy in enemy_array:
@@ -104,15 +97,16 @@ func change_state(enemy: Node) -> void:
 func _chase(enemy: Node) -> void:
 	var current_pos: Vector2 = enemy.global_position
 	var current_path: PoolVector2Array = enemy.navigation_path
+	var enemy_path2d: Path2D = path_of[enemy]
 
 	while current_path.size():
 # warning-ignore:return_value_discarded
-		enemy.tween.interpolate_property(enemy, "global_position", current_pos, current_path[0],
+		enemy_path2d.tween.interpolate_property(enemy_path2d.remote_enemy, "global_position", current_pos, current_path[0],
 		_find_transition_time(enemy.speed, current_pos.distance_to(current_path[0])))
 
 # warning-ignore:return_value_discarded
-		enemy.tween.start()
-		yield(enemy.tween, "tween_all_completed")
+		enemy_path2d.tween.start()
+		yield(enemy_path2d.tween, "tween_all_completed")
 
 		current_path.remove(0)
 		current_pos = enemy.global_position
@@ -122,15 +116,16 @@ func _chase(enemy: Node) -> void:
 ## Gets called by _timer
 func _update_navigation_path() -> void:
 	for enemy in enemy_array:
-		var navigation_path = get_simple_path(enemy.global_position,
-				player.global_position)
+		var navigation_path: PoolVector2Array = get_simple_path(enemy.get_global_position(),
+				PlayerStats.global_position)
+		print(enemy.get_global_position())
 		navigation_path.remove(0)
 
 		enemy.navigation_path = navigation_path
+		navigation_path.append(enemy.get_global_position())
 
 func _move_along_path(enemy: Node) -> void:
 	var path = path_of[enemy]
-	print(path.global_position, enemy.global_position)
 
 	path.tween.interpolate_property(path.follow, "unit_offset", 0, 1,
 	_find_transition_time(enemy.speed, path.curve.get_baked_length()))
@@ -156,21 +151,3 @@ func _enemy_touched_player(_player: Node, enemy: Node) -> void:
 	path_of[enemy].call_deferred("queue_free")
 
 	emit_signal("enemy_touched_player")
-
-func _get_player() -> Node:
-	for current_player in get_tree().get_nodes_in_group("player"):
-		if get_parent().is_a_parent_of(current_player):
-			return current_player
-
-	return null
-
-## pause setter
-func set_pause(is_paused: bool) -> void:
-	if is_paused:
-		for enemy in enemy_array:
-			path_of[enemy].tween.stop_all()
-			enemy.tween.stop_all()
-	else:
-		for enemy in enemy_array:
-			path_of[enemy].tween.resume_all()
-			enemy.tween.resume_all()

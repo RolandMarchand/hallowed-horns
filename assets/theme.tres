@@ -2,15 +2,15 @@
 
 [ext_resource path="res://assets/fonts/digi_castle/DigiCastle.ttf" type="DynamicFontData" id=1]
 
-[sub_resource type="DynamicFont" id=12]
+[sub_resource type="DynamicFont" id=1]
 size = 18
 outline_size = 1
 outline_color = Color( 0.368627, 0.305882, 0.290196, 1 )
 font_data = ExtResource( 1 )
 
-[sub_resource type="StyleBoxEmpty" id=11]
+[sub_resource type="StyleBoxEmpty" id=2]
 
-[sub_resource type="StyleBoxFlat" id=13]
+[sub_resource type="StyleBoxFlat" id=3]
 draw_center = false
 anti_aliasing = false
 
@@ -20,9 +20,9 @@ Button/colors/font_color_disabled = Color( 0.9, 0.9, 0.9, 0.2 )
 Button/colors/font_color_hover = Color( 0.882353, 0.843137, 0.843137, 1 )
 Button/colors/font_color_pressed = Color( 0.882353, 0.847059, 0.843137, 1 )
 Button/constants/hseparation = 0
-Button/fonts/font = SubResource( 12 )
+Button/fonts/font = SubResource( 1 )
 Button/styles/disabled = null
-Button/styles/focus = SubResource( 11 )
-Button/styles/hover = SubResource( 13 )
-Button/styles/normal = SubResource( 13 )
-Button/styles/pressed = SubResource( 13 )
+Button/styles/focus = SubResource( 2 )
+Button/styles/hover = SubResource( 3 )
+Button/styles/normal = SubResource( 3 )
+Button/styles/pressed = SubResource( 3 )

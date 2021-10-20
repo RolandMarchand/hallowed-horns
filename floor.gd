@@ -31,7 +31,7 @@ func _ready() -> void:
 		door.connect("change_room", self, "change_room")
 
 func disable_room(room: Node2D) -> void:
-	room.hide()
+	#room.hide()
 
 	for p in get_tree().get_nodes_in_group("player"):
 		if room.is_a_parent_of(p):
