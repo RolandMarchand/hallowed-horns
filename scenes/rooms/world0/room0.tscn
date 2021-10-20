@@ -8,30 +8,27 @@
 [node name="Room0" groups=[
 "spawn",
 ] instance=ExtResource( 1 )]
-position = Vector2( -264, 332 )
 script = ExtResource( 2 )
 
 [node name="Floor" parent="." index="0"]
-tile_data = PoolIntArray( -2, 0, 0, -1, 0, 0, -65536, 0, 0, 65534, 0, 0, 65535, 0, 0, 0, 0, 0, 1, 0, 0, 131070, 0, 0, 131071, 0, 0, 65536, 0, 0, 65537, 0, 0, 196607, 0, 0, 131072, 0, 0, 131073, 0, 0 )
+tile_data = PoolIntArray( -65538, 0, 0, -65537, 0, 0, -131072, 0, 0, -2, 0, 0, -1, 0, 0, -65536, 0, 0, 65534, 0, 0, 65535, 0, 0, 0, 0, 0 )
 
 [node name="Walls" parent="." index="1"]
-tile_data = PoolIntArray( -65539, 0, 1, -65538, 0, 1, -65537, 0, 1, -131072, 0, 2, -65536, 0, 65536, 65533, 0, 1, 1, 0, 65536, 131069, 0, 2, 131070, 0, 65537, 65538, 0, 2, 196607, 0, 65537, 131074, 0, 2, 196608, 0, 2, 196609, 0, 2 )
+show_collision = true
+tile_data = PoolIntArray( -131075, 0, 1, -131074, 0, 1, -131073, 0, 1, -196608, 0, 2, -131072, 0, 65536, -3, 0, 1, -65535, 0, 65536, 65533, 0, 2, 65534, 0, 65537, 2, 0, 2, 131071, 0, 65537, 65538, 0, 2, 131072, 0, 2, 131073, 0, 2 )
 
-[node name="Player" parent="Walls" index="0"]
-position = Vector2( -32, 7.99999 )
-
-[node name="Key" parent="Walls" index="1" instance=ExtResource( 3 )]
-collision_layer = 1
-collision_mask = 1
-
-[node name="Door" parent="Walls" index="2" instance=ExtResource( 4 )]
-position = Vector2( -64, -48 )
-scale = Vector2( -1, 1 )
+[node name="Door" parent="Walls" index="0" instance=ExtResource( 4 )]
+position = Vector2( -32, -64 )
 leads_to_room = 1
-leads_to_door = 5
 is_locked = true
 
-[node name="Respawn" parent="Walls/Door" index="3"]
-position = Vector2( -32, 16 )
+[node name="Position2D" parent="Walls/Door" index="3"]
+position = Vector2( 32, 16 )
+
+[node name="Key" parent="Walls" index="1" instance=ExtResource( 3 )]
+position = Vector2( 32, -16 )
+
+[node name="Position2D" type="Position2D" parent="Walls" index="2"]
+position = Vector2( 0, -16 )
 
 [editable path="Walls/Door"]

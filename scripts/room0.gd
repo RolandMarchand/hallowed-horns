@@ -13,3 +13,5 @@
 # You should have received a copy of the GNU General Public License
 # along with Hallowed Horns.  If not, see <https://www.gnu.org/licenses/>.
 extends "res://scripts/room.gd"
+
+onready var spawn_point: Vector2 = $Walls/Position2D.global_position

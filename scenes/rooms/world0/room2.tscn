@@ -18,10 +18,7 @@ scale = Vector2( 0.999963, 0.999963 )
 leads_to_room = 1
 leads_to_door = 1
 
-[node name="Respawn" parent="Walls/Door" index="3"]
-position = Vector2( 32.0012, -16.0006 )
-
-[node name="Player" parent="Walls" index="1"]
-position = Vector2( -24, -24 )
+[node name="Position2D" parent="Walls/Door" index="3"]
+position = Vector2( -16.0006, -24.0009 )
 
 [editable path="Walls/Door"]

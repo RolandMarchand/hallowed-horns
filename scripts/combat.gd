@@ -57,6 +57,7 @@ var stunned: bool # Does not record wrong key presses while stunned
 
 func _ready():
 	randomize()
+	set_process_unhandled_key_input(false)
 
 func new_combat(new_enemy: Object):
 	$Control.show()

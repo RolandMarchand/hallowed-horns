@@ -44,6 +44,7 @@ func display_message(message: String) -> void:
 
 func fades_in() -> void:
 	get_tree().paused = true
+# warning-ignore:return_value_discarded
 	_color_rect_tween.interpolate_property(
 			_black_color_rect,
 			"color",
@@ -53,11 +54,13 @@ func fades_in() -> void:
 			Tween.TRANS_QUINT,
 			Tween.EASE_IN
 			)
+# warning-ignore:return_value_discarded
 	_color_rect_tween.start()
 	yield(_color_rect_tween, "tween_all_completed")
 	emit_signal("text_displayed")
 
 func fades_out() -> void:
+# warning-ignore:return_value_discarded
 	_color_rect_tween.interpolate_property(
 			_black_color_rect,
 			"color",
@@ -67,6 +70,7 @@ func fades_out() -> void:
 			Tween.TRANS_QUINT,
 			Tween.EASE_OUT
 			)
+# warning-ignore:return_value_discarded
 	_color_rect_tween.start()
 
 	get_tree().paused = false
@@ -92,15 +96,19 @@ func _reload_node(node: Node, replacement: Resource) -> Node:
 	return new_node
 
 func _open_message_screen() -> void:
+# warning-ignore:return_value_discarded
 	_color_rect_tween.interpolate_property(_black_color_rect, "color",
 			Color("#00000000"), Color("#000000"), 0.5, Tween.TRANS_QUINT, Tween.EASE_IN)
+# warning-ignore:return_value_discarded
 	_color_rect_tween.start()
 	_animated_text.show()
 	get_tree().paused = true
 
 func _close_message_screen() -> void:
+# warning-ignore:return_value_discarded
 	_color_rect_tween.interpolate_property(_black_color_rect, "color",
 			Color("#000000"), Color("#00000000"), 0.5, Tween.TRANS_QUINT, Tween.EASE_OUT)
+# warning-ignore:return_value_discarded
 	_color_rect_tween.start()
 	_animated_text.hide()
 	get_tree().paused = false

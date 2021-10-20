@@ -21,7 +21,7 @@ enum {IDLE, PATH, CHASE}
 export(float) var _nav_poly_update_time: float = 0.1
 
 onready var _navigation = self
-onready var player: KinematicBody2D = _get_player()
+onready var player: KinematicBody2D# = get_tree().get_nodes_in_group("player")[0]
 
 var _timer: Timer = Timer.new()
 var _movement_preload: Resource = preload("res://scenes/entities/enemy/enemy_movement.tscn")
@@ -31,6 +31,8 @@ var enemy_array: Array = []
 var navigation: Navigation2D = self
 
 func _ready() -> void:
+	yield(get_tree().get_root(), "ready")
+	player = get_tree().get_nodes_in_group("player")[0]
 	_setup_timer()
 	_record_enemies()
 	_update_navigation_path()
@@ -52,42 +54,42 @@ func _record_enemies() -> void:
 			var movement = _movement_preload.instance()
 			var enemy_global_pos = enemy.global_position
 			add_child(movement)
-			
+
 			enemy_array.append(enemy)
-			
+
 			path_of[enemy] = movement
-			
+
 			enemy.connect("player_detected", self, "_enemy_spotted_player")
 			enemy.connect("body_entered", self, "_enemy_touched_player", [enemy])
-			
+
 			# BIG BUG, This line sets enemy.global_position and
 			# movement.remote_enemy.global_position to (0,0)
 			movement.remote_enemy.remote_path = enemy.get_path()
-			
+
 			# Little hack for the bug, but does not display the path correctly
 			movement.remote_enemy.global_position = enemy_global_pos
 			print(movement.remote_enemy.global_position)
-			
+
 			enemy.player = player
 
 func _record_path_curves() -> void:
 	for enemy in enemy_array:
 		var path_points = enemy.get_points()
 		var path: Curve2D = Curve2D.new()
-		
+
 		for point in path_points:
 			path.add_point(point.global_position)
-		
+
 		if enemy.loop_path: # Goes back to the first point
 			path.add_point(path_points[0].global_position)
-			
+
 		else: # Follows back the path
 			var path_points_inverted: PoolVector2Array = path.get_baked_points()
 			path_points_inverted.invert()
-			
+
 			for point in path_points_inverted:
 				path.add_point(point)#.global_position)
-		
+
 		path_of[enemy].curve = path
 
 func change_state(enemy: Node) -> void:
@@ -98,11 +100,11 @@ func change_state(enemy: Node) -> void:
 			_move_along_path(enemy)
 		CHASE:
 			_chase(enemy)
-	
+
 func _chase(enemy: Node) -> void:
 	var current_pos: Vector2 = enemy.global_position
 	var current_path: PoolVector2Array = enemy.navigation_path
-	
+
 	while current_path.size():
 # warning-ignore:return_value_discarded
 		enemy.tween.interpolate_property(enemy, "global_position", current_pos, current_path[0],
@@ -114,7 +116,7 @@ func _chase(enemy: Node) -> void:
 
 		current_path.remove(0)
 		current_pos = enemy.global_position
-	
+
 	change_state(enemy)
 
 ## Gets called by _timer
@@ -123,20 +125,20 @@ func _update_navigation_path() -> void:
 		var navigation_path = get_simple_path(enemy.global_position,
 				player.global_position)
 		navigation_path.remove(0)
-			
+
 		enemy.navigation_path = navigation_path
 
 func _move_along_path(enemy: Node) -> void:
 	var path = path_of[enemy]
 	print(path.global_position, enemy.global_position)
-	
+
 	path.tween.interpolate_property(path.follow, "unit_offset", 0, 1,
 	_find_transition_time(enemy.speed, path.curve.get_baked_length()))
-	
+
 # warning-ignore:return_value_discarded
 	path.tween.start()
 	yield(path.tween, "tween_all_completed")
-	
+
 	change_state(enemy)
 
 func _find_transition_time(speed: float, distance: float) -> float:
@@ -152,14 +154,14 @@ func _enemy_touched_player(_player: Node, enemy: Node) -> void:
 	enemy_array.erase(enemy)
 	enemy.call_deferred("queue_free")
 	path_of[enemy].call_deferred("queue_free")
-	
+
 	emit_signal("enemy_touched_player")
 
 func _get_player() -> Node:
 	for current_player in get_tree().get_nodes_in_group("player"):
 		if get_parent().is_a_parent_of(current_player):
 			return current_player
-	
+
 	return null
 
 ## pause setter

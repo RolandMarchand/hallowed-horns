@@ -14,22 +14,13 @@
 # along with Hallowed Horns.  If not, see <https://www.gnu.org/licenses/>.
 extends Node
 
-var loaded_rooms: Array = []
+func _ready():
+	OS.vsync_enabled = true
+	OS.window_maximized = true
+	OS.center_window()
+	OS.window_fullscreen = true
 
-# {level : room}
-var global_world := {
-	0: ["res://scenes/rooms/world0/room0.tscn",
-			"res://scenes/rooms/world0/room1.tscn",
-			"res://scenes/rooms/world0/room2.tscn",]
-}
-
-func _ready() -> void:
-	load_new_world(0)
-
-func _on_Timer_timeout() -> void:
-	print("Hello")
-
-func load_new_world(world: int = 0):
-	loaded_rooms = []
-	for room in GlobalWorld.global_world[world]:
-		loaded_rooms.append(load(room).instance())
+func _unhandled_key_input(event):
+	# Alt + Tab fullscreen shortcut
+	if event.get_scancode_with_modifiers() == 83886085 and not event.echo and event.is_pressed():
+		OS.window_fullscreen = not OS.window_fullscreen

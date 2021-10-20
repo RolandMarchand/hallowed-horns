@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Bitmgothic.svg-914525c770004e4465bd83619279687d.stex"
+path="res://.import/logo.svg-01597fe4b7eb446be26a49e8a22b6f42.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/fonts/Bitmgothic/Bitmgothic/Bitmgothic.svg"
-dest_files=[ "res://.import/Bitmgothic.svg-914525c770004e4465bd83619279687d.stex" ]
+source_file="res://assets/logo.svg"
+dest_files=[ "res://.import/logo.svg-01597fe4b7eb446be26a49e8a22b6f42.stex" ]
 
 [params]
 

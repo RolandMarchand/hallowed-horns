@@ -18,19 +18,23 @@ signal locked
 signal unlocked
 signal change_room
 
+export var leads_to_room: int
+export var leads_to_door: int
 export var id: int
 export var is_locked: bool = false
 export(ItemLexicon.KEY) var key_required = ItemLexicon.KEY.BRONZE
 
-onready var spawn_point: Vector2 = $Respawn.global_position
+onready var spawn_point: Vector2 = $Position2D.global_position
 
 func _on_Door_body_entered(_body):
-
 	if is_locked:
 		if PlayerStats.has_key(key_required):
 			is_locked = false
+			emit_signal("unlocked")
 			_on_Door_body_entered(_body)
+			print("lmao")
 		else:
 			emit_signal("locked")
+			print("lmao")
 	else:
-		emit_signal("change_room", id)
+		emit_signal("change_room", leads_to_room, leads_to_door)
