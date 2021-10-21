@@ -6,6 +6,7 @@ Made with Godot Engine v3.3.4.stable.flathub [faf3f883d]
 ## Team
 * Lead Developer - Moowool
 * Lead Artist - DanDude
+* Lead Musician - Janjan
 ## License
 ```
 Hallowed Horns Copyright (C) 2021 moowool195@gmail.com
