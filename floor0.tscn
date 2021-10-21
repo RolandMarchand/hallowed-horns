@@ -11,9 +11,10 @@
 script = ExtResource( 4 )
 
 [node name="Room0" parent="." instance=ExtResource( 2 )]
-position = Vector2( 96, 176 )
+position = Vector2( 32, 120 )
 
 [node name="Room1" parent="." instance=ExtResource( 3 )]
+position = Vector2( -64, -56 )
 
 [node name="Room2" parent="." instance=ExtResource( 1 )]
-position = Vector2( -32, -176 )
+position = Vector2( -96, -232 )

@@ -47,7 +47,7 @@ func _record_enemies() -> void:
 	for enemy in get_tree().get_nodes_in_group("enemies"):
 		if get_parent().is_a_parent_of(enemy):
 			var movement: Object = _movement_preload.instance()
-			var enemy_global_pos: Vector2 = enemy.global_position
+			var enemy_global_pos: Vector2 = to_global(enemy.position)
 			add_child(movement)
 
 			enemy_array.append(enemy)
@@ -62,26 +62,27 @@ func _record_enemies() -> void:
 			movement.remote_enemy.remote_path = enemy.get_path()
 
 			# Little hack for the bug, but does not display the path correctly
-			movement.remote_enemy.global_position = enemy_global_pos
-			print(movement.remote_enemy.global_position)
+			movement.remote_enemy.position = enemy_global_pos
 
+## BUG, The path is not printed in the right position
+## BUG, printing the global positions of the points does not work
 func _record_path_curves() -> void:
 	for enemy in enemy_array:
-		var path_points = enemy.get_points()
+		var path_points: Array = enemy.get_points()
 		var path: Curve2D = Curve2D.new()
 
 		for point in path_points:
-			path.add_point(point.global_position)
+			path.add_point(to_local(point.position))
 
 		if enemy.loop_path: # Goes back to the first point
-			path.add_point(path_points[0].global_position)
+			path.add_point(to_local(path_points[0].position))
 
 		else: # Follows back the path
 			var path_points_inverted: PoolVector2Array = path.get_baked_points()
 			path_points_inverted.invert()
 
 			for point in path_points_inverted:
-				path.add_point(point)#.global_position)
+				path.add_point(point)
 
 		path_of[enemy].curve = path
 
@@ -95,34 +96,36 @@ func change_state(enemy: Node) -> void:
 			_chase(enemy)
 
 func _chase(enemy: Node) -> void:
-	var current_pos: Vector2 = enemy.global_position
+	var current_pos: Vector2 = to_global(enemy.position)
 	var current_path: PoolVector2Array = enemy.navigation_path
-	var enemy_path2d: Path2D = path_of[enemy]
 
 	while current_path.size():
 # warning-ignore:return_value_discarded
-		enemy_path2d.tween.interpolate_property(enemy_path2d.remote_enemy, "global_position", current_pos, current_path[0],
+		enemy.tween.interpolate_property(enemy, "global_position", current_pos, current_path[0],
 		_find_transition_time(enemy.speed, current_pos.distance_to(current_path[0])))
 
 # warning-ignore:return_value_discarded
-		enemy_path2d.tween.start()
-		yield(enemy_path2d.tween, "tween_all_completed")
+		enemy.tween.start()
+		yield(enemy.tween, "tween_all_completed")
 
 		current_path.remove(0)
-		current_pos = enemy.global_position
+		current_pos = to_global(enemy.position)
 
 	change_state(enemy)
 
 ## Gets called by _timer
 func _update_navigation_path() -> void:
 	for enemy in enemy_array:
-		var navigation_path: PoolVector2Array = get_simple_path(enemy.get_global_position(),
-				PlayerStats.global_position)
-		print(enemy.get_global_position())
-		navigation_path.remove(0)
+		var navigation_path: Array
+		var tmp_navigation_path: PoolVector2Array = get_simple_path(enemy.position,
+				to_local(PlayerStats.global_position))
+		tmp_navigation_path.remove(0)
+
+		for point in tmp_navigation_path:
+			navigation_path.append(to_global(point))
 
 		enemy.navigation_path = navigation_path
-		navigation_path.append(enemy.get_global_position())
+		navigation_path.append(to_global(enemy.position))
 
 func _move_along_path(enemy: Node) -> void:
 	var path = path_of[enemy]

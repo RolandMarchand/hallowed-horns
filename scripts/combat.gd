@@ -58,6 +58,7 @@ var stunned: bool # Does not record wrong key presses while stunned
 func _ready():
 	randomize()
 	set_process_unhandled_key_input(false)
+	#new_combat(EnemyLexicon.Goblin.new())
 
 func new_combat(new_enemy: Object):
 	set_process_unhandled_key_input(true)
