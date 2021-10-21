@@ -23,7 +23,7 @@ onready var _tween: Tween = $Tween
 onready var _line_timer: Timer = $LineTimer
 onready var _screen_timer: Timer = $ScreenTimer
 
-var text_speed = 12 # Words per second
+var text_speed = 12.0 # Words per second
 
 # Code text skipping mechanic
 # Instead of restarting this node's processes, free and reload this node

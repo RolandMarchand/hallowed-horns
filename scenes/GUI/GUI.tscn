@@ -20,7 +20,6 @@ layer = 2
 script = ExtResource( 4 )
 
 [node name="TextureRect" type="TextureRect" parent="."]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 2 )
@@ -29,6 +28,7 @@ __meta__ = {
 }
 
 [node name="HealthLabel" type="Label" parent="TextureRect"]
+visible = false
 margin_left = 10.0
 margin_top = 31.75
 margin_right = 18.0
@@ -52,22 +52,13 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="PainColorRect" type="ColorRect" parent="BorderMargin"]
-margin_left = 32.0
-margin_top = 16.0
-margin_right = 928.0
-margin_bottom = 528.0
-color = Color( 0, 0, 0, 0 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="BlackColorRect" type="ColorRect" parent="BorderMargin"]
+visible = false
 margin_left = 32.0
 margin_top = 16.0
-margin_right = 928.0
-margin_bottom = 528.0
-color = Color( 0, 0, 0, 0 )
+margin_right = 288.0
+margin_bottom = 144.0
+color = Color( 0, 0, 0, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -77,15 +68,13 @@ __meta__ = {
 [node name="TextMargin" type="MarginContainer" parent="BorderMargin"]
 margin_left = 32.0
 margin_top = 16.0
-margin_right = 928.0
-margin_bottom = 528.0
+margin_right = 288.0
+margin_bottom = 144.0
 custom_constants/margin_right = 10
 custom_constants/margin_top = 10
 custom_constants/margin_left = 10
 custom_constants/margin_bottom = 10
 
 [node name="AnimatedText" parent="BorderMargin/TextMargin" instance=ExtResource( 3 )]
-margin_right = 886.0
-margin_bottom = 502.0
 
 [connection signal="text_displayed" from="BorderMargin/TextMargin/AnimatedText" to="." method="_on_AnimatedText_text_displayed"]

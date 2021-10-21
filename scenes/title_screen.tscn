@@ -122,15 +122,15 @@ __meta__ = {
 
 [node name="Main" type="VBoxContainer" parent="Menu"]
 margin_left = 19.0
-margin_top = 87.0
-margin_right = 140.0
-margin_bottom = 188.0
+margin_top = 495.0
+margin_right = 844.0
+margin_bottom = 596.0
 size_flags_vertical = 8
 theme = SubResource( 2 )
 custom_constants/separation = -1
 
 [node name="LoadGame" type="Button" parent="Menu/Main"]
-margin_right = 121.0
+margin_right = 825.0
 margin_bottom = 21.0
 text = "Load Game"
 flat = true
@@ -138,7 +138,7 @@ align = 0
 
 [node name="NewGame" type="Button" parent="Menu/Main"]
 margin_top = 20.0
-margin_right = 121.0
+margin_right = 825.0
 margin_bottom = 41.0
 text = "New Game"
 flat = true
@@ -146,7 +146,7 @@ align = 0
 
 [node name="Options" type="Button" parent="Menu/Main"]
 margin_top = 40.0
-margin_right = 121.0
+margin_right = 825.0
 margin_bottom = 61.0
 text = "Options"
 flat = true
@@ -154,7 +154,7 @@ align = 0
 
 [node name="About" type="Button" parent="Menu/Main"]
 margin_top = 60.0
-margin_right = 121.0
+margin_right = 825.0
 margin_bottom = 81.0
 text = "About"
 flat = true
@@ -162,7 +162,7 @@ align = 0
 
 [node name="Quit" type="Button" parent="Menu/Main"]
 margin_top = 80.0
-margin_right = 121.0
+margin_right = 825.0
 margin_bottom = 101.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -176,9 +176,9 @@ __meta__ = {
 [node name="Load" type="VBoxContainer" parent="Menu"]
 visible = false
 margin_left = 19.0
-margin_top = 188.0
-margin_right = 140.0
-margin_bottom = 188.0
+margin_top = 596.0
+margin_right = 844.0
+margin_bottom = 596.0
 size_flags_vertical = 8
 theme = SubResource( 2 )
 custom_constants/separation = -1
@@ -187,8 +187,8 @@ custom_constants/separation = -1
 visible = false
 margin_left = 19.0
 margin_top = 10.0
-margin_right = 140.0
-margin_bottom = 188.0
+margin_right = 844.0
+margin_bottom = 596.0
 custom_constants/separation = 0
 
 [node name="Sounds" type="Label" parent="Menu/Options"]

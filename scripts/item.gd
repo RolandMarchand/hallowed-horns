@@ -13,3 +13,17 @@
 # You should have received a copy of the GNU General Public License
 # along with Hallowed Horns.  If not, see <https://www.gnu.org/licenses/>.
 extends Area2D
+
+signal picked_up
+
+export(ItemLexicon.TYPE) var type: int = 0
+var value: int = 0
+var message: String = ""
+
+func _ready() -> void:
+# warning-ignore:return_value_discarded
+	connect("body_entered", self, "_on_body_entered")
+
+func _on_body_entered(_body: Node) -> void:
+	emit_signal("picked_up", type, value, message)
+	call_deferred("queue_free")

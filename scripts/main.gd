@@ -16,6 +16,8 @@ extends Node
 
 # Pause game for combats
 
+var combat_scene: Resource = preload("res://scenes/combat.tscn")
+
 var current_floor: Node2D
 var current_room: int
 var floor_list: Dictionary = {
@@ -25,9 +27,6 @@ var floor_list: Dictionary = {
 onready var gui = get_node("GUI")
 
 func _ready() -> void:
-# warning-ignore:return_value_discarded
-	$Combat.connect("combat_over", self, "combat_over")
-
 	VisualServer.set_default_clear_color(Color("#ff5555"))
 
 	change_world(0)
@@ -77,19 +76,40 @@ func _item_picked_up(type: int, value: int, message: String, _item: Node) -> voi
 			PlayerStats.add_key(value)
 
 			gui.display_message(message)
+		ItemLexicon.TYPE.CROWN:
+			gui.display_message(message)
+			yield(gui, "text_displayed")
+			get_tree().quit()
 
-func enemy_touched_player():
-	$Combat.new_combat(EnemyLexicon.Mouse.new())
-#	PlayerStats.health -= 1
-#	gui.damaged()
-#	if PlayerStats.health < 1:
-#		_death()
+func enemy_touched_player(enemy: Object) -> void:
+	open_combat_scene(enemy)
+	for child in $GUI.get_children():
+		child.hide()
 
-func combat_over():
-	pass
+func open_combat_scene(enemy: Node) -> void:
+	var new_combat_scene = combat_scene.instance()
+	new_combat_scene.connect("combat_over", self, "combat_over")
+	add_child(new_combat_scene)
 
-func _death():
-	gui.display_message("You have died.\nThe level will restart...")
-	#yield(gui, "text_displayed")
+	new_combat_scene.new_combat(enemy.type)
+
+func close_combat_scene() -> void:
+	get_tree().get_nodes_in_group("combat")[0].queue_free()
+
+func combat_over(did_win: bool) -> void:
+	close_combat_scene()
+
+	for child in $GUI.get_children():
+		child.show()
+
+	if did_win:
+		gui.call_deferred("display_message", "You won!")
+	else:
+		gui.call_deferred("display_message", "You lost...")
 # warning-ignore:return_value_discarded
-	get_tree().reload_current_scene()
+		get_tree().reload_current_scene()
+
+func _death() -> void:
+	gui.display_message("You have died.\nThe level will restart...")
+# warning-ignore:return_value_discarded
+	get_tree().call_deferred("reload_current_scene")

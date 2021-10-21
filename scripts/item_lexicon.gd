@@ -14,7 +14,11 @@
 # along with Hallowed Horns.  If not, see <https://www.gnu.org/licenses/>.
 extends Node
 
-enum TYPE {KEY}
+enum TYPE {KEY, CROWN}
 enum KEY {BRONZE = 1, SILVER = 2, GOLDEN = 4}
 
-var key_string_dict: Dictionary = {1: "bronze", 2: "silver", 4: "golden"}
+var key_dict: Dictionary = {
+		KEY.BRONZE: "bronze",
+		KEY.SILVER: "silver",
+		KEY.GOLDEN: "golden",
+		}

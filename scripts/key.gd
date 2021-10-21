@@ -14,21 +14,12 @@
 # along with Hallowed Horns.  If not, see <https://www.gnu.org/licenses/>.
 extends "res://scripts/item.gd"
 
-signal picked_up
-
-export(ItemLexicon.KEY) var _key_type: int = ItemLexicon.KEY.BRONZE
+export(ItemLexicon.KEY) var _value: int = ItemLexicon.KEY.BRONZE
 
 func _ready() -> void:
-# Evades body argument in signal body_entered
-# warning-ignore:return_value_discarded
-	connect("body_entered", self, "_on_body_entered")
-
-func _on_body_entered(_body: Node) -> void:
-	# Redirect the signal to main so that it can manage the singleton
-	# and the GUI message
-	emit_signal("picked_up",
-			ItemLexicon.TYPE.KEY,
-			_key_type,
-			"You picked up the {key} key.".format({"key": ItemLexicon.key_string_dict[_key_type]}))
-	call_deferred("queue_free")
+	type = ItemLexicon.TYPE.KEY
+	value = _value
+	message = "You picked up the {key} key.".format(
+			{"key": ItemLexicon.key_dict[_value]}
+			)
 

@@ -32,9 +32,7 @@ func _on_Door_body_entered(_body):
 			is_locked = false
 			emit_signal("unlocked")
 			_on_Door_body_entered(_body)
-			print("lmao")
 		else:
 			emit_signal("locked")
-			print("lmao")
 	else:
 		emit_signal("change_room", leads_to_room, leads_to_door)

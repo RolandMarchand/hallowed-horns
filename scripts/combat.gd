@@ -63,6 +63,8 @@ func _ready():
 func new_combat(new_enemy: Object):
 	set_process_unhandled_key_input(true)
 
+	get_tree().paused = true
+
 	$Control.show()
 
 	_new_attack()
@@ -152,18 +154,21 @@ func _damage(actor: int, damage):
 			attack_timer.wait_time = max(float(enemy.health) / float(ENEMY_MAX_HEALTH) * 3, 1)
 
 func _game_over(win: bool):
-	emit_signal("combat_over")
-	$Control.hide()
 	attack_timer.stop()
 	stunned_timer.stop()
 	set_process_unhandled_key_input(false)
-
+	$Control/MarginContainer.hide()
 	if win:
-		#texture_rect.flip_v = true
+		texture_rect.flip_v = true
 		$Control/GameOver/CenterContainer/VBoxContainer/Label.text = "You Win!"
 	else:
-		#$Control/BGRect.color = Color("#a31818")
+		$Control/BGRect.color = Color("#a31818")
 		$Control/GameOver/CenterContainer/VBoxContainer/Label.text = "You Lose!"
+
+	$EndTimer.start()
+	yield($EndTimer, "timeout")
+	get_tree().paused = false
+	emit_signal("combat_over", win)
 
 func _is_move_valid() -> bool:
 	var valid_attack = attack_array[next_attack]

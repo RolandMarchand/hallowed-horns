@@ -31,7 +31,7 @@ config/description="This demo shows a traditional isometric view with depth sort
 
 A character can move around the level and will also slide around objects,
 as well as be occluded when standing in front or behind them."
-run/main_scene="res://scenes/main.tscn"
+run/main_scene="res://scenes/title_screen.tscn"
 config/icon="res://assets/icon.png"
 
 [autoload]
@@ -44,6 +44,8 @@ Settings="*res://scripts/settings.gd"
 
 [display]
 
+window/size/width=320
+window/size/height=192
 window/dpi/allow_hidpi=true
 window/stretch/mode="viewport"
 window/stretch/aspect="keep"

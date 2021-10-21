@@ -14,6 +14,12 @@
 # along with Hallowed Horns.  If not, see <https://www.gnu.org/licenses/>.
 extends Node
 
+enum RACE {GOBLIN, MOUSE}
+var race_dict: Dictionary = {
+		RACE.GOBLIN: Goblin,
+		RACE.MOUSE: Mouse,
+}
+
 class Goblin extends Enemy:
 	func _init():
 		attack_speed = 3 # Second per attack
