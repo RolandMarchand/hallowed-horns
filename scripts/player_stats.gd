@@ -14,7 +14,9 @@
 # along with Hallowed Horns.  If not, see <https://www.gnu.org/licenses/>.
 extends Node
 
-var health: int = 18
+const MAX_HEALTH := 18
+
+var health: int = MAX_HEALTH
 var _keyring: int = 0
 var inventory: Array = []
 var global_position: Vector2

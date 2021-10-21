@@ -19,7 +19,7 @@ signal player_detected
 onready var vision_ray = $RayCast2D
 onready var tween = $Tween
 
-export(EnemyLexicon.RACE) var _type: int
+export(EnemyLexicon.RACE) onready var _value: int # This line isn't read, I have no clue why
 var type = EnemyLexicon.race_dict[1].new()
 
 var navigation_path: PoolVector2Array = []

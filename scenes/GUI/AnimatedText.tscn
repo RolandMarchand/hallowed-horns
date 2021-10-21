@@ -12,6 +12,8 @@ custom_colors/default_color = Color( 1, 0.333333, 0.333333, 1 )
 bbcode_text = "This is text.
 It should wait 2 seconds.
 After each line."
+visible_characters = 0
+percent_visible = 0.0
 text = "This is text.
 It should wait 2 seconds.
 After each line."
@@ -28,3 +30,7 @@ wait_time = 0.5
 
 [node name="ScreenTimer" type="Timer" parent="."]
 wait_time = 0.5
+
+[connection signal="tween_all_completed" from="Tween" to="." method="_on_Tween_tween_all_completed"]
+[connection signal="timeout" from="LineTimer" to="." method="_on_LineTimer_timeout"]
+[connection signal="timeout" from="ScreenTimer" to="." method="_on_ScreenTimer_timeout"]

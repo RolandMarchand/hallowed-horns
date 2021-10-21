@@ -79,8 +79,8 @@ func new_combat(new_enemy: Object):
 	enemy_health_bar.max_value = enemy.health
 	enemy_health_bar.value = enemy_health_bar.max_value
 
-	player_health_bar.max_value = PlayerStats.health
-	player_health_bar.value = player_health_bar.max_value
+	player_health_bar.max_value = PlayerStats.MAX_HEALTH
+	player_health_bar.value = PlayerStats.health
 
 func _physics_process(_delta):
 	time_bar.value = attack_timer.time_left / attack_timer.wait_time * 100

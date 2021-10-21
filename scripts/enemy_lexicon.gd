@@ -15,6 +15,7 @@
 extends Node
 
 enum RACE {GOBLIN, MOUSE}
+
 var race_dict: Dictionary = {
 		RACE.GOBLIN: Goblin,
 		RACE.MOUSE: Mouse,
@@ -27,7 +28,7 @@ class Goblin extends Enemy:
 		entrance= "I'm just a little Goblin!"
 		health = 18
 		name = "Goblin"
-		texture = preload("res://assets/troll.png")
+		texture = preload("res://assets/sprites/troll2.png")
 		vision_length = 50 # Overriden by the enemy's local vision length
 		walk_speed = 32 # Overriden by the enemy's local speed
 
@@ -38,6 +39,6 @@ class Mouse extends Enemy:
 		entrance= "I'm just a little Goblin!"
 		health = 1
 		name = "Mouse"
-		texture = preload("res://assets/troll.png")
+		texture = preload("res://assets/sprites/troll2.png")
 		vision_length = 50 # Overriden by the enemy's local vision length
 		walk_speed = 32 # Overriden by the enemy's local speed

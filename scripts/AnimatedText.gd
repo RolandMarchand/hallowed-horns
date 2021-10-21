@@ -16,13 +16,11 @@ extends RichTextLabel
 
 signal text_displayed
 
-const SLOW := 1.0
-const FAST := 5.0
-
 onready var _tween: Tween = $Tween
 onready var _line_timer: Timer = $LineTimer
 onready var _screen_timer: Timer = $ScreenTimer
 
+var skipped: bool = false
 var text_speed = 12.0 # Words per second
 
 # Code text skipping mechanic
@@ -30,34 +28,36 @@ var text_speed = 12.0 # Words per second
 
 func new_message(message: String):
 	text = message
-	visible_characters = 0
 
-	for line in message.split("\n"):
-# warning-ignore:return_value_discarded
-		_tween.interpolate_property(self, "visible_characters",
-				visible_characters, visible_characters + line.length(),
-				_find_transition_time(text_speed, line.length()))
-# warning-ignore:return_value_discarded
-		_tween.start()
-		yield(_tween, "tween_all_completed")
-
-		_line_timer.start()
-		yield(_line_timer, "timeout")
-
-	_screen_timer.start()
-	yield(_screen_timer, "timeout")
-
-	emit_signal("text_displayed")
+	if not skipped:
+		for line in message.split("\n"):
+	# warning-ignore:return_value_discarded
+			_tween.interpolate_property(self, "visible_characters",
+					visible_characters, visible_characters + line.length(),
+					_find_transition_time(text_speed, line.length()))
+	# warning-ignore:return_value_discarded
+			_tween.start()
 
 func _unhandled_input(_event):
 	if Input.is_action_just_pressed("ui_accept"):
-		match _tween.playback_speed:
-			SLOW:
-				_tween.playback_speed = FAST
-				_line_timer.wait_time = 0.001
-				_screen_timer.wait_time = text.length() / text_speed
-			FAST:
-				emit_signal("text_displayed")
+		if not skipped:
+			_tween.queue_free()
+			_line_timer.queue_free()
+			call_deferred("set_percent_visible", 1)
+			skipped = true
+			_screen_timer.wait_time = text.length() / text_speed
+			_screen_timer.start()
+		else:
+			emit_signal("text_displayed")
 
 func _find_transition_time(speed: float, words: float) -> float:
 	return pow(speed, -1) * words
+
+func _on_Tween_tween_all_completed():
+	_line_timer.start()
+
+func _on_LineTimer_timeout():
+	_screen_timer.start()
+
+func _on_ScreenTimer_timeout():
+	emit_signal("text_displayed")

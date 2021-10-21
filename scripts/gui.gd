@@ -50,13 +50,11 @@ func _reload_AnimatedText():
 	_animated_text.connect("text_displayed", self, "_on_AnimatedText_text_displayed")
 
 func _reload_node(node: Node, replacement: Resource) -> Node:
-	var parent: Node = node.get_node("../")
 	var new_node = replacement.instance()
 
 	node.queue_free()
 
-	#new_animated_text.connect("text_displayed", self, "_on_AnimatedText_text_displayed")
-	parent.add_child(new_node)
+	$BorderMargin/TextMargin.add_child(new_node)
 	return new_node
 
 func _open_message_screen() -> void:
