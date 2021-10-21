@@ -2,7 +2,7 @@
 
 [ext_resource path="res://scenes/entities/door.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/entities/crown.tscn" type="PackedScene" id=2]
-[ext_resource path="res://scenes/rooms/room_template.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/floors/room_template.tscn" type="PackedScene" id=3]
 
 [node name="Room2" instance=ExtResource( 3 )]
 id = 2

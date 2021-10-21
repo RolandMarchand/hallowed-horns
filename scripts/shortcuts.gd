@@ -14,8 +14,7 @@
 # along with Hallowed Horns.  If not, see <https://www.gnu.org/licenses/>.
 extends Node
 
-func _ready():
-	OS.vsync_enabled = true
-	OS.window_maximized = true
-	OS.center_window()
-	OS.window_fullscreen = true
+func _unhandled_key_input(event):
+	# Alt + Tab fullscreen shortcut
+	if event.get_scancode_with_modifiers() == 83886085 and not event.echo and event.is_pressed():
+		OS.window_fullscreen = not OS.window_fullscreen

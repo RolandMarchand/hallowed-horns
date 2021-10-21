@@ -1,8 +1,8 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://scenes/rooms/world0/room2.tscn" type="PackedScene" id=1]
-[ext_resource path="res://scenes/rooms/world0/room0.tscn" type="PackedScene" id=2]
-[ext_resource path="res://scenes/rooms/world0/room1.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/floors/floor0/rooms/room2.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/floors/floor0/rooms/room0.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/floors/floor0/rooms/room1.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scripts/floor.gd" type="Script" id=4]
 
 [node name="Floor0" type="Node2D" groups=[

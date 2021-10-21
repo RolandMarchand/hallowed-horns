@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/attack_class_icon.svg-4e1be674c30d2403a7ed69d7b147b084.stex"
+path="res://.import/attack_class_icon.svg-d9bb933494177885c83cee252868d6c6.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/attack_class_icon.svg"
-dest_files=[ "res://.import/attack_class_icon.svg-4e1be674c30d2403a7ed69d7b147b084.stex" ]
+source_file="res://assets/sprites/attack_class_icon.svg"
+dest_files=[ "res://.import/attack_class_icon.svg-d9bb933494177885c83cee252868d6c6.stex" ]
 
 [params]
 

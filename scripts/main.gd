@@ -21,7 +21,7 @@ var combat_scene: Resource = preload("res://scenes/combat.tscn")
 var current_floor: Node2D
 var current_room: int
 var floor_list: Dictionary = {
-		0: preload("res://floor0.tscn")
+		0: preload("res://scenes/floors/floor0/floor0.tscn")
 }
 
 onready var gui = get_node("GUI")
