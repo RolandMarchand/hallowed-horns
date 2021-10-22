@@ -65,7 +65,7 @@ func set_scene_process(node: Node, paused: bool) -> void:
 		set_scene_process(child, paused)
 
 func door_locked() -> void:
-	gui.display_message("The door is locked.")
+	gui.display_message("The door is locked.\nThis is a longer message.")
 
 func door_unlocked() -> void:
 	gui.display_message("The door is locked.\nBut you have the key.")

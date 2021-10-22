@@ -27,7 +27,7 @@ var text_speed = 12.0 # Words per second
 # Instead of restarting this node's processes, free and reload this node
 
 func new_message(message: String):
-	text = message
+	bbcode_text = message
 
 	if not skipped:
 		for line in message.split("\n"):
@@ -37,13 +37,20 @@ func new_message(message: String):
 					_find_transition_time(text_speed, line.length()))
 	# warning-ignore:return_value_discarded
 			_tween.start()
+			yield(_tween, "tween_all_completed")
+
+			_line_timer.start()
+			yield(_line_timer, "timeout")
+
+		_screen_timer.start()
 
 func _unhandled_input(_event):
 	if Input.is_action_just_pressed("ui_accept"):
 		if not skipped:
+			_tween.stop_all()
 			_tween.queue_free()
 			_line_timer.queue_free()
-			call_deferred("set_percent_visible", 1)
+			set_percent_visible(1)
 			skipped = true
 			_screen_timer.wait_time = text.length() / text_speed
 			_screen_timer.start()
@@ -52,12 +59,6 @@ func _unhandled_input(_event):
 
 func _find_transition_time(speed: float, words: float) -> float:
 	return pow(speed, -1) * words
-
-func _on_Tween_tween_all_completed():
-	_line_timer.start()
-
-func _on_LineTimer_timeout():
-	_screen_timer.start()
 
 func _on_ScreenTimer_timeout():
 	emit_signal("text_displayed")

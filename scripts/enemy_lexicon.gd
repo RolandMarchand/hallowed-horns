@@ -14,6 +14,7 @@
 # along with Hallowed Horns.  If not, see <https://www.gnu.org/licenses/>.
 extends Node
 
+# When updating this line, also update enemy.gd. Godot bug.
 enum RACE {GOBLIN, MOUSE}
 
 var race_dict: Dictionary = {
@@ -30,7 +31,7 @@ class Goblin extends Enemy:
 		name = "Goblin"
 		texture = preload("res://assets/sprites/troll2.png")
 		vision_length = 50 # Overriden by the enemy's local vision length
-		walk_speed = 32 # Overriden by the enemy's local speed
+		walk_speed = 64 # Overriden by the enemy's local speed
 
 class Mouse extends Enemy:
 	func _init():
@@ -39,6 +40,6 @@ class Mouse extends Enemy:
 		entrance= "I'm just a little Goblin!"
 		health = 1
 		name = "Mouse"
-		texture = preload("res://assets/sprites/troll2.png")
+		texture = preload("res://assets/sprites/mouse.png")
 		vision_length = 50 # Overriden by the enemy's local vision length
 		walk_speed = 32 # Overriden by the enemy's local speed

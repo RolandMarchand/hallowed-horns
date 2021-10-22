@@ -16,6 +16,7 @@ extends CanvasLayer
 
 # TODO:
 # Separate the dialogue system and the border
+# BUG, the animated text doesn't show all
 
 signal text_displayed
 

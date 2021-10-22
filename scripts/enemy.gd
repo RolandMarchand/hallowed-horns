@@ -16,18 +16,26 @@ extends Area2D
 
 signal player_detected
 
-onready var vision_ray = $RayCast2D
-onready var tween = $Tween
-
-export(EnemyLexicon.RACE) onready var _value: int # This line isn't read, I have no clue why
-var type = EnemyLexicon.race_dict[1].new()
+# When updating this line, also update enemy_lexicon.gd. Godot bug.
+enum RACE {GOBLIN, MOUSE}
 
 var navigation_path: PoolVector2Array = []
 
+export(RACE) onready var value # Ignore the error, Godot bug
+
+# Those variables need to be onready because of how exports are managed
+onready var type = EnemyLexicon.race_dict[value].new()
+export(int) onready var vision_length: int = type.vision_length
+export(float) onready var speed: float = type.walk_speed
+
 export(int, "Idle", "Path", "Chase") var state = 0
-export(int) var vision_length: int = type.vision_length
-export(float) var speed: float = type.walk_speed
 export(bool) var walk_back: bool = false
+
+onready var vision_ray = $RayCast2D
+onready var tween = $Tween
+
+func _ready():
+	$Sprite.texture = type.texture
 
 func _physics_process(_delta: float) -> void:
 	vision_ray.cast_to = (Vector2(PlayerStats.global_position) - self.global_position).clamped(vision_length)
