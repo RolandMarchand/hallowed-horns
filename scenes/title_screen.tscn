@@ -192,7 +192,7 @@ margin_bottom = 188.0
 custom_constants/separation = 0
 
 [node name="Sounds" type="Label" parent="Menu/Options"]
-margin_right = 163.0
+margin_right = 121.0
 margin_bottom = 21.0
 custom_fonts/font = SubResource( 3 )
 custom_colors/font_color = Color( 0.768627, 0.67451, 0.639216, 1 )
@@ -200,13 +200,13 @@ text = "Sounds"
 
 [node name="SoundsSlider" type="HSlider" parent="Menu/Options"]
 margin_top = 21.0
-margin_right = 163.0
+margin_right = 121.0
 margin_bottom = 37.0
 max_value = 20.0
 
 [node name="Music" type="Label" parent="Menu/Options"]
 margin_top = 37.0
-margin_right = 163.0
+margin_right = 121.0
 margin_bottom = 58.0
 size_flags_vertical = 0
 custom_fonts/font = SubResource( 3 )
@@ -215,13 +215,13 @@ text = "Music"
 
 [node name="MusicSlider" type="HSlider" parent="Menu/Options"]
 margin_top = 58.0
-margin_right = 163.0
+margin_right = 121.0
 margin_bottom = 74.0
 max_value = 20.0
 
 [node name="VSync" type="Button" parent="Menu/Options"]
 margin_top = 74.0
-margin_right = 163.0
+margin_right = 121.0
 margin_bottom = 95.0
 toggle_mode = true
 text = "Vsync"
@@ -229,23 +229,23 @@ align = 0
 
 [node name="Controls" type="Button" parent="Menu/Options"]
 margin_top = 95.0
-margin_right = 163.0
+margin_right = 121.0
 margin_bottom = 116.0
 text = "Controls"
 align = 0
 
 [node name="Fullscreen" type="Button" parent="Menu/Options"]
 margin_top = 116.0
-margin_right = 163.0
+margin_right = 121.0
 margin_bottom = 137.0
 toggle_mode = true
 text = "Fullscreen"
 align = 0
 
 [node name="Back" type="Button" parent="Menu/Options"]
-margin_top = 159.0
-margin_right = 163.0
-margin_bottom = 180.0
+margin_top = 157.0
+margin_right = 121.0
+margin_bottom = 178.0
 size_flags_vertical = 10
 text = "< Back"
 align = 0

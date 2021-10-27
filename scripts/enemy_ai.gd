@@ -34,14 +34,14 @@ var navigation: Navigation2D = self
 
 func _ready() -> void:
 	yield(get_parent().get_parent(), "initialized")
-	_create_timer()
+	_setup_timer()
 	_record_enemies()
 	_record_curve_paths()
 	_update_navigation_path()
 	for enemy in enemy_array:
 		change_state(enemy)
 
-func _create_timer() -> void:
+func _setup_timer() -> void:
 	_timer.wait_time = _nav_poly_update_time
 # warning-ignore:return_value_discarded
 	_timer.connect("timeout", self, "_update_navigation_path")

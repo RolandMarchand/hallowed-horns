@@ -28,7 +28,7 @@ var text_speed = 12.0 # Words per second
 
 func new_message(message: String):
 	bbcode_text = message
-
+	
 	if not skipped:
 		for line in message.split("\n"):
 	# warning-ignore:return_value_discarded
@@ -47,6 +47,7 @@ func new_message(message: String):
 func _unhandled_input(_event):
 	if Input.is_action_just_pressed("ui_accept"):
 		if not skipped:
+# warning-ignore:return_value_discarded
 			_tween.stop_all()
 			_tween.queue_free()
 			_line_timer.queue_free()

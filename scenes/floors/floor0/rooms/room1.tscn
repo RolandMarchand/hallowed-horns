@@ -40,7 +40,6 @@ position = Vector2( 32, 16 )
 
 [node name="Enemy" parent="Walls" index="3" instance=ExtResource( 7 )]
 position = Vector2( 48, -56 )
-value = 1
 vision_length = 50
 speed = 32.0
 state = 1

@@ -14,20 +14,9 @@
 # along with Hallowed Horns.  If not, see <https://www.gnu.org/licenses/>.
 extends CanvasLayer
 
-# TODO:
-# Separate the dialogue system and the border
-# BUG, the animated text doesn't show all
-
 signal text_displayed
 
-const FAST = 5.0
-const SLOW = 1.0
-
-onready var _animated_text_scene = preload("res://scenes/GUI/AnimatedText.tscn")
-onready var _animated_text: RichTextLabel = get_node("BorderMargin/TextMargin/AnimatedText")
-onready var _health_label: Label = get_node("TextureRect/HealthLabel")
-onready var _black_color_rect: ColorRect = get_node("BorderMargin/BlackColorRect")
-onready var _color_rect_tween: Tween = get_node("BorderMargin/ColorRectTween")
+onready var message_popup = get_node("MessagePopup")
 
 var _text_display_speed: int = 12 # Characers per second
 var cga_palette: Dictionary = {
@@ -37,33 +26,21 @@ var cga_palette: Dictionary = {
 		}
 
 func display_message(message: String) -> void:
-	_open_message_screen()
-	_animated_text.new_message(message)
+	message_popup.new_message(message)
 
-func _on_AnimatedText_text_displayed() -> void:
-	emit_signal("text_displayed")
-	_reload_AnimatedText()
-	_close_message_screen()
-
-func _reload_AnimatedText():
-	_animated_text = _reload_node(_animated_text, _animated_text_scene)
-# warning-ignore:return_value_discarded
-	_animated_text.connect("text_displayed", self, "_on_AnimatedText_text_displayed")
-
+## Unused
 func _reload_node(node: Node, replacement: Resource) -> Node:
 	var new_node = replacement.instance()
 
 	node.queue_free()
 
-	$BorderMargin/TextMargin.add_child(new_node)
+	$BorderMargin/NinePatchRect/MarginContainer.add_child(new_node)
 	return new_node
 
-func _open_message_screen() -> void:
-	_black_color_rect.show()
-	_animated_text.show()
+func _on_MessagePopup_about_to_show():
 	get_tree().paused = true
 
-func _close_message_screen() -> void:
-	_black_color_rect.hide()
-	_animated_text.hide()
+
+func _on_MessagePopup_popup_hide():
 	get_tree().paused = false
+	emit_signal("text_displayed")
