@@ -26,7 +26,13 @@ var text_speed = 12.0 # Words per second
 # Code text skipping mechanic
 # Instead of restarting this node's processes, free and reload this node
 
-func new_message(message: String):
+# TODO: Change the message system, set a list of characters to pause at
+
+func _ready() -> void:
+	set_process_unhandled_input(false)
+
+func new_message(message: String) -> void:
+	set_process_unhandled_input(true)
 	bbcode_text = message
 	
 	if not skipped:
@@ -44,7 +50,7 @@ func new_message(message: String):
 
 		_screen_timer.start()
 
-func _unhandled_input(_event):
+func _unhandled_input(_event) -> void:
 	if Input.is_action_just_pressed("ui_accept"):
 		if not skipped:
 # warning-ignore:return_value_discarded
@@ -61,5 +67,6 @@ func _unhandled_input(_event):
 func _find_transition_time(speed: float, words: float) -> float:
 	return pow(speed, -1) * words
 
-func _on_ScreenTimer_timeout():
+func _on_ScreenTimer_timeout() -> void:
+	set_process_unhandled_input(false)
 	emit_signal("text_displayed")
