@@ -22,6 +22,7 @@ extends CanvasLayer
 
 signal combat_over
 
+const ATTACK_LOG_lENGTH := 3
 const ENEMY_MAX_HEALTH := 18
 
 onready var time_bar: ProgressBar = $Control/MarginContainer/VBoxContainer/HBoxContainer3/ProgressBar
@@ -50,6 +51,7 @@ var enemy: Object
 var attack_array: Array = [punch, kick]
 var next_attack: int
 
+var attack_log: Array = []
 var attack_buffer: Array = []
 var array_pos: int
 
@@ -58,7 +60,7 @@ var stunned: bool # Does not record wrong key presses while stunned
 func _ready():
 	randomize()
 	set_process_unhandled_key_input(false)
-	#new_combat(EnemyLexicon.Goblin.new())
+	new_combat(EnemyLexicon.Goblin.new())
 
 func new_combat(new_enemy: Object):
 	set_process_unhandled_key_input(true)
@@ -86,8 +88,28 @@ func _physics_process(_delta):
 	time_bar.value = attack_timer.time_left / attack_timer.wait_time * 100
 
 func _new_attack():
-	next_attack = randi() % attack_array.size()
+	next_attack = _pseudo_randi(attack_array.size())
 	next_attack_label.text = attack_array[next_attack].name
+
+## Returns a random number that feels more random.
+## randi can return the same value 5 times in a row, which doesn't feel random.
+## pseudo_randi returns more balanced values.
+func _pseudo_randi(maximum: int) -> int:
+	var random_val: int
+	
+	while true:
+		random_val = randi() % maximum
+		
+		if attack_log.size() < ATTACK_LOG_lENGTH:
+			attack_log.append(random_val)
+			break
+		
+		if attack_log.size() != attack_log.count(random_val):
+			attack_log.pop_front()
+			attack_log.append(random_val)
+			break
+	
+	return random_val
 
 func _update_attack_buffer(value: int):
 	_record_move(value)
