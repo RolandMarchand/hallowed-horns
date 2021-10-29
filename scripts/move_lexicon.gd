@@ -14,6 +14,18 @@
 # along with Hallowed Horns.  If not, see <https://www.gnu.org/licenses/>.
 extends Node
 
+#enum ATTACK {PUNCH, KICK}
+#
+#var attack_dict: Dictionary = {
+#		ATTACK.PUNCH: Punch,
+#		ATTACK.KICK: Kick,
+#}
+#
+#func get_attack(attack: int) -> Object:
+#	return attack_dict[attack]
+
+var attack_list: Array = [Punch, Kick]
+
 class Punch extends Attack:
 	func _init():
 		enabled = true

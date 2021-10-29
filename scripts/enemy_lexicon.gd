@@ -22,6 +22,9 @@ var race_dict: Dictionary = {
 		RACE.MOUSE: Mouse,
 }
 
+func get_race(race: int) -> Object:
+	return race_dict[race]
+
 class Goblin extends Enemy:
 	func _init():
 		attack_speed = 3 # Second per attack

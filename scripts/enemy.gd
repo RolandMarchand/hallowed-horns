@@ -24,7 +24,7 @@ var navigation_path: PoolVector2Array = []
 export(RACE) onready var value # Ignore the error, Godot bug
 
 # Those variables need to be onready because of how exports are managed
-onready var type = EnemyLexicon.race_dict[value].new()
+onready var type = EnemyLexicon.get_race(value).new()
 export(int) onready var vision_length: int = type.vision_length
 export(float) onready var speed: float = type.walk_speed
 

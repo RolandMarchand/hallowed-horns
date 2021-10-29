@@ -60,7 +60,14 @@ var stunned: bool # Does not record wrong key presses while stunned
 func _ready():
 	randomize()
 	set_process_unhandled_key_input(false)
+	_load_attacks()
 	new_combat(EnemyLexicon.Goblin.new())
+
+# TODO, get list of all attacks that can be played and dynamically add 
+# VBoxContainer's to the Moves node
+func _load_attacks():
+#	for attack in MoveLexicon.attack_list:
+	pass
 
 func new_combat(new_enemy: Object):
 	set_process_unhandled_key_input(true)
