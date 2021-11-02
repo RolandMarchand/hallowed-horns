@@ -27,10 +27,10 @@ func new_message(message: String):
 
 func _reload_AnimatedText() -> void:
 	var new_anim_text = _animated_text_scene.instance()
-	
+
 	_animated_text.queue_free()
 	$BorderMargin/Panel/TextMargin.add_child(new_anim_text)
-	
+
 	_animated_text = new_anim_text
 # warning-ignore:return_value_discarded
 	_animated_text.connect("text_displayed", self, "_on_AnimatedText_text_displayed")

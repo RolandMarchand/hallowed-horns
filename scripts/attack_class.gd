@@ -14,15 +14,20 @@
 # along with Hallowed Horns.  If not, see <https://www.gnu.org/licenses/>.
 class_name Attack#, "res://assets/attack_class_icon.svg"
 
-var enabled: bool = false
-var required_items: PoolIntArray
-var key_combination: PoolIntArray
-var damage: int
-var name: String
+var enabled: bool = false setget ,get_enabled
+var required_items: Array = []
+var key_combination: Array = []
+var damage: int = 0
+var name: String = "Unamed"
 
-## Returns false if item_list doesn't have all the values in required_items
-func has_required_items(item_list: Array) -> bool:
-	for required in required_items:
-		if not item_list.has(required):
-			return false
-	return true
+## Sets enabled to true if the player has all the required items of the attack,
+## Sets to false otherwise.
+## Returns enabled
+func get_enabled() -> bool:
+	for item in required_items:
+		if not PlayerStats.inventory.has(item):
+			enabled = false
+			return enabled
+
+	enabled = true
+	return enabled
