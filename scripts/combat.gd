@@ -42,8 +42,8 @@ var punch2: AudioStreamOGGVorbis = preload("res://assets/sounds/impactPunch_heav
 
 enum {PLAYER, ENEMY}
 
-var punch: Object = MoveLexicon.Punch.new()
-var kick: Object = MoveLexicon.Kick.new()
+var punch: Object = AttackLexicon.Punch.new()
+var kick: Object = AttackLexicon.Kick.new()
 
 
 var enemy: Object
@@ -63,10 +63,10 @@ func _ready():
 	_load_attacks()
 	new_combat(EnemyLexicon.Goblin.new())
 
-# TODO, get list of all attacks that can be played and dynamically add 
+# TODO, get list of all attacks that can be played and dynamically add
 # VBoxContainer's to the Moves node
 func _load_attacks():
-#	for attack in MoveLexicon.attack_list:
+#	for attack in AttackLexicon.attack_list:
 	pass
 
 func new_combat(new_enemy: Object):
@@ -103,19 +103,19 @@ func _new_attack():
 ## pseudo_randi returns more balanced values.
 func _pseudo_randi(maximum: int) -> int:
 	var random_val: int
-	
+
 	while true:
 		random_val = randi() % maximum
-		
+
 		if attack_log.size() < ATTACK_LOG_lENGTH:
 			attack_log.append(random_val)
 			break
-		
+
 		if attack_log.size() != attack_log.count(random_val):
 			attack_log.pop_front()
 			attack_log.append(random_val)
 			break
-	
+
 	return random_val
 
 func _update_attack_buffer(value: int):

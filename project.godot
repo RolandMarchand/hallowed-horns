@@ -38,7 +38,7 @@ config/icon="res://assets/sprites/icon.png"
 
 ItemLexicon="*res://scripts/item_lexicon.gd"
 PlayerStats="*res://scripts/player_stats.gd"
-MoveLexicon="*res://scripts/move_lexicon.gd"
+AttackLexicon="*res://scripts/attack_lexicon.gd"
 EnemyLexicon="*res://scripts/enemy_lexicon.gd"
 Settings="*res://scripts/settings.gd"
 Shortcuts="*res://scripts/shortcuts.gd"

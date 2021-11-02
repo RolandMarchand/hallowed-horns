@@ -29,13 +29,13 @@ var text_speed = 12.0 # Words per second
 # TODO: Change the message system, set a list of characters to pause at
 
 func _ready() -> void:
-	# Prevents a bug 
+	# Prevents a bug
 	set_process_unhandled_input(false)
 
 func new_message(message: String) -> void:
 	set_process_unhandled_input(true)
 	bbcode_text = message
-	
+
 	if not skipped:
 		for line in message.split("\n"):
 	# warning-ignore:return_value_discarded
@@ -60,18 +60,18 @@ func _unhandled_input(_event) -> void:
 
 func _skip_text() -> void:
 	skipped = true
-	
+
 # warning-ignore:return_value_discarded
 	_tween.stop_all() # If not paused before queued free, weird bugs happen
 	_tween.queue_free()
-	
+
 	_line_timer.queue_free()
-	
+
 	set_percent_visible(1) # Shows all text
-	
+
 	_screen_timer.wait_time = text.length() / text_speed
 	_screen_timer.start()
-	
+
 
 func _find_transition_time(speed: float, words: float) -> float:
 	return pow(speed, -1) * words
