@@ -20,10 +20,8 @@ var key_combination: Array = []
 var damage: int = 0
 var name: String = "Unamed"
 
-## Sets enabled to true if the player has all the required items of the attack,
-## Sets to false otherwise.
-## Returns enabled
 
+## Returns a string of the key combination
 func get_key_combination_string() -> String:
 	var keys: String
 
@@ -35,6 +33,9 @@ func get_key_combination_string() -> String:
 
 	return keys
 
+## Sets enabled to true if the player has all the required items of the attack,
+## Sets to false otherwise.
+## Returns enabled
 func get_enabled() -> bool:
 	for item in required_items:
 		if not PlayerStats.inventory.has(item):
