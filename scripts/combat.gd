@@ -36,6 +36,7 @@ onready var enemy_health_bar: ProgressBar = $Control/MarginContainer/VBoxContain
 onready var stream: AudioStreamPlayer = $AudioStreamPlayer
 onready var animation_player: AnimationPlayer = $AnimationPlayer
 onready var animation_enemy: AnimationPlayer = $AnimationPlayer2
+onready var moves_container: HBoxContainer = $Control/MarginContainer/VBoxContainer/Moves
 
 var punch1: AudioStreamOGGVorbis = preload("res://assets/sounds/impactPunch_heavy_003.ogg")
 var punch2: AudioStreamOGGVorbis = preload("res://assets/sounds/impactPunch_heavy_004.ogg")
@@ -63,11 +64,30 @@ func _ready():
 	_load_attacks()
 	new_combat(EnemyLexicon.Goblin.new())
 
+	for attack in AttackLexicon.get_available_attacks():
+		moves_container.add_child(get_new_attack_container(attack))
+
 # TODO, get list of all attacks that can be played and dynamically add
 # VBoxContainer's to the Moves node
 func _load_attacks():
 #	for attack in AttackLexicon.attack_list:
 	pass
+
+func get_new_attack_container(attack: Attack) -> VBoxContainer:
+	var container := VBoxContainer.new()
+	var attack_name := Label.new()
+	var attack_combo := Label.new()
+
+	attack_name.text = attack.name
+	attack_combo.text = attack.get_key_combination_string()
+
+	for label in [attack_name, attack_combo]:
+		label.align = Label.ALIGN_CENTER
+		container.add_child(label)
+
+	container.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+
+	return container
 
 func new_combat(new_enemy: Object):
 	set_process_unhandled_key_input(true)

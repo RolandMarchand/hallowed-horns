@@ -23,6 +23,18 @@ var name: String = "Unamed"
 ## Sets enabled to true if the player has all the required items of the attack,
 ## Sets to false otherwise.
 ## Returns enabled
+
+func get_key_combination_string() -> String:
+	var keys: String
+
+	for key in key_combination:
+		keys += OS.get_scancode_string(key)
+		keys += " "
+
+	keys = keys.trim_suffix(" ")
+
+	return keys
+
 func get_enabled() -> bool:
 	for item in required_items:
 		if not PlayerStats.inventory.has(item):
