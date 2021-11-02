@@ -15,10 +15,7 @@
 extends CanvasLayer
 
 # TODO
-# 1) Add forced randomness.
-# Make sure there cannot be the same next move more than 4 times in a row
-# 2) Make the listing of moves dynamic
-# 3) Rely on tweening the time bar instead of using _physics_process
+# 1) Rely on tweening the time bar instead of using _physics_process
 
 signal combat_over
 
@@ -43,13 +40,9 @@ var punch2: AudioStreamOGGVorbis = preload("res://assets/sounds/impactPunch_heav
 
 enum {PLAYER, ENEMY}
 
-var punch: Object = AttackLexicon.Punch.new()
-var kick: Object = AttackLexicon.Kick.new()
-
-
 var enemy: Object
 
-var attack_array: Array = [punch, kick]
+var attack_array: Array
 var next_attack: int
 
 var attack_log: Array = []
@@ -62,16 +55,14 @@ func _ready():
 	randomize()
 	set_process_unhandled_key_input(false)
 	_load_attacks()
-	new_combat(EnemyLexicon.Goblin.new())
-
-	for attack in AttackLexicon.get_available_attacks():
-		moves_container.add_child(get_new_attack_container(attack))
 
 # TODO, get list of all attacks that can be played and dynamically add
 # VBoxContainer's to the Moves node
 func _load_attacks():
-#	for attack in AttackLexicon.attack_list:
-	pass
+	attack_array = AttackLexicon.get_available_attacks()
+
+	for attack in attack_array:
+		moves_container.add_child(get_new_attack_container(attack))
 
 func get_new_attack_container(attack: Attack) -> VBoxContainer:
 	var container := VBoxContainer.new()
@@ -115,6 +106,7 @@ func _physics_process(_delta):
 	time_bar.value = attack_timer.time_left / attack_timer.wait_time * 100
 
 func _new_attack():
+	assert(attack_array.size() > 0, "attack_array needs to hold at least one attack.")
 	next_attack = _pseudo_randi(attack_array.size())
 	next_attack_label.text = attack_array[next_attack].name
 
